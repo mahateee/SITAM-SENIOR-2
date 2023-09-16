@@ -12,6 +12,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase/index";
+import ScanQR from "../component/ScanQR";
 function Assets() {
   // const [asset, setAsset] = useState({
   //   id:'',
@@ -79,6 +80,11 @@ function Assets() {
     });
   };
   const [assetsList, setAssetsList] = React.useState([]);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const handleAddClick = () => {
+    setIsOpen(!isOpen);
+  };
   React.useEffect(() => {
     const q = query(collection(db, "asset"));
     const unsub = onSnapshot(q, (querySnapshot) => {
@@ -94,7 +100,9 @@ function Assets() {
   return (
     <div data-testid="asset-table">
       {/* table */}
+
       <section className="bg-gray-50  p-3 sm:p-5">
+        {/* <ScanQR /> */}
         <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
           <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
@@ -128,6 +136,16 @@ function Assets() {
                     />
                   </div>
                 </form>
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleAddClick();
+                  }}
+                  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                >
+                  Scan
+                </button>
+                {isOpen && <ScanQR />}
               </div>
               <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                 <button
@@ -404,7 +422,7 @@ function Assets() {
                                 d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
                               ></path>
                             </svg>
-                            {/* <Link to={`/Asset/show/${asset.id}`}>Preview</Link> */}
+                            <Link to={`/Asset/show/${asset.id}`}>Preview</Link>
                           </button>
                         </td>
                         <td className=" px-4 py-2">
@@ -433,7 +451,6 @@ function Assets() {
                           <button
                             onClick={() => {
                               deleteAssetItem(asset.id);
-                              // console.log(asset.id);
                             }}
                             type="button"
                             class="text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "

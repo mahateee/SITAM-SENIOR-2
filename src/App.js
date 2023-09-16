@@ -7,6 +7,7 @@ import AddAsset from "./pages/AddAsset";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import ShowPage from "./pages/ShowPage";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/Asset" element={<Assets />} />
         <Route path="/Asset/add" element={<AddAsset />} />
-        {/* <Route path='/Asset/show/:id' element={<ShowPage/>} /> */}
+        <Route path="/Asset/show/:id" element={<ShowPage />} />
         {/* <Route path='/Asset/edit/:id' element={<EditPage/>} /> */}
       </Routes>
     </>

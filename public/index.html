@@ -39,5 +39,35 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    
+<script>
+// Initializing values
+var isPlaying = true;
+
+// On video playing toggle values
+video.onplaying = function() {
+    isPlaying = true;
+};
+
+// On video pause toggle values
+video.onpause = function() {
+    isPlaying = false;
+};
+
+// Play video function
+async function playVid() {      
+    if (video.paused && !isPlaying) {
+        return video.play();
+    }
+} 
+
+// Pause video function
+function pauseVid() {     
+    if (!video.paused && isPlaying) {
+        video.pause();
+    }
+}
+</script>
   </body>
+
 </html>
