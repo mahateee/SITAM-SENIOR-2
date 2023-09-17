@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   collection,
@@ -10,24 +10,31 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/index";
 import Example from "../component/Example"; // Import the caution dialog component here
-
-
+import ScanQR from "../component/ScanQR";
 
 function Assets() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   const deleteAssetItem = async (id) => {
     await deleteDoc(doc(db, "asset", id)).then(() => {
       console.log("delete");
     });
   };
-  
 
   const [showCautionDialog, setShowCautionDialog] = useState(false);
   const [selectedAssetId, setSelectedAssetId] = useState(null);
   const openCautionDialog = (id) => {
     setSelectedAssetId(id);
     setShowCautionDialog(true);
-  }
+  };
 
   const [assetsList, setAssetsList] = React.useState([]);
   React.useEffect(() => {
@@ -47,35 +54,32 @@ function Assets() {
   const [searchQuery, setSearchQuery] = useState("");
 
   //Modify rendering logic to filter assets by Asset ID, name, category, or status
-  const filteredAssets = assetsList.filter((asset) =>
-    asset.AssetID.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    asset.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    asset.Category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    asset.Status.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredAssets = assetsList.filter(
+    (asset) =>
+      asset.AssetID.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      asset.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      asset.Category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      asset.Status.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    
-
     <div data-testid="asset-table">
-
-{showCautionDialog && (
-  <Example
-    open={showCautionDialog}
-    onClose={() => {
-      setShowCautionDialog(false);
-    }}
-    onDelete={() => {
-      deleteAssetItem(selectedAssetId); // Pass the selected asset ID
-      setShowCautionDialog(false); // Close the dialog after deletion
-    }}
-    assetId={selectedAssetId}
-    setShowCautionDialog={setShowCautionDialog} // Pass setShowCautionDialog as a prop
-    deleteAssetItem={deleteAssetItem} // Pass deleteAssetItem as a prop
-  />
-)}
-
-
+      {showCautionDialog && (
+        <Example
+          open={showCautionDialog}
+          onClose={() => {
+            setShowCautionDialog(false);
+          }}
+          onDelete={() => {
+            deleteAssetItem(selectedAssetId); // Pass the selected asset ID
+            setShowCautionDialog(false); // Close the dialog after deletion
+          }}
+          assetId={selectedAssetId}
+          setShowCautionDialog={setShowCautionDialog} // Pass setShowCautionDialog as a prop
+          deleteAssetItem={deleteAssetItem} // Pass deleteAssetItem as a prop
+        />
+      )}
+      {open && <ScanQR onClose={handleClose} />}
       {/* table */}
       <section className="bg-gray-50  p-3 sm:p-5">
         <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -114,7 +118,28 @@ function Assets() {
                   </div>
                 </form>
               </div>
-
+              <button onClick={handleOpen}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  className="w-5 h-5 text-gray-500 "
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z"
+                  />
+                </svg>
+              </button>
               <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                 <button
                   type="button"
@@ -392,7 +417,7 @@ function Assets() {
                                 d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
                               ></path>
                             </svg>
-                            <Link to={`/Asset/show/${asset.id}`}>Preview</Link> 
+                            <Link to={`/Asset/show/${asset.id}`}>Preview</Link>
                           </button>
                         </td>
                         <td className=" px-4 py-2">

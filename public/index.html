@@ -39,5 +39,20 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+<script>
+  var playPromise = document.querySelector('video').play();
+
+// In browsers that don’t yet support this functionality,
+// playPromise won’t be defined.
+if (playPromise !== undefined) {
+    playPromise.then(function() {
+    // Automatic playback started!
+    video.pause();
+    }).catch(function(error) {
+    // Automatic playback failed.
+    // Show a UI element to let the user manually start playback.
+    });
+}
+</script>
   </body>
 </html>
