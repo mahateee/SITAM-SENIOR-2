@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-// import axios from 'axios';
-// import Sidebar from "../component/Sidebar";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import {
   app,
   db,
@@ -11,7 +9,10 @@ import {
   addDoc,
   getDocs,
 } from "../firebase/index";
+
 export default function AddAsset() {
+
+  const navigate = useNavigate();
   const [asset, setAsset] = useState({
     id: "",
     name: "",
@@ -38,62 +39,72 @@ export default function AddAsset() {
     Status: "",
     date: "",
   });
+
   const checkValidation = () => {
     let errors = validation;
 
     let isValid = true;
     // Assets name validation
     if (!asset.name.trim()) {
-      errors.name = "Asset name is required";
+      errors.name = "Asset Name is required.";
       isValid = false;
-    } else if (!asset.name.match(/[A-Za-z]/)) {
-      errors.name = "please enter only alphabets.";
+    } else if (!asset.name.match(/^[A-Za-z\s]*$/)) {
+      errors.name = "Please enter only alphabets.";
       isValid = false;
     } else {
       errors.name = "";
     }
-    // Assets ID validation
 
+    // Assets ID validation
     if (!asset.AssetID.trim()) {
-      errors.AssetID = "Assets ID is required";
+      errors.AssetID = "Assets ID is required.";
       isValid = false;
     } else if (!asset.AssetID.match(/[0-9]/)) {
-      errors.AssetID = "please enter only numbers.";
+      errors.AssetID = "Please enter only numbers.";
       isValid = false;
     } else {
       errors.AssetID = "";
     }
-    // Assets Model validation
 
-    if (!asset.Model.trim()) {
-      errors.Model = "Assets Model is required";
+    // Assets Serial Number validation
+    if (!asset.SerialNumber.trim()) {
+      errors.SerialNumber = "Asset Serial Number is required.";
       isValid = false;
-    } else if (!asset.Model.match(/[a-zA-Z]/)) {
-      errors.Model = "please enter only alphabets and number.";
+    } else if (!asset.SerialNumber.match(/^[A-Za-z0-9-\s]*$/)) {
+      errors.SerialNumber = "Please enter only alphabets, numbers, and/or hyphens.";
+      isValid = false;
+    } else {
+      errors.SerialNumber = "";
+    }
+    
+    // Assets Model validation
+    if (!asset.Model.trim()) {
+      errors.Model = "Asset Model is required.";
+      isValid = false;
+    } else if (!asset.Model.match(/^[A-Za-z0-9\s]*$/)) {
+      errors.Model = "Please enter only alphabets and/or numbers.";
       isValid = false;
     } else {
       errors.Model = "";
-    }
+    }    
 
     // Assets OS validation
-
     if (!asset.os.trim()) {
-      errors.os = "Assets Os is required";
+      errors.os = "Asset Operating System is required.";
       isValid = false;
-    } else if (!asset.os.match(/[a-zA-Z]/)) {
-      errors.os = "please enter only alphabets and number";
+    } else if (!asset.os.match(/^[A-Za-z0-9\s]*$/)) {
+      errors.os = "Please enter only alphabets and/or numbers.";
       isValid = false;
     } else {
       errors.os = "";
-    }
+    }  
 
     // Assets Brand validation
-
     if (!asset.Brand.trim()) {
-      errors.Brand = "Assets Brand is required";
+      errors.Brand = "Asset Brand is required.";
       isValid = false;
-    } else if (!asset.Brand.match(/[a-zA-Z]/)) {
-      errors.Brand = "please enter only alphabets.";
+    } else if (!asset.Brand.match(/^[A-Za-z\s]*$/)) {
+      errors.Brand = "Please enter only alphabets.";
       isValid = false;
     } else {
       errors.Brand = "";
@@ -107,44 +118,15 @@ export default function AddAsset() {
     setAsset({ ...asset, [event.target.name]: event.target.value });
   };
 
-  // const navigate = useNavigate();
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const isValid = checkValidation();
-  //   if (isValid) {
-  //     axios
-  //       .post("/Asset/add", asset)
-  //       .then((response) => {
-  //         setAssets([...assets, response.data]);
-  //         setAsset({
-  //           Assets: "",
-  //           AssetID: "",
-  //           SerialNumber: "",
-  //           Model: "",
-  //           Brand: "",
-  //           Category: "",
-  //           Os: "",
-  //           Description: '',
-  //           Status: '',
-  //           date: "",
-  //         });
-
-  //       }).then(() => navigate("/Asset"))
-  //       .catch((error) => console.error(error));
-  //   }
-  // };
+  
   const handleSubmit = () => {
     console.log("submit");
   };
-  // useEffect(() => {
-  //   axios
-  //     .get("/Asset/add")
-  //     .catch((error) => console.error(error));
-  //   checkValidation();
-  // }, [asset]);
+  
   useEffect(() => {
     checkValidation();
   }, [asset]);
+  
   const addAssetItem = async (event) => {
     event.preventDefault();
     const isValid = checkValidation();
@@ -163,11 +145,13 @@ export default function AddAsset() {
           date: asset.date,
         });
         console.log("Document written with ID: ", docRef.id);
+        navigate("/Asset");
       } catch (e) {
         console.error("Error adding document: ", e);
       }
     }
   };
+
   return (
     <div>
       <section class="bg-white ">
@@ -175,8 +159,6 @@ export default function AddAsset() {
           <h2 class="mb-4 text-xl font-bold text-gray-900">Add a New Asset</h2>
           <form
             onSubmit={addAssetItem}
-            // method="post"
-            // action="/Server"
             className="mb-4 px-10"
           >
             <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
@@ -185,7 +167,7 @@ export default function AddAsset() {
                   className="block mb-2 text-sm font-medium text-gray-900"
                   htmlFor="Assets"
                 >
-                  Asset:
+                  Asset Name:
                 </label>
                 <input
                   data-testid="asset-id-input"
@@ -198,16 +180,16 @@ export default function AddAsset() {
                   onChange={handleChange}
                 />
                 {validation.name && (
-                  <p className="mt-2 text-sm text-red-600">{validation.name}</p>
-                )}
-                {validation.name && console.log(validation)}
+                <p className="mt-2 text-sm text-red-600">{validation.name}</p>
+              )}
+                
               </div>
               <div className="w-full">
                 <label
                   className="block text-gray-700 font-bold mb-2"
                   htmlFor="AssetID"
                 >
-                  ID:
+                  Asset ID:
                 </label>
                 <input
                   label="code"
@@ -218,19 +200,18 @@ export default function AddAsset() {
                   value={asset.AssetID}
                   onChange={handleChange}
                 />
-                {validation.AssetID && (
-                  <p className="mt-2 text-sm text-red-600">
-                    {validation.AssetID}
-                  </p>
-                )}
-                {validation.AssetID && console.log(validation)}
+                {/* validate */}
+              {validation.AssetID && (
+                <p className="mt-2 text-sm text-red-600">{validation.AssetID}</p>
+              )}
+                
               </div>
               <div className="w-full">
                 <label
                   className="block text-gray-700 font-bold mb-2"
                   htmlFor="Status"
                 >
-                  Status:
+                  Asset Status:
                 </label>
                 <select
                   id="Status"
@@ -238,11 +219,12 @@ export default function AddAsset() {
                   value={asset.Status}
                   onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                  required
                 >
-                  <option selected="">Select Status</option>
+                  <option value="" disabled selected>Select Status</option>
                   <option value="Available">Available</option>
-                  <option value="Disposed">Disposed</option>
                   <option value="InUse">In Use</option>
+                  <option value="Disposed">Disposed</option>
                 </select>
               </div>
               <div className="w-full">
@@ -250,7 +232,7 @@ export default function AddAsset() {
                   className="block text-gray-700 font-bold mb-2"
                   htmlFor="SerialNumber"
                 >
-                  Serial Number:
+                  Asset Serial Number:
                 </label>
                 <input
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -260,13 +242,18 @@ export default function AddAsset() {
                   value={asset.SerialNumber}
                   onChange={handleChange}
                 />
+                {/* validate */}
+              {validation.SerialNumber && (
+                <p className="mt-2 text-sm text-red-600">{validation.SerialNumber}</p>
+              )}
               </div>
+
               <div className="w-full">
                 <label
                   className="block text-gray-700 font-bold mb-2"
                   htmlFor="Model"
                 >
-                  Model:
+                  Asset Model:
                 </label>
                 <input
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -276,19 +263,18 @@ export default function AddAsset() {
                   value={asset.Model}
                   onChange={handleChange}
                 />
-                {validation.Model && (
-                  <p className="mt-2 text-sm text-red-600">
-                    {validation.Model}
-                  </p>
-                )}
-                {validation.Model && console.log(validation)}
+                {/* validate */}
+              {validation.Model && (
+                <p className="mt-2 text-sm text-red-600">{validation.Model}</p>
+              )}
               </div>
+
               <div className="w-full">
                 <label
                   className="block text-gray-700 font-bold mb-2"
                   htmlFor="date"
                 >
-                  Date:
+                  Insertion Date:
                 </label>
                 <input
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -297,14 +283,16 @@ export default function AddAsset() {
                   name="date"
                   value={asset.date}
                   onChange={handleChange}
+                  required
                 />
               </div>
+
               <div className="w-full">
                 <label
                   className="block text-gray-700 font-bold mb-2"
                   htmlFor="Brand"
                 >
-                  Brand:
+                  Asset Brand:
                 </label>
                 <input
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -314,12 +302,10 @@ export default function AddAsset() {
                   value={asset.Brand}
                   onChange={handleChange}
                 />
-                {validation.Brand && (
-                  <p className="mt-2 text-sm text-red-600">
-                    {validation.Brand}
-                  </p>
-                )}
-                {validation.Brand && console.log(validation)}
+                {/* validate */}
+              {validation.Brand && (
+                <p className="mt-2 text-sm text-red-600">{validation.Brand}</p>
+              )}
               </div>
 
               <div className="w-full">
@@ -327,7 +313,7 @@ export default function AddAsset() {
                   className="block text-gray-700 font-bold mb-2"
                   htmlFor="Category"
                 >
-                  Category:
+                  Asset Category:
                 </label>
 
                 <select
@@ -336,8 +322,9 @@ export default function AddAsset() {
                   value={asset.Category}
                   onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                  required
                 >
-                  <option selected="">Select category</option>
+                  <option value="" disabled selected>Select Category</option>
                   <option value="Monitors">Monitors</option>
                   <option value="Laptop">Laptop</option>
                   <option value="PC">PC</option>
@@ -351,7 +338,7 @@ export default function AddAsset() {
                   className="block text-gray-700 font-bold mb-2"
                   htmlFor="os"
                 >
-                  Os:
+                  Operating System:
                 </label>
                 <input
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -361,10 +348,10 @@ export default function AddAsset() {
                   value={asset.os}
                   onChange={handleChange}
                 />
-                {validation.os && (
-                  <p className="mt-2 text-sm text-red-600">{validation.os}</p>
-                )}
-                {validation.os && console.log(validation)}
+                {/* validate */}
+              {validation.os && (
+                <p className="mt-2 text-sm text-red-600">{validation.os}</p>
+              )}
               </div>
 
               <div className="w-full">
@@ -372,7 +359,7 @@ export default function AddAsset() {
                   className="block text-gray-700 font-bold mb-2"
                   htmlFor="description"
                 >
-                  description:
+                  Description:
                 </label>
 
                 <textarea
@@ -384,6 +371,7 @@ export default function AddAsset() {
                   rows="8"
                   className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 "
                   placeholder="Your description here"
+                  required
                 ></textarea>
               </div>
             </div>
@@ -395,6 +383,12 @@ export default function AddAsset() {
               >
                 Add Asset
               </button>
+              <Link
+              to={`/Asset`}
+              className="ml-2 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+              >
+                Cancel
+              </Link>
             </div>
           </form>
         </div>

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import Sidebar from "../component/Sidebar";
 import { Link } from "react-router-dom";
-
 import {
   collection,
   query,
@@ -12,72 +9,26 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase/index";
+import Example from "../component/Example"; // Import the caution dialog component here
+
+
+
 function Assets() {
-  // const [asset, setAsset] = useState({
-  //   id:'',
-  //   Assets: '',
-  //   AssetID: '',
-  //   SerialNumber: '',
-  //   Model:'',
-  //   Brand:'',
-  //   Category:'',
-  //   Os:'',
-  //   Description:'',
-  //   Status:'',
-  //   date: ''
-  // });
-  // const [assets, setAssets] = useState([]);
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   axios
-  //     .post("/Asset", asset)
-  //     .then((response) => {
-  //       setAssets([...assets, response.data]);
-  //       setAsset({
-  //         id:'',
-  //         Assets: "",
-  //         AssetID: "",
-  //         SerialNumber: "",
-  //         Model:"",
-  //         Brand:"",
-  //         Category:"",
-  //         Os:"",
-  //         Description:'',
-  //         Status:'',
-  //         date: "",
-  //       });
-  //     })
-  //     .catch((error) => console.error(error));
-  // };
-
-  // useEffect(() => {
-  //   axios
-  //     .get("/Asset")
-  //     .then((response) => setAssets(response.data))
-  //     .catch((error) => console.error(error));
-  // }, []);
-
-  // const deleteAsset = async (assetToDelete) => {
-  //   console.log("delet?");
-  //   await fetch(`http://localhost:3000/Asset/${assetToDelete.id}`, {
-  //     method: "DELETE",
-  //     headers: {
-  //       "Content-type": "application/json"
-  //     }
-  //   })
-  //   await setAssets(assets.filter(asset => asset.id !== assetToDelete.id))
-  // }
-
-  // const setID=(id)=>{
-  //   console.log(id)
-  // }
 
   const deleteAssetItem = async (id) => {
     await deleteDoc(doc(db, "asset", id)).then(() => {
       console.log("delete");
     });
   };
+  
+
+  const [showCautionDialog, setShowCautionDialog] = useState(false);
+  const [selectedAssetId, setSelectedAssetId] = useState(null);
+  const openCautionDialog = (id) => {
+    setSelectedAssetId(id);
+    setShowCautionDialog(true);
+  }
+
   const [assetsList, setAssetsList] = React.useState([]);
   React.useEffect(() => {
     const q = query(collection(db, "asset"));
@@ -91,8 +42,40 @@ function Assets() {
     });
     return () => unsub();
   }, []);
+
+  //Create state for the search query
+  const [searchQuery, setSearchQuery] = useState("");
+
+  //Modify rendering logic to filter assets by Asset ID, name, category, or status
+  const filteredAssets = assetsList.filter((asset) =>
+    asset.AssetID.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    asset.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    asset.Category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    asset.Status.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
+    
+
     <div data-testid="asset-table">
+
+{showCautionDialog && (
+  <Example
+    open={showCautionDialog}
+    onClose={() => {
+      setShowCautionDialog(false);
+    }}
+    onDelete={() => {
+      deleteAssetItem(selectedAssetId); // Pass the selected asset ID
+      setShowCautionDialog(false); // Close the dialog after deletion
+    }}
+    assetId={selectedAssetId}
+    setShowCautionDialog={setShowCautionDialog} // Pass setShowCautionDialog as a prop
+    deleteAssetItem={deleteAssetItem} // Pass deleteAssetItem as a prop
+  />
+)}
+
+
       {/* table */}
       <section className="bg-gray-50  p-3 sm:p-5">
         <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -123,12 +106,15 @@ function Assets() {
                       type="text"
                       id="simple-search"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 "
-                      placeholder="Search"
+                      placeholder="Search by Asset ID, Name, Category, or Status"
                       required=""
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
                 </form>
               </div>
+
               <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                 <button
                   type="button"
@@ -317,6 +303,7 @@ function Assets() {
                 </div>
               </div>
             </div>
+
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-gray-500 ">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -351,8 +338,8 @@ function Assets() {
                   </tr>
                 </thead>
                 <tbody>
-                  {assetsList.length > 0 ? (
-                    assetsList.map((asset, i) => (
+                  {filteredAssets.length > 0 ? (
+                    filteredAssets.map((asset, i) => (
                       <tr className="border-b" data-testid="asset" key={i}>
                         <td className="px-4 py-3">{i + 1}</td>
 
@@ -384,6 +371,7 @@ function Assets() {
                         </td>
                         <td className="px-4 py-3">{asset.date}</td>
                         <td className="px-4 py-2">
+                          {/* show button. */}
                           <button
                             type="button"
                             data-drawer-target="drawer-read-product-advanced"
@@ -404,10 +392,11 @@ function Assets() {
                                 d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
                               ></path>
                             </svg>
-                            {/* <Link to={`/Asset/show/${asset.id}`}>Preview</Link> */}
+                            <Link to={`/Asset/show/${asset.id}`}>Preview</Link> 
                           </button>
                         </td>
                         <td className=" px-4 py-2">
+                          {/* Edit button for the edit page. */}
                           <button
                             type="button"
                             class=" inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 font-medium text-sm px-5 py-2.5 text-center "
@@ -426,14 +415,14 @@ function Assets() {
                                 clip-rule="evenodd"
                               ></path>
                             </svg>
-                            {/* <Link to={`/Asset/edit/${asset.id}`}>Edit</Link> */}
+                            <Link to={`/Asset/edit/${asset.id}`}>Edit</Link>
                           </button>
                         </td>
                         <td className=" px-4 py-2">
+                          {/* Delete Button. */}
                           <button
                             onClick={() => {
-                              deleteAssetItem(asset.id);
-                              // console.log(asset.id);
+                              openCautionDialog(asset.id); // Open the caution dialog
                             }}
                             type="button"
                             class="text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
