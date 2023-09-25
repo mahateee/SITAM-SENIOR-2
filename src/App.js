@@ -1,7 +1,7 @@
 // import logo from "./logo.svg";
 import "./App.css";
 import Assets from "./pages/Assets";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Switch, Routes, Route } from "react-router-dom";
 import AddAsset from "./pages/AddAsset";
 import Home from "./pages/Home";
@@ -9,20 +9,121 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import EditAsset from "./pages/EditAsset";
 import ShowPage from "./pages/ShowPage";
+import { useEffect, useState } from "react";
+import Request from "./component/Request";
+import AuthProvider from "./context/AuthContext";
+const USER_TYPE = {
+  PUBLIC: "Public User",
+  NORMAL_USER: "user",
+  ADMIN_USER: "admin",
+};
 function App() {
+  const [userRole, setUserRole] = useState(USER_TYPE.PUBLIC);
+  const navigate = useNavigate();
+
+  const adminUserRoutes = [
+    { path: "/", element: <Assets /> },
+    { path: "/add", element: <AddAsset /> },
+    { path: "/edit/:id", element: <EditAsset /> },
+    { path: "/show/:id", element: <ShowPage /> },
+  ];
+
+  useEffect(() => {
+    if (userRole === USER_TYPE.ADMIN_USER) {
+      navigate("/Asset");
+    } else if (userRole === USER_TYPE.NORMAL_USER) {
+      navigate("/user");
+    } else {
+      navigate("/");
+    }
+  }, [userRole]);
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/Asset" element={<Assets />} />
-        <Route path="/Asset/add" element={<AddAsset />} />
-        <Route path="/Asset/edit/:id" element={<EditAsset />} />
-        <Route path='/Asset/show/:id' element={<ShowPage/>} /> 
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PublicElement>
+                <Home />
+              </PublicElement>
+            }
+          />
+          <Route
+            path="/signin"
+            element={
+              <PublicElement>
+                <SignIn setUserRole={setUserRole} />
+              </PublicElement>
+            }
+          />
+
+          <Route
+            path="/signup"
+            element={
+              <PublicElement>
+                <SignUp />
+              </PublicElement>
+            }
+          />
+          <Route
+            path="/Asset/*"
+            element={
+              <AdminElement userRole={userRole}>
+                <Routes>
+                  {adminUserRoutes.map((route, index) => (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      element={route.element}
+                    />
+                  ))}
+                </Routes>
+              </AdminElement>
+            }
+          />
+          <Route
+            path="/user"
+            element={
+              <UserElement userRole={userRole}>
+                <Request />
+              </UserElement>
+            }
+          />
+          <Route
+            path="/Request/Assets"
+            element={
+              <UserElement userRole={userRole}>
+                <div>Asset</div>
+              </UserElement>
+            }
+          />
+          <Route
+            path="/Request/Maintenance"
+            element={
+              <UserElement userRole={userRole}>
+                <div>Maintenance</div>
+              </UserElement>
+            }
+          />
+        </Routes>
+      </AuthProvider>
     </>
   );
 }
-
+function PublicElement({ children }) {
+  return <>{children}</>;
+}
+function UserElement({ children, userRole }) {
+  if (userRole === USER_TYPE.NORMAL_USER || userRole === USER_TYPE.ADMIN_USER) {
+    return <>{children}</>;
+  }
+}
+function AdminElement({ children, userRole }) {
+  if (userRole === USER_TYPE.ADMIN_USER) {
+    return <>{children}</>;
+  } else {
+    return <div>you don't have access to this page!</div>;
+  }
+}
 export default App;

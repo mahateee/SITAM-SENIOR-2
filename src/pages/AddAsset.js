@@ -11,8 +11,8 @@ import {
 } from "../firebase/index";
 
 export default function AddAsset() {
-
   const navigate = useNavigate();
+
   const [asset, setAsset] = useState({
     id: "",
     name: "",
@@ -71,12 +71,13 @@ export default function AddAsset() {
       errors.SerialNumber = "Asset Serial Number is required.";
       isValid = false;
     } else if (!asset.SerialNumber.match(/^[A-Za-z0-9-\s]*$/)) {
-      errors.SerialNumber = "Please enter only alphabets, numbers, and/or hyphens.";
+      errors.SerialNumber =
+        "Please enter only alphabets, numbers, and/or hyphens.";
       isValid = false;
     } else {
       errors.SerialNumber = "";
     }
-    
+
     // Assets Model validation
     if (!asset.Model.trim()) {
       errors.Model = "Asset Model is required.";
@@ -86,7 +87,7 @@ export default function AddAsset() {
       isValid = false;
     } else {
       errors.Model = "";
-    }    
+    }
 
     // Assets OS validation
     if (!asset.os.trim()) {
@@ -97,7 +98,7 @@ export default function AddAsset() {
       isValid = false;
     } else {
       errors.os = "";
-    }  
+    }
 
     // Assets Brand validation
     if (!asset.Brand.trim()) {
@@ -118,15 +119,14 @@ export default function AddAsset() {
     setAsset({ ...asset, [event.target.name]: event.target.value });
   };
 
-  
   const handleSubmit = () => {
     console.log("submit");
   };
-  
+
   useEffect(() => {
     checkValidation();
   }, [asset]);
-  
+
   const addAssetItem = async (event) => {
     event.preventDefault();
     const isValid = checkValidation();
@@ -157,10 +157,7 @@ export default function AddAsset() {
       <section class="bg-white ">
         <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
           <h2 class="mb-4 text-xl font-bold text-gray-900">Add a New Asset</h2>
-          <form
-            onSubmit={addAssetItem}
-            className="mb-4 px-10"
-          >
+          <form onSubmit={addAssetItem} className="mb-4 px-10">
             <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
               <div className="w-full">
                 <label
@@ -180,9 +177,8 @@ export default function AddAsset() {
                   onChange={handleChange}
                 />
                 {validation.name && (
-                <p className="mt-2 text-sm text-red-600">{validation.name}</p>
-              )}
-                
+                  <p className="mt-2 text-sm text-red-600">{validation.name}</p>
+                )}
               </div>
               <div className="w-full">
                 <label
@@ -201,10 +197,11 @@ export default function AddAsset() {
                   onChange={handleChange}
                 />
                 {/* validate */}
-              {validation.AssetID && (
-                <p className="mt-2 text-sm text-red-600">{validation.AssetID}</p>
-              )}
-                
+                {validation.AssetID && (
+                  <p className="mt-2 text-sm text-red-600">
+                    {validation.AssetID}
+                  </p>
+                )}
               </div>
               <div className="w-full">
                 <label
@@ -221,7 +218,9 @@ export default function AddAsset() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                   required
                 >
-                  <option value="" disabled selected>Select Status</option>
+                  <option value="" disabled selected>
+                    Select Status
+                  </option>
                   <option value="Available">Available</option>
                   <option value="InUse">In Use</option>
                   <option value="Disposed">Disposed</option>
@@ -243,9 +242,11 @@ export default function AddAsset() {
                   onChange={handleChange}
                 />
                 {/* validate */}
-              {validation.SerialNumber && (
-                <p className="mt-2 text-sm text-red-600">{validation.SerialNumber}</p>
-              )}
+                {validation.SerialNumber && (
+                  <p className="mt-2 text-sm text-red-600">
+                    {validation.SerialNumber}
+                  </p>
+                )}
               </div>
 
               <div className="w-full">
@@ -264,9 +265,11 @@ export default function AddAsset() {
                   onChange={handleChange}
                 />
                 {/* validate */}
-              {validation.Model && (
-                <p className="mt-2 text-sm text-red-600">{validation.Model}</p>
-              )}
+                {validation.Model && (
+                  <p className="mt-2 text-sm text-red-600">
+                    {validation.Model}
+                  </p>
+                )}
               </div>
 
               <div className="w-full">
@@ -303,9 +306,11 @@ export default function AddAsset() {
                   onChange={handleChange}
                 />
                 {/* validate */}
-              {validation.Brand && (
-                <p className="mt-2 text-sm text-red-600">{validation.Brand}</p>
-              )}
+                {validation.Brand && (
+                  <p className="mt-2 text-sm text-red-600">
+                    {validation.Brand}
+                  </p>
+                )}
               </div>
 
               <div className="w-full">
@@ -324,7 +329,9 @@ export default function AddAsset() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                   required
                 >
-                  <option value="" disabled selected>Select Category</option>
+                  <option value="" disabled selected>
+                    Select Category
+                  </option>
                   <option value="Monitors">Monitors</option>
                   <option value="Laptop">Laptop</option>
                   <option value="PC">PC</option>
@@ -349,9 +356,9 @@ export default function AddAsset() {
                   onChange={handleChange}
                 />
                 {/* validate */}
-              {validation.os && (
-                <p className="mt-2 text-sm text-red-600">{validation.os}</p>
-              )}
+                {validation.os && (
+                  <p className="mt-2 text-sm text-red-600">{validation.os}</p>
+                )}
               </div>
 
               <div className="w-full">
@@ -384,8 +391,8 @@ export default function AddAsset() {
                 Add Asset
               </button>
               <Link
-              to={`/Asset`}
-              className="ml-2 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                to={`/Asset`}
+                className="ml-2 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 Cancel
               </Link>

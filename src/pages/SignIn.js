@@ -1,35 +1,79 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "./logo3-1(2).png";
-
+import {
+  collection,
+  query,
+  onSnapshot,
+  doc,
+  updateDoc,
+  deleteDoc,
+  where,
+  getDocs,
+} from "firebase/firestore";
+import { db } from "../firebase/index";
+import { auth, firestore } from "../firebase/index"; // Assuming you have set up Firebase and exported the `auth` and `firestore` objects
+import { useAuth } from "../context/AuthContext";
 // import axios from "axios";
-
-function SignIn() {
+function SignIn({ setUserRole }) {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { login } = useAuth();
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  const emailRef = useRef();
+  const passwordRef = useRef();
   const [error, setError] = useState(null);
-  const handleSubmit = (event) => {
+  const [loading, setLoading] = useState(null);
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate("/Asset");
+    try {
+      setError("");
+      setLoading(true);
+      // await login(emailRef.current.value, passwordRef.current.value);
+      const userCredential = await login(
+        emailRef.current.value,
+        passwordRef.current.value
+      );
+      const user = userCredential.user;
+      console.log(user);
+      // Retrieve user document from Firestore based on the signed-in user's email
+      const usersCollectionRef = collection(db, "Account");
+      const q = query(usersCollectionRef, where("email", "==", user.email));
+      const querySnapshot = await getDocs(q);
 
-    // axios
-    //   .post("/SignIn", { email, password })
-    //   .then((response) => {
-    //     if (response.status === 200) {
-    //       // Navigate to the asset page if the user is authenticated
-    //       console.log('Navigating to Asset page...');
-    //       navigate("/Asset");
-    //     } else {
-    //       // Set the error state if the user is not authenticated
-    //       setError("Email or password is incorrect.");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     // Set the error state if there was a problem sending the POST request
-    //     setError(error.message);
-    //   });
+      if (!querySnapshot.empty) {
+        // Handle the user document data here
+        const userData = querySnapshot.docs[0].data();
+        console.log(userData);
+
+        // Determine the user role and navigate accordingly
+        if (userData.role === "admin") {
+          setUserRole("admin");
+          // navigate("/admin");
+        } else {
+          setUserRole("user");
+          navigate("/user");
+        }
+      } else {
+        setError("User data not found.");
+      }
+    } catch {
+      setError("Failed to login");
+    }
+    setLoading(false);
   };
+  // const authenticateUser = () => {
+  //   // Perform authentication logic and obtain the user role
+  //   // This can involve making an API call, checking credentials, or accessing Redux state
+  //   // Return the user role
+  //   return "user";
+  // };
+
+  // useEffect(() => {
+  //   const userRole = authenticateUser();
+  //   setUserRole(userRole);
+  // }, [setUserRole]);
+
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -62,8 +106,9 @@ function SignIn() {
                     type="email"
                     autoComplete="email"
                     required
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    ref={emailRef}
+                    // value={email}
+                    // onChange={(event) => setEmail(event.target.value)}
                     className="block w-full rounded-md border-0 px-2.5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -94,8 +139,9 @@ function SignIn() {
                     autoComplete="current-password"
                     required
                     className="block w-full rounded-md border-0 px-2.5  py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                    ref={passwordRef}
+                    // value={password}
+                    // onChange={(event) => setPassword(event.target.value)}
                   />
                 </div>
               </div>

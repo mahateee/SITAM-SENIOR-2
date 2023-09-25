@@ -1,39 +1,34 @@
 import ReactDOM from "react-dom/client";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import logo from "./logo3-1(2).png";
+import { useAuth } from "../context/AuthContext";
 // import axios from "axios";
 
 function SignUp() {
   const navigate = useNavigate();
+  const { signup } = useAuth();
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate("/Asset");
-
-    // try {
-    //   // Send a POST request to the server with the form data
-    //   const response = await axios.post('/SignUp', {
-    //     name,
-    //     email,
-    //     password
-    //   });
-
-    //   if (response.status === 200) {
-    //     // Navigate to the asset page if the POST request was successful
-    //     navigate('/Asset');
-    //   } else {
-    //     // Set the error state if the POST request failed
-    //     setError(response.data.message);
-    //   }
-    // } catch (error) {
-    //   // Set the error state if therewas a problem sending the POST request
-    //   setError(error.message);
-    // }
+    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+      return setError("Passwords do not match");
+    }
+    try {
+      setError("");
+      setLoading(true);
+      await signup(emailRef.current.value, passwordRef.current.value);
+      navigate("/");
+    } catch {
+      setError("Failed to create an account");
+    }
+    setLoading(false);
   };
 
   return (
@@ -83,8 +78,9 @@ function SignUp() {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               placeholder="name@company.com"
               required
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              ref={emailRef}
+              // value={email}
+              // onChange={(event) => setEmail(event.target.value)}
             />
           </div>
           <div>
@@ -101,8 +97,28 @@ function SignUp() {
               placeholder="••••••••"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               required
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              ref={passwordRef}
+              // value={password}
+              // onChange={(event) => setPassword(event.target.value)}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="password-confirmation"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Confirm Password <span className="text-red-600">*</span>
+            </label>
+            <input
+              type="password"
+              name="password"
+              id="password-confirmation"
+              placeholder="••••••••"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              required
+              ref={passwordConfirmRef}
+              // value={password}
+              // onChange={(event) => setPassword(event.target.value)}
             />
           </div>
 
