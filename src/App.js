@@ -10,8 +10,12 @@ import SignUp from "./pages/SignUp";
 import EditAsset from "./pages/EditAsset";
 import ShowPage from "./pages/ShowPage";
 import { useEffect, useState } from "react";
-import Request from "./component/Request";
+// import Request from "./component/Request";
 import AuthProvider from "./context/AuthContext";
+import Requests from "./pages/Requests";
+import NewRequest from "./pages/NewRequest";
+import UserInfo from "./pages/UserInfo";
+
 const USER_TYPE = {
   PUBLIC: "Public User",
   NORMAL_USER: "user",
@@ -82,30 +86,50 @@ function App() {
               </AdminElement>
             }
           />
+          
           <Route
             path="/user"
             element={
               <UserElement userRole={userRole}>
-                <Request />
+                <UserInfo />
               </UserElement>
             }
           />
+
           <Route
+            path="/Request"
+            element={
+              <UserElement userRole={userRole}>
+                <Requests />
+              </UserElement>
+            }
+          />
+
+          <Route
+            path="/newRequest"
+            element={
+              <UserElement userRole={userRole}>
+                <NewRequest />
+              </UserElement>
+            }
+          />
+          
+          {/* <Route
             path="/Request/Assets"
             element={
               <UserElement userRole={userRole}>
                 <div>Asset</div>
               </UserElement>
             }
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/Request/Maintenance"
             element={
               <UserElement userRole={userRole}>
                 <div>Maintenance</div>
               </UserElement>
             }
-          />
+          /> */}
         </Routes>
       </AuthProvider>
     </>
