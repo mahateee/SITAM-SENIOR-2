@@ -3,10 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import { collection, addDoc, getDoc, updateDoc } from "firebase/firestore";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, Timestamp } from "firebase/firestore"; // Import Timestamp from firestore
 import { doc, deleteDoc } from "firebase/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -38,4 +36,5 @@ export {
   updateDoc,
   auth,
   firestore,
+  Timestamp, // Include Timestamp in the exports
 };
