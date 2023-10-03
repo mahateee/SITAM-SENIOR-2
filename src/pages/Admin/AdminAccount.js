@@ -1,8 +1,8 @@
 import { PaperClipIcon } from "@heroicons/react/20/solid";
-import Sidebar from "../component/Sidebar";
-import { useAuth } from "../context/AuthContext";
+
+import { useAuth } from "../../context/AuthContext";
 import { useEffect } from "react";
-import { firestore } from "../firebase/index";
+// import { firestore } from "../firebase/index";
 import { useState } from "react";
 import {
   collection,
@@ -14,8 +14,10 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { db } from "../firebase/index";
-export default function UserInfo() {
+import { db } from "../../firebase/index";
+import Sidebar from "../../component/Sidebar";
+import AdminSidebar from "../../component/AdminSidebar";
+export default function AdminAccount() {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -82,7 +84,7 @@ export default function UserInfo() {
   };
   return (
     <div>
-      <Sidebar />
+      <AdminSidebar />
       <div className="mx-auto max-w-screen-md">
         <div className="flex items-center mx-auto max-w-screen-md px-4 sm:px-0">
           <div className="relative w-12 h-12 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-5">

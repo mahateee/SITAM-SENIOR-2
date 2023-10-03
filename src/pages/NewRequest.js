@@ -1,17 +1,29 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { app, getFirestore, collection, addDoc, Timestamp } from "../firebase/index";
-
+import { useEffect, useState } from "react";
+import {
+  app,
+  getFirestore,
+  collection,
+  addDoc,
+  Timestamp,
+} from "../firebase/index";
+import { getDocs, query, where } from "firebase/firestore";
+import { useAuth } from "../context/AuthContext";
+import { db } from "../firebase/index";
 function NewRequest() {
+  const { currentUser, logout } = useAuth();
+  const [userData, setUserData] = useState(null);
+
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
+    lastname: "",
     desiredDate: "",
     phoneNumber: "",
     category: "",
     brand: "",
     operatingSystem: "",
     description: "",
+    department: "",
   });
 
   const handleChange = (e) => {
@@ -26,39 +38,67 @@ function NewRequest() {
 
     try {
       await addDoc(collection(db, "request"), {
-        first: formData.firstName,
-        last: formData.lastName,
+        name: formData.name,
+        lastname: formData.lastname,
         date: Timestamp.fromDate(new Date(formData.desiredDate)),
         phone: formData.phoneNumber,
         type: formData.category,
         brand: formData.brand,
         system: formData.operatingSystem,
-        description: formData.description
+        description: formData.description,
+        department: formData.department,
       });
 
       console.log("Request added to the 'request' collection in Firestore!");
     } catch (error) {
-      console.error("Error adding request to the 'request' collection in Firestore: ", error);
+      console.error(
+        "Error adding request to the 'request' collection in Firestore: ",
+        error
+      );
     }
   };
-
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userQuery = query(
+        collection(db, "Account"),
+        where("userId", "==", currentUser.uid)
+      );
+      const userSnapshot = await getDocs(userQuery);
+      const user = userSnapshot.docs[0].data();
+      console.log(user);
+      // setUserData(user);
+      setFormData({
+        ...formData,
+        name: user.name,
+        lastname: user.lastname,
+        department: user.department,
+        email: user.email,
+      });
+    };
+    fetchUserData();
+  }, [currentUser.uid]);
   return (
     <section className="bg-white white:bg-gray-900">
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-        <h2 className="mb-4 text-xl font-bold text-gray-900 white:text-white">Request New Asset</h2>
+        <h2 className="mb-4 text-xl font-bold text-gray-900 white:text-white">
+          Request New Asset
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
             {/* First Name */}
             <div className="w-full">
-              <label htmlFor="firstName" className="block mb-2 text-sm font-medium text-gray-900 white:text-white">
+              <label
+                htmlFor="name"
+                className="block mb-2 text-sm font-medium text-gray-900 white:text-white"
+              >
                 First Name
               </label>
               <input
                 type="text"
-                name="firstName"
-                id="firstName"
-                value={formData.firstName}
+                name="name"
+                id="name"
                 onChange={handleChange}
+                value={formData.name}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
                 placeholder="First Name"
                 required
@@ -66,14 +106,17 @@ function NewRequest() {
             </div>
             {/* Last Name */}
             <div className="w-full">
-              <label htmlFor="lastName" className="block mb-2 text-sm font-medium text-gray-900 white:text-white">
+              <label
+                htmlFor="lastname"
+                className="block mb-2 text-sm font-medium text-gray-900 white:text-white"
+              >
                 Last Name
               </label>
               <input
                 type="text"
-                name="lastName"
-                id="lastName"
-                value={formData.lastName}
+                name="lastname"
+                id="lastname"
+                value={formData.lastname}
                 onChange={handleChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
                 placeholder="Last Name"
@@ -82,7 +125,10 @@ function NewRequest() {
             </div>
             {/* Desired Date */}
             <div className="w-full">
-              <label htmlFor="desiredDate" className="block mb-2 text-sm font-medium text-gray-900 white:text-white">
+              <label
+                htmlFor="desiredDate"
+                className="block mb-2 text-sm font-medium text-gray-900 white:text-white"
+              >
                 Desired Date
               </label>
               <input
@@ -97,7 +143,10 @@ function NewRequest() {
             </div>
             {/* Phone Number */}
             <div className="w-full">
-              <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-gray-900 white:text-white">
+              <label
+                htmlFor="phoneNumber"
+                className="block mb-2 text-sm font-medium text-gray-900 white:text-white"
+              >
                 Phone Number
               </label>
               <input
@@ -113,8 +162,31 @@ function NewRequest() {
               />
               <small className="text-gray-500">Format: 123-456-7890</small>
             </div>
+
             <div>
-              <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 white:text-white">
+              <label
+                htmlFor="department"
+                className="block mb-2 text-sm font-medium text-gray-900 white:text-white"
+              >
+                Department
+              </label>
+              <select
+                id="department"
+                name="department"
+                value={formData.department}
+                onChange={handleChange}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
+              >
+                <option value="">Select category</option>
+                <option value="HR">HR</option>
+                <option value="FIN">FIN</option>
+              </select>
+            </div>
+            <div>
+              <label
+                htmlFor="category"
+                className="block mb-2 text-sm font-medium text-gray-900 white:text-white"
+              >
                 Asset Category
               </label>
               <select
@@ -132,7 +204,10 @@ function NewRequest() {
               </select>
             </div>
             <div className="w-full">
-              <label htmlFor="brand" className="block mb-2 text-sm font-medium text-gray-900 white:text-white">
+              <label
+                htmlFor="brand"
+                className="block mb-2 text-sm font-medium text-gray-900 white:text-white"
+              >
                 Asset Brand
               </label>
               <input
@@ -147,7 +222,10 @@ function NewRequest() {
               />
             </div>
             <div className="sm:col-span-2">
-              <label htmlFor="operatingSystem" className="block mb-2 text-sm font-medium text-gray-900 white:text-white">
+              <label
+                htmlFor="operatingSystem"
+                className="block mb-2 text-sm font-medium text-gray-900 white:text-white"
+              >
                 Operating System
               </label>
               <input
@@ -162,7 +240,10 @@ function NewRequest() {
               />
             </div>
             <div className="sm:col-span-2">
-              <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 white:text-white">
+              <label
+                htmlFor="description"
+                className="block mb-2 text-sm font-medium text-gray-900 white:text-white"
+              >
                 Description
               </label>
               <textarea

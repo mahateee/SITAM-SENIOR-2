@@ -11,6 +11,7 @@ import {
 import { db } from "../firebase/index";
 import Example from "../component/Example"; // Import the caution dialog component here
 import ScanQR from "../component/ScanQR";
+import AdminSidebar from "../component/AdminSidebar";
 
 function Assets() {
   const [open, setOpen] = React.useState(false);
@@ -64,6 +65,7 @@ function Assets() {
 
   return (
     <div data-testid="asset-table">
+      <AdminSidebar />
       {showCautionDialog && (
         <Example
           open={showCautionDialog}

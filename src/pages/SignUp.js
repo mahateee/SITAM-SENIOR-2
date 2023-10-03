@@ -4,11 +4,21 @@ import React, { useRef, useState } from "react";
 import logo from "./logo3-1(2).png";
 import { useAuth } from "../context/AuthContext";
 // import axios from "axios";
-
+import {
+  app,
+  db,
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+} from "../firebase/index";
+import { doc, setDoc } from "firebase/firestore";
 function SignUp() {
   const navigate = useNavigate();
   const { signup } = useAuth();
   const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
@@ -23,8 +33,23 @@ function SignUp() {
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
+      const { user } = await signup(
+        emailRef.current.value,
+        passwordRef.current.value
+      );
+      const userId = user.uid; // Get the user's UID from the signup response
       navigate("/");
+      try {
+        const docRef = await setDoc(doc(db, "Account", userId), {
+          name: name,
+          email: emailRef.current.value,
+          role: "user",
+          department: "",
+        });
+        console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
     } catch {
       setError("Failed to create an account");
     }
@@ -62,6 +87,24 @@ function SignUp() {
               required
               value={name}
               onChange={(event) => setName(event.target.value)}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="lastname"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Name <span className="text-red-600">*</span>
+            </label>
+            <input
+              type="text"
+              name="lastname"
+              id="lastname"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Enter your lastname"
+              required
+              value={lastname}
+              onChange={(event) => setLastname(event.target.value)}
             />
           </div>
           <div>

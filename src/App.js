@@ -15,6 +15,8 @@ import AuthProvider from "./context/AuthContext";
 import Requests from "./pages/Requests";
 import NewRequest from "./pages/NewRequest";
 import UserInfo from "./pages/UserInfo";
+import AdminAccount from "./pages/Admin/AdminAccount";
+import RequestPage from "./pages/Admin/RequestPage";
 
 const USER_TYPE = {
   PUBLIC: "Public User",
@@ -86,7 +88,23 @@ function App() {
               </AdminElement>
             }
           />
-          
+          <Route
+            path="/adminAccount"
+            element={
+              <AdminElement userRole={userRole}>
+                <AdminAccount />
+              </AdminElement>
+            }
+          />
+          <Route
+            path="/requestPage"
+            element={
+              <AdminElement userRole={userRole}>
+                <RequestPage />
+              </AdminElement>
+            }
+          />
+
           <Route
             path="/user"
             element={
@@ -113,7 +131,7 @@ function App() {
               </UserElement>
             }
           />
-          
+
           {/* <Route
             path="/Request/Assets"
             element={
