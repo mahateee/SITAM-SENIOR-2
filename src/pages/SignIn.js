@@ -12,14 +12,11 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { db } from "../firebase/index";
-import { auth, firestore } from "../firebase/index"; // Assuming you have set up Firebase and exported the `auth` and `firestore` objects
+import { auth, firestore } from "../firebase/index";
 import { useAuth } from "../context/AuthContext";
-// import axios from "axios";
 function SignIn({ setUserRole }) {
   const navigate = useNavigate();
   const { login } = useAuth();
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
   const emailRef = useRef();
   const passwordRef = useRef();
   const [error, setError] = useState(null);
@@ -62,17 +59,6 @@ function SignIn({ setUserRole }) {
     }
     setLoading(false);
   };
-  // const authenticateUser = () => {
-  //   // Perform authentication logic and obtain the user role
-  //   // This can involve making an API call, checking credentials, or accessing Redux state
-  //   // Return the user role
-  //   return "user";
-  // };
-
-  // useEffect(() => {
-  //   const userRole = authenticateUser();
-  //   setUserRole(userRole);
-  // }, [setUserRole]);
 
   return (
     <div className="flex justify-center items-center h-screen">

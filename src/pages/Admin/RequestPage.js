@@ -15,10 +15,41 @@ export default function RequestPage() {
       });
       setRequestsList(todosArray);
       console.log(requestsList);
+      setData(todosArray);
     });
     return () => unsub();
   }, []);
 
+  const [searchText, setSearchText] = useState([]);
+  const [data, setData] = useState(requestsList);
+  // exclude column list from filter
+  const excludeColumns = ["id"];
+
+  // handle change event of search input
+  const handleChange = (value) => {
+    const searchValues = value.split(" ").map((v) => v.trim());
+    setSearchText(searchValues);
+    filterData(searchValues);
+  };
+  const filterData = (values) => {
+    if (values.length === 0) {
+      setData(requestsList);
+    } else {
+      const filteredData = requestsList.filter((item) => {
+        return values.every((searchValue) => {
+          return Object.keys(item).some((key) =>
+            excludeColumns.includes(key)
+              ? false
+              : item[key]
+                  .toString()
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase())
+          );
+        });
+      });
+      setData(filteredData);
+    }
+  };
   return (
     <>
       <AdminSidebar />
@@ -52,7 +83,8 @@ export default function RequestPage() {
                       id="simple-search"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 "
                       placeholder="Search"
-                      required=""
+                      value={searchText.join(" ")}
+                      onChange={(e) => handleChange(e.target.value)}
                     />
                   </div>
                 </form>
@@ -270,8 +302,8 @@ export default function RequestPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {requestsList.length > 0
-                    ? requestsList.map((req, id) => (
+                  {data.length > 0
+                    ? data.map((req, id) => (
                         <tr key={id} class="border-b ">
                           <th
                             scope="row"

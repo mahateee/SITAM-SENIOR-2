@@ -47,21 +47,51 @@ function Assets() {
       });
       setAssetsList(todosArray);
       console.log(assetsList);
+      setData(todosArray);
     });
     return () => unsub();
   }, []);
+  const [searchText, setSearchText] = useState([]);
+  const [data, setData] = useState(assetsList);
+  // exclude column list from filter
+  const excludeColumns = ["id"];
 
-  //Create state for the search query
-  const [searchQuery, setSearchQuery] = useState("");
+  // handle change event of search input
+  const handleChange = (value) => {
+    const searchValues = value.split(" ").map((v) => v.trim());
+    setSearchText(searchValues);
+    filterData(searchValues);
+  };
+  const filterData = (values) => {
+    if (values.length === 0) {
+      setData(assetsList);
+    } else {
+      const filteredData = assetsList.filter((item) => {
+        return values.every((searchValue) => {
+          return Object.keys(item).some((key) =>
+            excludeColumns.includes(key)
+              ? false
+              : item[key]
+                  .toString()
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase())
+          );
+        });
+      });
+      setData(filteredData);
+    }
+  };
+  // //Create state for the search query
+  // const [searchQuery, setSearchQuery] = useState("");
 
-  //Modify rendering logic to filter assets by Asset ID, name, category, or status
-  const filteredAssets = assetsList.filter(
-    (asset) =>
-      asset.AssetID.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      asset.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      asset.Category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      asset.Status.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // //Modify rendering logic to filter assets by Asset ID, name, category, or status
+  // const filteredAssets = assetsList.filter(
+  //   (asset) =>
+  //     asset.AssetID.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     asset.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     asset.Category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     asset.Status.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
 
   return (
     <div data-testid="asset-table">
@@ -113,9 +143,11 @@ function Assets() {
                       id="simple-search"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 "
                       placeholder="Search by Asset ID, Name, Category, or Status"
-                      required=""
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      // required=""
+                      value={searchText.join(" ")}
+                      onChange={(e) => handleChange(e.target.value)}
+                      // value={searchQuery}
+                      // onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
                 </form>
@@ -365,8 +397,8 @@ function Assets() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredAssets.length > 0 ? (
-                    filteredAssets.map((asset, i) => (
+                  {data.length > 0 ? (
+                    data.map((asset, i) => (
                       <tr className="border-b" data-testid="asset" key={i}>
                         <td className="px-4 py-3">{i + 1}</td>
 
