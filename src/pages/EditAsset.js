@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useNavigate} from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { doc, updateDoc, getDoc } from "../firebase/index";
 import { db } from "../firebase/index";
+import { collection, onSnapshot, query } from "firebase/firestore";
 
 export default function EditAsset() {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const [showEmployeeField, setShowEmployeeField] = useState(false);
   const [asset, setAsset] = useState({
     name: "",
     AssetID: "",
@@ -18,6 +19,7 @@ export default function EditAsset() {
     description: "",
     Status: "",
     date: "",
+    employeeId: "",
   });
 
   const [validation, setValidation] = useState({
@@ -29,7 +31,9 @@ export default function EditAsset() {
   });
 
   const handleChange = (event) => {
+    const selectedStatus = event.target.value;
     setAsset({ ...asset, [event.target.name]: event.target.value });
+    setShowEmployeeField(selectedStatus === "InUse");
   };
 
   const checkValidation = () => {
@@ -63,7 +67,8 @@ export default function EditAsset() {
       errors.SerialNumber = "Asset Serial Number is required.";
       isValid = false;
     } else if (!asset.SerialNumber.match(/^[A-Za-z0-9-\s]*$/)) {
-      errors.SerialNumber = "Please enter only alphabets, numbers, and/or hyphens.";
+      errors.SerialNumber =
+        "Please enter only alphabets, numbers, and/or hyphens.";
       isValid = false;
     } else {
       errors.SerialNumber = "";
@@ -79,7 +84,6 @@ export default function EditAsset() {
     } else {
       errors.Model = "";
     }
-    
 
     // Assets OS validation
     if (!asset.os.trim()) {
@@ -90,7 +94,7 @@ export default function EditAsset() {
       isValid = false;
     } else {
       errors.os = "";
-    }  
+    }
 
     // Assets Brand validation
     if (!asset.Brand.trim()) {
@@ -118,6 +122,7 @@ export default function EditAsset() {
           const assetData = assetDoc.data();
           // Set the asset state with the fetched data
           setAsset(assetData);
+          setShowEmployeeField(assetData.Status === "InUse");
         } else {
           // Handle the case where the asset doesn't exist
           console.log("Asset not found");
@@ -130,7 +135,22 @@ export default function EditAsset() {
     // Call the fetchAssetData function
     fetchAssetData();
   }, [id]); // Trigger the fetch when the id parameter changes
+  const [employees, setEmployees] = useState([]);
 
+  // const [assetsList, setAssetsList] = React.useState([]);
+  React.useEffect(() => {
+    const q = query(collection(db, "Account"));
+    const unsub = onSnapshot(q, (querySnapshot) => {
+      let todosArray = [];
+      querySnapshot.forEach((doc) => {
+        todosArray.push({ ...doc.data(), id: doc.id });
+      });
+      setEmployees(todosArray);
+      console.log(employees);
+      // setData(todosArray);
+    });
+    return () => unsub();
+  }, []);
   const handleSubmit = (event) => {
     event.preventDefault();
     const isValid = checkValidation();
@@ -147,6 +167,7 @@ export default function EditAsset() {
         description: asset.description,
         Status: asset.Status,
         date: asset.date,
+        employeeId: asset.employeeId,
       })
         .then(() => {
           console.log("Document successfully updated!");
@@ -161,7 +182,9 @@ export default function EditAsset() {
   return (
     <section className="bg-white">
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-        <h2 className="mb-4 text-xl font-bold text-gray-900">Edit Asset Information</h2>
+        <h2 className="mb-4 text-xl font-bold text-gray-900">
+          Edit Asset Information
+        </h2>
 
         <form onSubmit={handleSubmit} className="mb-4 px-10">
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
@@ -202,7 +225,9 @@ export default function EditAsset() {
               />
               {/* validate */}
               {validation.AssetID && (
-                <p className="mt-2 text-sm text-red-600">{validation.AssetID}</p>
+                <p className="mt-2 text-sm text-red-600">
+                  {validation.AssetID}
+                </p>
               )}
             </div>
             <div className="w-full">
@@ -240,9 +265,11 @@ export default function EditAsset() {
                 value={asset.SerialNumber}
                 onChange={handleChange}
               />
-               {/* validate */}
-               {validation.SerialNumber && (
-                <p className="mt-2 text-sm text-red-600">{validation.SerialNumber}</p>
+              {/* validate */}
+              {validation.SerialNumber && (
+                <p className="mt-2 text-sm text-red-600">
+                  {validation.SerialNumber}
+                </p>
               )}
             </div>
             <div className="w-full">
@@ -323,7 +350,7 @@ export default function EditAsset() {
                 <option value="Phone">Phone</option>
               </select>
             </div>
-            <div className="w-full">
+            <div className="sm:col-span-2">
               <label
                 className="block text-gray-700 font-bold mb-2"
                 htmlFor="os"
@@ -343,7 +370,7 @@ export default function EditAsset() {
                 <p className="mt-2 text-sm text-red-600">{validation.os}</p>
               )}
             </div>
-            <div className="w-full">
+            <div className="sm:col-span-2">
               <label
                 className="block text-gray-700 font-bold mb-2"
                 htmlFor="description"
@@ -360,11 +387,39 @@ export default function EditAsset() {
                 className="block p-2.5 border w-full h-full focus:ring-primary-500 focus:border-primary-500 text-gray-900 text-sm rounded-lg"
               ></textarea>
             </div>
+
+            {showEmployeeField && (
+              <div className="w-full  my-2.5">
+                <label
+                  className="block text-gray-700 font-bold mb-2"
+                  htmlFor="employee"
+                >
+                  Employee:
+                </label>
+                <select
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                  value={asset.employeeId}
+                  onChange={(e) =>
+                    setAsset({ ...asset, employeeId: e.target.value })
+                  }
+                >
+                  <option value="">Select Employee</option>
+                  {/* <option value="AM7M4QfDBfae37XMWKvdGvCepbX2">
+                    George Ahmed
+                  </option> */}
+                  {employees.map((employee) => (
+                    <option key={employee.id} value={employee.id}>
+                      {employee.name}
+                    </option>
+                  ))}
+                  {/* Other employee options */}
+                </select>
+              </div>
+            )}
           </div>
 
           <div className="mt-6">
             <button
-              
               className="bg-teal-700 hover:bg-teal-900 text-white font-bold my-5 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >

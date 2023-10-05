@@ -7,7 +7,7 @@ import QRcode from "qrcode.react";
 function ShowPage() {
   const { id } = useParams();
   const [asset, setAsset] = useState({});
-
+  const [employee, setEmployee] = useState({});
   useEffect(() => {
     const fetchAsset = async () => {
       try {
@@ -15,6 +15,13 @@ function ShowPage() {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setAsset(docSnap.data());
+          const empRef = doc(db, "Account", asset.employeeId);
+          const empDoc = await getDoc(empRef);
+          if (empDoc.exists()) {
+            setEmployee(empDoc.data());
+          } else {
+            console.log("No such Account!");
+          }
         } else {
           console.log("No such asset!");
         }
@@ -47,7 +54,7 @@ function ShowPage() {
                 Maintenance History
               </a>
             </div>
-            <div className="flex border-t border-gray-200 py-2">
+            <div className="flex py-2">
               <span className="text-gray-500">Asset ID</span>
               <span className="ml-auto text-gray-900">{asset.AssetID}</span>
             </div>
@@ -102,6 +109,25 @@ function ShowPage() {
             <div className="flex border-t border-gray-200 py-2">
               <span className="text-gray-500">Description</span>
               <span className="ml-auto text-gray-900">{asset.description}</span>
+            </div>
+            <div className="flex border-b-4 border-gray-200 pt-4 pb-2">
+              <span className="text-teal-700 font-medium">Employee Info</span>
+            </div>
+            <div className="flex border-t border-gray-200 py-2">
+              <span className="text-gray-500 pl-4">Employee</span>
+              <span className="ml-auto text-gray-900">
+                {employee.name + " " + employee.lastname}
+              </span>
+            </div>
+            <div className="flex border-t border-gray-200 py-2">
+              <span className="text-gray-500 pl-4">Department</span>
+              <span className="ml-auto text-gray-900">
+                {employee.department}
+              </span>
+            </div>
+            <div className="flex border-t border-gray-200 py-2">
+              <span className="text-gray-500 pl-4">Email</span>
+              <span className="ml-auto text-gray-900">{employee.email}</span>
             </div>
             {/* Cancel Button */}
             <div className="flex justify-center mt-4">

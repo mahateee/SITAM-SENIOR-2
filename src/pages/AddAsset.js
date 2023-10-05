@@ -9,10 +9,11 @@ import {
   addDoc,
   getDocs,
 } from "../firebase/index";
+import { onSnapshot, query } from "firebase/firestore";
 
 export default function AddAsset() {
   const navigate = useNavigate();
-
+  const [showEmployeeField, setShowEmployeeField] = useState(false);
   const [asset, setAsset] = useState({
     id: "",
     name: "",
@@ -25,6 +26,7 @@ export default function AddAsset() {
     description: "",
     Status: "",
     date: "",
+    employeeId: "",
   });
   const [validation, setValidation] = useState({
     id: "",
@@ -38,6 +40,7 @@ export default function AddAsset() {
     description: "",
     Status: "",
     date: "",
+    employeeId: "",
   });
 
   const checkValidation = () => {
@@ -116,17 +119,30 @@ export default function AddAsset() {
 
   // const [assets, setAssets] = useState([]);
   const handleChange = (event) => {
+    const selectedStatus = event.target.value;
     setAsset({ ...asset, [event.target.name]: event.target.value });
-  };
-
-  const handleSubmit = () => {
-    console.log("submit");
+    if (selectedStatus === "InUse") {
+      setShowEmployeeField(true);
+    }
   };
 
   useEffect(() => {
     checkValidation();
   }, [asset]);
-
+  const [employees, setEmployees] = useState([]);
+  useEffect(() => {
+    const q = query(collection(db, "Account"));
+    const unsub = onSnapshot(q, (querySnapshot) => {
+      let todosArray = [];
+      querySnapshot.forEach((doc) => {
+        todosArray.push({ ...doc.data(), id: doc.id });
+      });
+      setEmployees(todosArray);
+      console.log(employees);
+      // setData(todosArray);
+    });
+    return () => unsub();
+  }, []);
   const addAssetItem = async (event) => {
     event.preventDefault();
     const isValid = checkValidation();
@@ -143,6 +159,7 @@ export default function AddAsset() {
           description: asset.description,
           Status: asset.Status,
           date: asset.date,
+          employeeId: asset.employeeId,
         });
         console.log("Document written with ID: ", docRef.id);
         navigate("/Asset");
@@ -381,6 +398,34 @@ export default function AddAsset() {
                   required
                 ></textarea>
               </div>
+              {showEmployeeField && (
+                <div className="w-full  my-2.5">
+                  <label
+                    className="block text-gray-700 font-bold mb-2"
+                    htmlFor="employee"
+                  >
+                    Employee:
+                  </label>
+                  <select
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                    value={asset.employeeId}
+                    onChange={(e) =>
+                      setAsset({ ...asset, employeeId: e.target.value })
+                    }
+                  >
+                    <option value="">Select Employee</option>
+                    {/* <option value="AM7M4QfDBfae37XMWKvdGvCepbX2">
+                    George Ahmed
+                  </option> */}
+                    {employees.map((employee) => (
+                      <option key={employee.id} value={employee.id}>
+                        {employee.name}
+                      </option>
+                    ))}
+                    {/* Other employee options */}
+                  </select>
+                </div>
+              )}
             </div>
             <div className="flex items-center justify-between">
               <button
