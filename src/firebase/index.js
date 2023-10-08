@@ -5,7 +5,6 @@ import { getAnalytics } from "firebase/analytics";
 import { collection, addDoc, getDoc, updateDoc } from "firebase/firestore";
 import { getFirestore, Timestamp } from "firebase/firestore"; // Import Timestamp from firestore
 import { doc, deleteDoc } from "firebase/firestore";
-
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
