@@ -15,48 +15,39 @@ import { Link } from "react-router-dom";
 const PreviousRequests = () => {
   const [assets, setAssets] = useState([]);
   const { currentUser } = useAuth();
-
-  useEffect(() => {
-    const fetchAssets = async () => {
-      try {
-        if (!currentUser || !currentUser.uid) {
-          console.error("Current user or user ID is undefined.");
-          return;
+  
+    useEffect(() => {
+      const fetchRequests = async () => {
+        try {
+          if (!currentUser || !currentUser.uid) {
+            console.error("Current user or user ID is undefined.");
+            return;
+          }
+  
+          console.log("Fetching requests for user ID:", currentUser.uid);
+  
+          // Fetch requests
+          const requestsQuery = query(
+            collection(db, "request"),
+            where("userid", "==", currentUser.uid)
+          );
+  
+          const requestsSnapshot = await getDocs(requestsQuery);
+          const requestsData = requestsSnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+  
+          console.log("Fetched requests:", requestsData);
+  
+          setAssets(requestsData);
+        } catch (error) {
+          console.error("Error fetching requests:", error);
         }
-
-        console.log("Fetching assets for user ID:", currentUser.uid);
-
-        // Fetch assets
-        const assetsQuery = query(
-          collection(db, "request"),
-          where("userid", "==", currentUser.uid)
-        );
-
-        const assetsSnapshot = await getDocs(assetsQuery);
-        const assetsData = assetsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        console.log("Fetched request:", assetsData);
-
-        // Fetch employer name from the Account table
-        const accountDocRef = doc(db, "Account", currentUser.uid);
-        const accountDocSnapshot = await getDoc(accountDocRef);
-        const employerName = accountDocSnapshot.exists()
-          ? accountDocSnapshot.data().employerName
-          : "Unknown Employer";
-
-        console.log("Employer Name:", employerName);
-
-        setAssets(assetsData.map((asset) => ({ ...asset, employerName })));
-      } catch (error) {
-        console.error("Error fetching assets:", error);
-      }
-    };
-
-    fetchAssets();
-  }, [currentUser]);
+      };
+  
+      fetchRequests();
+    }, [currentUser]);
 
   return (
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
@@ -152,9 +143,34 @@ const PreviousRequests = () => {
                       </td>
 
                       <td class="p-4 whitespace-nowrap">
-                        <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md  border border-green-100 ">
-                          Completed
-                        </span>
+                      <span className="ml-auto text-gray-900">
+                      {(!asset.status || asset.status === "Waiting") ? (
+    <span className="bg-violet-100 text-violet-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+      Waiting
+    </span>
+  ) : null}
+  {(!asset.status || asset.status === "Pending") ? (
+    <span className="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+      Pending
+    </span>
+  ) : null}
+  {asset.status === "Completed" ? (
+    <span className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+      Completed
+    </span>
+  ) : null}
+  {asset.status === "Canceled" ? (
+    <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+      Canceled
+    </span>
+  ) : null}
+  {asset.status === "In Progress" ? (
+    <span className="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+      In Progress
+    </span>
+  ) : null}
+</span>
+
                       </td>
                     </tr>
                   ))}
@@ -166,6 +182,7 @@ const PreviousRequests = () => {
       </div>
     </div>
   );
+
 };
 
 export default PreviousRequests;

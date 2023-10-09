@@ -37,7 +37,7 @@ const TaskManager = () => {
     <section className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm  sm:p-6">
       <div className="flex justify-center px-6 py-8 mx-auto xs:h-screen overflow-y-auto ">
         <div className="">
-          <div className="flex justify-center cursor-default bg-gray-200 rounded-3xl px-4 py-1 color-gray hover:scale-110 transition-all">
+          <div className="flex justify-center cursor-default bg-gray-200 rounded-3xl px-4 py-1 color-gray ">
             <div className="w-full p-3">
               <h1 className="text-3xl text-black-600 font-black">
                 Task Manager
@@ -67,7 +67,7 @@ const TaskManager = () => {
             <input
               type="text"
               id="newTask"
-              className="block w-full pl-10 p-2  rounded-full bg-gray-100 text-black"
+              className="block w-full pl-10 p-2  bg-gray-100 text-black"
               placeholder="    Enter to Add new item"
               value={newTask}
               onChange={(e) => setNewTask(e.target.value)}

@@ -57,6 +57,8 @@ function NewRequest() {
         system: formData.operatingSystem,
         description: formData.description,
         department: formData.department,
+        status: "Waiting", // Set default status to "Waiting"
+        approved: false,   // Set default approved status to false
       };
       await addDoc(collection(db, "request"), newRequest);
       // Update the user's requests array with the new request
