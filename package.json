@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "date-fns": "^2.30.0",
     "firebase": "^10.3.1",
     "modern-react-qr-reader": "^1.0.12",
     "qrcode.react": "^3.1.0",

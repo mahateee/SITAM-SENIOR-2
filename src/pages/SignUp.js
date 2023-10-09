@@ -38,10 +38,12 @@ function SignUp() {
         passwordRef.current.value
       );
       const userId = user.uid; // Get the user's UID from the signup response
+      console.log(userId);
       navigate("/");
       try {
         const docRef = await setDoc(doc(db, "Account", userId), {
           name: name,
+          lastname: lastname,
           email: emailRef.current.value,
           role: "user",
           department: "",

@@ -7,13 +7,21 @@ import {
   addDoc,
   Timestamp,
 } from "../firebase/index";
-import { getDocs, query, where } from "firebase/firestore";
+import {
+  arrayUnion,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase/index";
 function NewRequest() {
   const { currentUser, logout } = useAuth();
   const [userData, setUserData] = useState(null);
-
+  const userRef = doc(db, "Account", currentUser.uid);
   const [formData, setFormData] = useState({
     name: "",
     lastname: "",
@@ -37,7 +45,9 @@ function NewRequest() {
     const db = getFirestore(app);
 
     try {
-      await addDoc(collection(db, "request"), {
+      const userRef = doc(db, "Account", currentUser.uid);
+      const newRequest = {
+        userid: currentUser.uid,
         name: formData.name,
         lastname: formData.lastname,
         date: Timestamp.fromDate(new Date(formData.desiredDate)),
@@ -47,7 +57,9 @@ function NewRequest() {
         system: formData.operatingSystem,
         description: formData.description,
         department: formData.department,
-      });
+      };
+      await addDoc(collection(db, "request"), newRequest);
+      // Update the user's requests array with the new request
 
       console.log("Request added to the 'request' collection in Firestore!");
     } catch (error) {
@@ -57,23 +69,27 @@ function NewRequest() {
       );
     }
   };
+
   useEffect(() => {
     const fetchUserData = async () => {
-      const userQuery = query(
-        collection(db, "Account"),
-        where("userId", "==", currentUser.uid)
-      );
-      const userSnapshot = await getDocs(userQuery);
-      const user = userSnapshot.docs[0].data();
-      console.log(user);
-      // setUserData(user);
-      setFormData({
-        ...formData,
-        name: user.name,
-        lastname: user.lastname,
-        department: user.department,
-        email: user.email,
-      });
+      try {
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          console.log(userData);
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            name: userData.name,
+            lastname: userData.lastname,
+            department: userData.department,
+            email: userData.email,
+          }));
+        } else {
+          console.log("User document does not exist");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
     };
     fetchUserData();
   }, [currentUser.uid]);

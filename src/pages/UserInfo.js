@@ -35,50 +35,49 @@ export default function UserInfo() {
     setOpen(!open);
   };
   const { currentUser, logout } = useAuth();
-  // const [userData, setUserData] = useState(null);
+  const userRef = doc(db, "Account", currentUser.uid);
+
   useEffect(() => {
     const fetchUserData = async () => {
-      const userQuery = query(
-        collection(db, "Account"),
-        where("userId", "==", currentUser.uid)
-      );
-      const userSnapshot = await getDocs(userQuery);
-      const user = userSnapshot.docs[0].data();
-      console.log(user);
-      // setUserData(user);
-      setFormData({
-        ...formData,
-        name: user.name,
-        lastname: user.lastname,
-        department: user.department,
-        email: user.email,
-      });
+      try {
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          console.log(userData);
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            name: userData.name,
+            lastname: userData.lastname,
+            department: userData.department,
+            email: userData.email,
+          }));
+        } else {
+          console.log("User document does not exist");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
     };
     fetchUserData();
   }, [currentUser.uid]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const userQuery = query(
-      collection(db, "Account"),
-      where("userId", "==", currentUser.uid)
-    );
-    const userSnapshot = await getDocs(userQuery);
-    const userDocRef = doc(db, "Account", userSnapshot.docs[0].id);
-
-    updateDoc(userDocRef, {
-      name: formData.name,
-      lastname: formData.lastname,
-      department: formData.department,
-      email: formData.email,
-    })
-      .then(() => {
+    try {
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        await updateDoc(userRef, {
+          name: formData.name,
+          lastname: formData.lastname,
+          department: formData.department,
+          email: formData.email,
+        });
         console.log("Document successfully updated!");
-      })
-      .catch((error) => {
-        console.error("Error updating document: ", error);
-      });
+      } else {
+        console.log("User document does not exist");
+      }
+    } catch (error) {
+      console.error("Error updating document:", error);
+    }
   };
   return (
     <div>
