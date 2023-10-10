@@ -7,7 +7,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase/index";
-import AdminNewRequestsTable from "./AdminApproval";
+
 export default function AdminRequest() {
   const [requestsList, setRequestsList] = useState([]);
   const [searchText, setSearchText] = useState([]);
@@ -38,14 +38,15 @@ export default function AdminRequest() {
     } else {
       const filteredData = requestsList.filter((item) => {
         return values.every((searchValue) => {
-          return Object.keys(item).some((key) =>
-            key.toLowerCase().includes("status")
-              ? false // exclude status from search
-              : Object.keys(item[key])
-                  .toString()
-                  .toLowerCase()
-                  .includes(searchValue.toLowerCase())
-          );
+          return Object.entries(item).some(([key, value]) => {
+            if (key.toLowerCase().includes("status")) {
+              return false; // exclude status from search
+            }
+            if (value && typeof value === "string") {
+              return value.toLowerCase().includes(searchValue.toLowerCase());
+            }
+            return false;
+          });
         });
       });
       setData(filteredData);
