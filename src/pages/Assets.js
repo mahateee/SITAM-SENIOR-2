@@ -420,6 +420,11 @@ function Assets() {
                               Disposed
                             </span>
                           ) : null}
+                          {asset.Status === "Return" ? (
+                            <span className="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                              Return
+                            </span>
+                          ) : null}
                         </td>
                         <td className="px-4 py-3">{asset.SerialNumber}</td>
                         <td className="px-4 py-3">{asset.description}</td>

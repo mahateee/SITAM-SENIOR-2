@@ -6,6 +6,7 @@ import {
   getDocs,
   doc,
   getDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase/index";
 import { useAuth } from "../context/AuthContext"; // Update the path as needed
@@ -56,6 +57,26 @@ const AssetsTable = () => {
 
     fetchAssets();
   }, [currentUser]);
+  const updateAssetStatus = async (assetKey) => {
+    const assetDocRef = doc(db, "asset", assetKey);
+    await updateDoc(assetDocRef, { Status: "Return" });
+  };
+
+  const handleReturn = async (assetKey, index) => {
+    try {
+      // Update the status in Firestore
+      await updateAssetStatus(assetKey);
+
+      // Create a copy of the assets array
+      const updatedAssets = [...assets];
+      // Update the status of the asset to "Return"
+      updatedAssets[index].Status = "Return";
+      // Update the state with the updated assets
+      setAssets(updatedAssets);
+    } catch (error) {
+      console.log("Error updating asset status:", error);
+    }
+  };
 
   return (
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm  sm:p-6">
@@ -228,6 +249,7 @@ const AssetsTable = () => {
                       </td>
                       <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap ">
                         <button
+                          onClick={() => handleReturn(asset.id, id)}
                           type="button"
                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none "
                         >

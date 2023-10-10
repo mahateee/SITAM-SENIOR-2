@@ -248,6 +248,7 @@ export default function EditAsset() {
                 <option value="Available">Available</option>
                 <option value="InUse">In Use</option>
                 <option value="Disposed">Disposed</option>
+                <option value="Return">request to return</option>
               </select>
             </div>
             <div className="w-full">
