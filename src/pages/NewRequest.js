@@ -1,5 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Alerts from "../component/Alerts"
+
 import {
   app,
   getFirestore,
@@ -18,6 +20,7 @@ import {
 } from "firebase/firestore";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase/index";
+
 function NewRequest() {
   const { currentUser, logout } = useAuth();
   const [userData, setUserData] = useState(null);
@@ -38,6 +41,8 @@ function NewRequest() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,6 +69,12 @@ function NewRequest() {
       // Update the user's requests array with the new request
 
       console.log("Request added to the 'request' collection in Firestore!");
+
+      // Set showSuccessAlert to true and navigate to Request page
+      navigate('/Request', { state: { showSuccessAlert: true } });
+      // navigate("/Request");
+      // Set showSuccessAlert to true to display the alert
+      // setShowSuccessAlert(true);
     } catch (error) {
       console.error(
         "Error adding request to the 'request' collection in Firestore: ",
