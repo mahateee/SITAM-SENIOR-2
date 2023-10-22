@@ -5,6 +5,7 @@ import {
   query,
   doc,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "../../firebase/index";
 
@@ -68,6 +69,45 @@ export default function AdminMaintenance() {
       console.error("Error updating request status:", error);
     }
   };
+  const updateMaintancAssign = async (requestId, newStatus) => {
+    try {
+      const requestRef = doc(db, "Maintainance_Requests", requestId);
+      await updateDoc(requestRef, { assign: newStatus });
+      // Update the local state to reflect the change
+      setMaintainance((prevRequests) =>
+        prevRequests.map((request) =>
+          request.id === requestId ? { ...request, assign: newStatus } : request
+        )
+      );
+      console.log(`Request ${requestId} status updated to ${newStatus}`);
+    } catch (error) {
+      console.error("Error updating request status:", error);
+    }
+  };
+  const [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const q = query(
+          collection(db, "Account"),
+          where("role", "==", "admin")
+        );
+        const unsub = onSnapshot(q, (querySnapshot) => {
+          const adminsArray = [];
+          querySnapshot.forEach((doc) => {
+            adminsArray.push({ ...doc.data(), id: doc.id });
+          });
+          setEmployees(adminsArray);
+        });
+        return () => unsub();
+      } catch (error) {
+        console.error("Error fetching admin employees:", error);
+      }
+    };
+
+    fetchEmployees();
+  }, []);
 
   return (
     <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
@@ -117,72 +157,93 @@ export default function AdminMaintenance() {
         <div className="overflow-x-auto rounded-lg max-h-96">
           <div className="inline-block min-w-full align-middle">
             <div className="overflow-hidden shadow sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
-  <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-    <tr>
-      <th scope="col" className="px-4 py-3">
-        Requester name
-      </th>
-      <th scope="col" className="px-4 py-3">
-        Maintainance Type
-      </th>
-      <th scope="col" className="px-4 py-3">
-        Category
-      </th>
-      <th scope="col" className="px-4 py-3">
-        remarks
-      </th>
-      <th scope="col" className="px-4 py-3">
-        Asset ID
-      </th>
-      <th scope="col" className="px-4 py-3">
-      urgency
-      </th>
-      <th scope="col" className="px-4 py-3">
-        Assign
-      </th>
-      <th scope="col" className="px-4 py-3">
-        <span className="sr-only">Actions</span>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    {data.length > 0 ? (
-      data.map((main, id) => (
-        <tr key={id} className="border-b">
-          <th
-            scope="row"
-            className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap"
-          >
-            {main.user}
-          </th>
-          <td className="px-4 py-3">{main.maintenanceType}</td>
-          <td className="px-4 py-3">{main.category}</td>
-          <td className="px-4 py-3">{main.remarks}</td>
-          <td className="px-4 py-3">{main.assetID}</td>
-          <td className="px-4 py-3">{main.urgency}</td>
-          <td className="px-4 py-3">
-            <select
-              value={main.assign || "None"}
-              onChange={(e) =>
-                updateMaintancStatus(main.id, e.target.value)
-              }
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-            >
-              <option value="None">None</option>
-              <option value="User">User</option>
-              <option value="dana">dana</option>
-             
-            </select>
-          </td>
-          <td className="px-4 py-3 flex items-center justify-end">
-          </td>
-        </tr>
-      ))
-    ) : null}
-  </tbody>
-</table>
-
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-4 py-3">
+                      Requester name
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Maintainance Type
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Category
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      remarks
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Asset ID
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      urgency
+                    </th>
+                    <th scope="col" class="px-4 py-3">
+                      Status
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Assign
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      <span className="sr-only">Actions</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.length > 0
+                    ? data.map((main, id) => (
+                        <tr key={id} className="border-b">
+                          <th
+                            scope="row"
+                            className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap"
+                          >
+                            {main.user}
+                          </th>
+                          <td className="px-4 py-3">{main.maintenanceType}</td>
+                          <td className="px-4 py-3">{main.category}</td>
+                          <td className="px-4 py-3">{main.remarks}</td>
+                          <td className="px-4 py-3">{main.assetID}</td>
+                          <td className="px-4 py-3">{main.urgency}</td>
+                          <td className="px-4 py-3">
+                            <select
+                              value={main.status || "Waiting"}
+                              onChange={(e) =>
+                                updateMaintancStatus(main.id, e.target.value)
+                              }
+                              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                            >
+                              <option value="Waiting">Waiting</option>
+                              <option value="Pending">Pending</option>
+                              <option value="In Progress">In Progress</option>
+                              <option value="Completed">Completed</option>
+                              <option value="Canceled">Canceled</option>
+                            </select>
+                          </td>
+                          <td className="px-4 py-3">
+                            <select
+                              value={main.assign || "None"}
+                              onChange={(e) =>
+                                updateMaintancAssign(main.id, e.target.value)
+                              }
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                            >
+                              <option value="None">None</option>
+                              {employees.map((employee) => (
+                                <option key={employee.id} value={employee.id}>
+                                  {employee.name}
+                                </option>
+                              ))}
+                              {/* <option value="None">None</option>
+                              <option value="User">User</option>
+                              <option value="dana">dana</option> */}
+                            </select>
+                          </td>
+                          <td className="px-4 py-3 flex items-center justify-end"></td>
+                        </tr>
+                      ))
+                    : null}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

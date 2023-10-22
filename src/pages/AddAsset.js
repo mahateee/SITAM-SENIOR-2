@@ -241,6 +241,8 @@ export default function AddAsset() {
                   <option value="Available">Available</option>
                   <option value="InUse">In Use</option>
                   <option value="Disposed">Disposed</option>
+                  <option value="Return">request to return</option>
+                  <option value={"Maintenance"}>Maintenance</option>
                 </select>
               </div>
               <div className="w-full">
