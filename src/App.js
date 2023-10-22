@@ -18,7 +18,8 @@ import UserInfo from "./pages/UserInfo";
 import AdminAccount from "./pages/Admin/AdminAccount";
 import RequestPage from "./pages/Admin/RequestPage";
 import Maintenance from "./pages/Maintenance";
-import MaintenancePage from "./pages/Admin/MaintenacePage"; 
+import MaintenancePage from "./pages/Admin/MaintenacePage";
+import EmployeeList from "./pages/Admin/EmployeeList";
 
 const USER_TYPE = {
   PUBLIC: "Public User",
@@ -106,7 +107,15 @@ function App() {
               </AdminElement>
             }
           />
-             <Route
+          <Route
+            path="/employeelist"
+            element={
+              <AdminElement userRole={userRole}>
+                <EmployeeList />
+              </AdminElement>
+            }
+          />
+          <Route
             path="/maintenancePage"
             element={
               <AdminElement userRole={userRole}>
