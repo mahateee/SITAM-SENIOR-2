@@ -165,6 +165,7 @@ const AdminSidebar = () => {
                 </li>
 
                 <li>
+                  <Link to="/maintenancePage">
                   <a
                     href="#"
                     class="flex items-center p-2 rounded-lg hover:bg-teal-700"
@@ -184,7 +185,9 @@ const AdminSidebar = () => {
                     </svg>
                     <span class="ml-3">Maintenance</span>
                   </a>
+                  </Link>
                 </li>
+              
               </ul>
 
               {/* Additional sections in the sidebar */}

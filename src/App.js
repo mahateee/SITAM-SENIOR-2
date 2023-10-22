@@ -17,6 +17,8 @@ import NewRequest from "./pages/NewRequest";
 import UserInfo from "./pages/UserInfo";
 import AdminAccount from "./pages/Admin/AdminAccount";
 import RequestPage from "./pages/Admin/RequestPage";
+import Maintenance from "./pages/Maintenance";
+import MaintenancePage from "./pages/Admin/MaintenacePage"; 
 
 const USER_TYPE = {
   PUBLIC: "Public User",
@@ -104,6 +106,14 @@ function App() {
               </AdminElement>
             }
           />
+             <Route
+            path="/maintenancePage"
+            element={
+              <AdminElement userRole={userRole}>
+                <MaintenancePage />
+              </AdminElement>
+            }
+          />
 
           <Route
             path="/user"
@@ -128,6 +138,14 @@ function App() {
             element={
               <UserElement userRole={userRole}>
                 <NewRequest />
+              </UserElement>
+            }
+          />
+          <Route
+            path="/Request/Maintenance/:id"
+            element={
+              <UserElement userRole={userRole}>
+                <Maintenance />
               </UserElement>
             }
           />

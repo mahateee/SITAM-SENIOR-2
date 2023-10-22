@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   collection,
   query,
@@ -83,9 +84,9 @@ const AssetsTable = () => {
       {/* <!-- Card header --> */}
       <div class="items-center justify-between lg:flex">
         <div class="mb-4 lg:mb-0">
-          <h3 class="mb-2 text-xl font-bold text-gray-900">Assets</h3>
+          <h3 class="mb-2 text-xl font-bold text-gray-900">Current Assets </h3>
           <span class="text-base font-normal text-gray-500 ">
-            This is a list of Assets
+            a list of Current Assets
           </span>
         </div>
         <div class="items-center sm:flex">
@@ -202,7 +203,7 @@ const AssetsTable = () => {
                       scope="col"
                       class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase "
                     >
-                      Transaction
+                      Assets
                     </th>
                     <th
                       scope="col"
@@ -235,7 +236,7 @@ const AssetsTable = () => {
                   {assets.map((asset, id) => (
                     <tr key={id}>
                       <td class="p-4 text-sm font-normal text-gray-900 whitespace-nowrap ">
-                        Request a {asset.name}
+                       {asset.name}
                       </td>
                       <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap ">
                         {asset.Category}
@@ -255,12 +256,14 @@ const AssetsTable = () => {
                         >
                           Return
                         </button>
-                        <button
-                          type="button"
-                          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none "
-                        >
-                          Maintenance
-                        </button>
+                        <Link
+  to={`/Request/Maintenance/${asset.id}`}
+  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
+>
+  Maintenance
+</Link>
+
+
                       </td>
                     </tr>
                   ))}
@@ -271,44 +274,7 @@ const AssetsTable = () => {
         </div>
       </div>
     </div>
-    // <div className="relative overflow-x-auto">
-    //   <div className="flex flex-col items-center justify-center py-8">
-    //   <table className="text-sm text-left text-gray-500">
-    //       <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-    //         <tr>
-    //           <th scope="col" className="px-6 py-3">
-    //             Current Asset
-    //           </th>
-    //           <th scope="col" className="px-6 py-3">
-    //             Operating system
-    //           </th>
-    //           <th scope="col" className="px-6 py-3">
-    //             Action
-    //           </th>
-    //           {/* Add more headers as needed */}
-    //         </tr>
-    //       </thead>
-    //       <tbody>
-    //         {assets.map((asset) => (
-    //           <tr key={asset.id} className="bg-white border-b">
-    //             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-    //               {asset.name}
-    //             </td>
-    //             <td className="px-6 py-4">{asset.os}</td>
-    //             <td className="px-6 py-4">
-    //               <button   className="bg-white-500 hover:bg-gray-50 text-gray-700 font-bold py-1 px-2 mr-2 border border-gray-500 rounded">
-    //                 Request Return
-    //               </button>
-    //               <button className="bg-white-500 hover:bg-gray-50 text-gray-700 font-bold py-1 px-2 border border-gray-500 rounded">
-    //                 Request Maintenance
-    //               </button>
-    //             </td>
-    //           </tr>
-    //         ))}
-    //       </tbody>
-    //     </table>
-    //   </div>
-    // </div>
+
   );
 };
 

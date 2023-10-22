@@ -425,6 +425,11 @@ function Assets() {
                               Return
                             </span>
                           ) : null}
+                            {asset.Status === "Maintenance" ? (
+                            <span className="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                              Maintenance
+                            </span>
+                          ) : null}
                         </td>
                         <td className="px-4 py-3">{asset.SerialNumber}</td>
                         <td className="px-4 py-3">{asset.description}</td>
