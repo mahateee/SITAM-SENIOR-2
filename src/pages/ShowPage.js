@@ -4,6 +4,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/index";
 // import QRCodeGenerator from './Barcode'; // Import your BarcodeComponent
 import QRcode from "qrcode.react";
+import generatePDF from "./Admin/generatePDF";
+
 function ShowPage() {
   const { id } = useParams();
   const [asset, setAsset] = useState({});
@@ -129,20 +131,26 @@ function ShowPage() {
               <span className="text-gray-500 pl-4">Email</span>
               <span className="ml-auto text-gray-900">{employee.email}</span>
             </div>
-            {/* Cancel Button */}
-            <div className="flex justify-center mt-4">
+            {/* Cancel and Generate PDF BUttons*/}
+          
+            <div className="flex justify-between mt-4">
               <Link
                 to={`/Asset`}
                 className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-white text-sm font-medium rounded-md bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-              >
-                Cancel
-              </Link>
-            </div>
+              >Done</Link>
+
+              <button
+                className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-white text-sm font-medium rounded-md bg-teal-800 hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                onClick={() => generatePDF(asset, employee)}
+              >Generate PDF</button>
+</div>
+
           </div>
 
           <div className="flex justify-center items-center">
-            <QRcode id="myqr" value={id} size={320} includeMargin={true} />
+            <QRcode id="myqr" value={id} size={450} includeMargin={true} />
           </div>
+
         </div>
       </div>
     </section>
