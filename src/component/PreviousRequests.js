@@ -86,7 +86,7 @@ const PreviousRequests = () => {
       </div>
       {/* <!-- Table --> */}
       <div class="flex flex-col mt-6">
-        <div class="overflow-x-auto rounded-lg">
+      <div className="overflow-y-auto" style={{ maxHeight: '640px' }}>
           <div class="inline-block min-w-full align-middle">
             <div class="overflow-hidden shadow sm:rounded-lg">
               <table class="min-w-full divide-y divide-gray-200 ">

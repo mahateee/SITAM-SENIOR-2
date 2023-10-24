@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   collection,
   query,
@@ -63,6 +63,7 @@ const AssetsTable = () => {
     await updateDoc(assetDocRef, { Status: "Return" });
   };
 
+  const navigate = useNavigate();
   const handleReturn = async (assetKey, index) => {
     try {
       // Update the status in Firestore
@@ -74,19 +75,22 @@ const AssetsTable = () => {
       updatedAssets[index].Status = "Return";
       // Update the state with the updated assets
       setAssets(updatedAssets);
+      // Set showSuccessAlert to true and navigate to Request page
+      navigate('/personalassets', { state: { showReturnAlert: true } });
     } catch (error) {
       console.log("Error updating asset status:", error);
     }
   };
 
   return (
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm  sm:p-6">
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div style={{ flex: 1, maxWidth: '90%' }} class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm  sm:p-6">
       {/* <!-- Card header --> */}
       <div class="items-center justify-between lg:flex">
         <div class="mb-4 lg:mb-0">
           <h3 class="mb-2 text-xl font-bold text-gray-900">Current Assets </h3>
           <span class="text-base font-normal text-gray-500 ">
-            a list of Current Assets
+            A List of Current Assets.
           </span>
         </div>
         <div class="items-center sm:flex">
@@ -201,32 +205,32 @@ const AssetsTable = () => {
                   <tr>
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase "
+                      class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
                     >
                       Assets
                     </th>
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase "
+                      class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
                     >
                       Category
                     </th>
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase "
+                      class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
                     >
                       Brand
                     </th>
 
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase "
+                      class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
                     >
                       os
                     </th>
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase "
+                      class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
                     >
                       Action
                     </th>
@@ -235,20 +239,20 @@ const AssetsTable = () => {
                 <tbody class="bg-white ">
                   {assets.map((asset, id) => (
                     <tr key={id}>
-                      <td class="p-4 text-sm font-normal text-gray-900 whitespace-nowrap ">
+                      <td class="p-4 text-sm font-normal text-center text-gray-900 whitespace-nowrap ">
                        {asset.name}
                       </td>
-                      <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap ">
+                      <td class="p-4 text-sm font-normal text-center text-gray-500 whitespace-nowrap ">
                         {asset.Category}
                       </td>
-                      <td class="p-4 text-sm font-semibold text-gray-900 whitespace-nowr">
+                      <td class="p-4 text-sm font-semibold text-center text-gray-900 whitespace-nowr">
                         {asset.Brand}
                       </td>
 
-                      <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap ">
+                      <td class="p-4 text-sm font-normal text-center text-gray-500 whitespace-nowrap ">
                         {asset.os}
                       </td>
-                      <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap ">
+                      <td class="p-4 text-sm font-normal text-center text-gray-500 whitespace-nowrap ">
                         <button
                           onClick={() => handleReturn(asset.id, id)}
                           type="button"
@@ -257,13 +261,9 @@ const AssetsTable = () => {
                           Return
                         </button>
                         <Link
-  to={`/Request/Maintenance/${asset.id}`}
-  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
->
-  Maintenance
-</Link>
-
-
+                          to={`/Request/Maintenance/${asset.id}`}
+                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-6 mb-2 focus:outline-none"
+                        >Maintenance</Link>
                       </td>
                     </tr>
                   ))}
@@ -273,6 +273,7 @@ const AssetsTable = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
 
   );

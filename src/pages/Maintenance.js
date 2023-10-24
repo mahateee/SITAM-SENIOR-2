@@ -32,6 +32,7 @@ const Maintenance = () => {
     }
   };
   
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -55,7 +56,8 @@ const Maintenance = () => {
         user: '',
       });
 
-      navigate('/Request');
+      // Set showSuccessAlert to true and navigate to Request page
+      navigate('/personalassets', { state: { showMaintenanceAlert: true } });
 
     } catch (error) {
       console.error('Error adding document: ', error);
@@ -267,7 +269,7 @@ const Maintenance = () => {
             </button>
             <button
               type="button"
-              onClick={() => navigate('/Request')}
+              onClick={() => navigate('/personalassets')}
               className="ml-2 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               Cancel

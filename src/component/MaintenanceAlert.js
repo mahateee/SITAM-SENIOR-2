@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 //New request alert.
-function Alerts() {
+function MaintenanceAlert() {
   const [isAlertVisible, setIsAlertVisible] = useState(true);
 
   const handleDismiss = () => {
@@ -31,11 +31,11 @@ function Alerts() {
   
         <div className="flex-1">
           <strong className="block font-medium text-gray-900 font-bold">
-            Request Submitted
+          Maintenance Request Submitted
           </strong>
   
           <p className="mt-1 text-sm text-gray-700">
-            Your new asset request has been successfully submitted.
+          Your maintenance request has been successfully submitted.
           </p>
         </div>
   
@@ -61,4 +61,4 @@ function Alerts() {
   ) : null;
 } 
 
-export default Alerts;
+export default MaintenanceAlert;

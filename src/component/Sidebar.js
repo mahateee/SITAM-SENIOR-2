@@ -23,12 +23,25 @@ const Sidebar = () => {
 
               <ul className="space-y-2 font-medium">
               <li>
-         <Link to="/user">
+         <Link to="/userinfo">
             <a href="#" class="flex items-center p-2 rounded-lg hover:bg-teal-700">
             <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-teal-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
                   <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"/>
                </svg>
                <span class="ml-3">Account</span>
+            </a>
+            </Link>
+         </li>
+         <li>
+          <Link to="/user">
+            <a href="#" class="flex items-center p-2 rounded-lg hover:bg-teal-700">
+            <svg aria-hidden="true" 
+               class="flex-shrink-0 w-6 h-6 text-teal-500 transition duration-75  group-hover:text-gray-900" 
+               fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" 
+                  d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" 
+                  clip-rule="evenodd"></path></svg>
+               <span class="ml-3">Personal Productivity</span>
             </a>
             </Link>
          </li>
@@ -58,7 +71,7 @@ const Sidebar = () => {
           clipRule="evenodd"
         ></path>
       </svg>
-      <span className={`ml-3 text-left whitespace-nowrap ${isPagesActive ? 'text-white' : 'text-white-900'}`}>Assets</span>
+      <span className={`ml-3 text-left whitespace-nowrap ${isPagesActive ? 'text-white' : 'text-white-900'}`}>Management</span>
     </div>
     <svg
       className={`w-6 h-6 text-gray-400 transition duration-75 transform rotate-0 ${
@@ -83,6 +96,18 @@ const Sidebar = () => {
     className={`py-2 space-y-2 ${isPagesActive ? 'block' : 'hidden'}`}
   >
     <li>
+      <Link to="/personalassets"> {/* Replace "/settings" with your desired URL */}
+        <a
+          className={`flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group ${
+            isPagesActive ? 'hover:bg-teal-700 dark:text-white dark:hover:bg-teal-700' : 'hover:bg-teal-700 dark:text-white dark:hover:bg-teal-700'
+          }`}
+        >
+          Assets
+        </a>
+      </Link>
+    </li>
+    
+    <li>
       <Link to="/Request"> {/* Replace "/settings" with your desired URL */}
         <a
           className={`flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group ${
@@ -94,7 +119,7 @@ const Sidebar = () => {
       </Link>
     </li>
 
-    <li>
+    {/* <li>
       <a
         href="#"
         className={`flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group ${
@@ -103,35 +128,10 @@ const Sidebar = () => {
       >
         Returns
       </a>
-    </li>
-    {/* <li>
-      <a
-        href="#"
-        className={`flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group ${
-          isPagesActive ? 'hover:bg-teal-700 dark:text-white dark:hover:bg-teal-700' : 'hover:bg-teal-700 dark:text-white dark:hover:bg-teal-700'
-        }`}
-      >
-        Nothing
-      </a>
     </li> */}
+    
   </ul>
-</li>
-
-
-
-
-        <li>
-            <a href="#" class="flex items-center p-2 rounded-lg hover:bg-teal-700">
-            <svg aria-hidden="true" 
-               class="flex-shrink-0 w-6 h-6 text-teal-500 transition duration-75  group-hover:text-gray-900" 
-               fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" 
-                  d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" 
-                  clip-rule="evenodd"></path></svg>
-               <span class="ml-3">Maintenance</span>
-            </a>
-         </li>
-                
+</li>       
               </ul>
 
               {/* Additional sections in the sidebar */}

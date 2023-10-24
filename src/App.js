@@ -17,9 +17,12 @@ import NewRequest from "./pages/NewRequest";
 import UserInfo from "./pages/UserInfo";
 import AdminAccount from "./pages/Admin/AdminAccount";
 import RequestPage from "./pages/Admin/RequestPage";
+import ReturnPage from "./pages/Admin/ReturnPage";
 import Maintenance from "./pages/Maintenance";
 import MaintenancePage from "./pages/Admin/MaintenacePage";
 import EmployeeList from "./pages/Admin/EmployeeList";
+import Productivity from "./pages/Productivity";
+import PersonalAssets from "./pages/PersonalAssets";
 
 const USER_TYPE = {
   PUBLIC: "Public User",
@@ -108,6 +111,14 @@ function App() {
             }
           />
           <Route
+            path="/returnPage"
+            element={
+              <AdminElement userRole={userRole}>
+                <ReturnPage />
+              </AdminElement>
+            }
+          />
+          <Route
             path="/employeelist"
             element={
               <AdminElement userRole={userRole}>
@@ -125,7 +136,7 @@ function App() {
           />
 
           <Route
-            path="/user"
+            path="/userinfo"
             element={
               <UserElement userRole={userRole}>
                 <UserInfo />
@@ -138,6 +149,24 @@ function App() {
             element={
               <UserElement userRole={userRole}>
                 <Requests />
+              </UserElement>
+            }
+          />
+
+          <Route
+            path="/user"
+            element={
+              <UserElement userRole={userRole}>
+                <Productivity />
+              </UserElement>
+            }
+          />
+
+          <Route
+            path="/personalassets"
+            element={
+              <UserElement userRole={userRole}>
+                <PersonalAssets />
               </UserElement>
             }
           />
