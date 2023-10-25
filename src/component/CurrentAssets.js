@@ -101,7 +101,7 @@ const AssetsTable = () => {
               class="mb-4 sm:mb-0 mr-4 inline-flex items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2.5"
               type="button"
             >
-              Filter by status
+              Filter by Category
               <svg
                 class="w-4 h-4 ml-2"
                 aria-hidden="true"
@@ -207,32 +207,32 @@ const AssetsTable = () => {
                       scope="col"
                       class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
                     >
-                      Assets
+                      Asset Name
                     </th>
                     <th
                       scope="col"
                       class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
                     >
-                      Category
+                      Asset Category
                     </th>
                     <th
                       scope="col"
                       class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
                     >
-                      Brand
+                      Asset Brand
                     </th>
 
                     <th
                       scope="col"
                       class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
                     >
-                      os
+                      Operating System
                     </th>
                     <th
                       scope="col"
                       class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
                     >
-                      Action
+                      Actions
                     </th>
                   </tr>
                 </thead>
@@ -252,18 +252,17 @@ const AssetsTable = () => {
                       <td class="p-4 text-sm font-normal text-center text-gray-500 whitespace-nowrap ">
                         {asset.os}
                       </td>
-                      <td class="p-4 text-sm font-normal text-center text-gray-500 whitespace-nowrap ">
+                      <td class="p-4 text-sm font-normal text-center text-gray-500 whitespace-nowrap " style={{ width: '135px' }}>
                         <button
                           onClick={() => handleReturn(asset.id, id)}
                           type="button"
-                          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none "
-                        >
+                          className="text-white bg-indigo-800 hover:bg-indigo-600 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-6 mb-2 focus:outline-none">
                           Return
                         </button>
                         <Link
                           to={`/Request/Maintenance/${asset.id}`}
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-6 mb-2 focus:outline-none"
-                        >Maintenance</Link>
+                          className="text-white bg-indigo-500 hover:bg-indigo-600 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-6 mb-2 focus:outline-none">
+                            Maintenance</Link>
                       </td>
                     </tr>
                   ))}

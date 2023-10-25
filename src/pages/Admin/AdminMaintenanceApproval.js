@@ -15,7 +15,7 @@ const AdminMaintenanceApproval = ({ requests, onApprove, onReject }) => (
       New Maintenance Requests ✅{" "}
     </h3>
     <span className="text-base font-normal text-gray-500">
-      Request need to be Approved
+    Requests Awaiting Approval or Rejection.
     </span>
     <div class="flex flex-col mt-6">
       <div class="overflow-x-auto rounded-lg">

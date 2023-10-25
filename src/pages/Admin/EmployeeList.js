@@ -85,7 +85,7 @@ export default function EmployeeList() {
                   Employee 👨‍💼
                 </h3>
                 <span className="text-base font-normal text-gray-500">
-                  Latest Request has been Approved
+                  List of Employee
                 </span>
               </div>
               <div className="w-full md:w-1/3">

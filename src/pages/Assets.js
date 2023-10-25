@@ -51,6 +51,7 @@ function Assets() {
     });
     return () => unsub();
   }, []);
+  
   const [searchText, setSearchText] = useState([]);
   const [data, setData] = useState(assetsList);
   // exclude column list from filter
@@ -62,6 +63,7 @@ function Assets() {
     setSearchText(searchValues);
     filterData(searchValues);
   };
+
   const filterData = (values) => {
     if (values.length === 0) {
       setData(assetsList);
@@ -81,17 +83,6 @@ function Assets() {
       setData(filteredData);
     }
   };
-  // //Create state for the search query
-  // const [searchQuery, setSearchQuery] = useState("");
-
-  // //Modify rendering logic to filter assets by Asset ID, name, category, or status
-  // const filteredAssets = assetsList.filter(
-  //   (asset) =>
-  //     asset.AssetID.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     asset.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     asset.Category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     asset.Status.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
 
   return (
     <div data-testid="asset-table">
@@ -114,7 +105,7 @@ function Assets() {
       {open && <ScanQR onClose={handleClose} />}
       {/* table */}
       <section className="bg-gray-50  p-3 sm:p-5">
-        <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+        <div className="mx-auto max-w-screen-xl px-4 lg:px-12 " style={{ maxWidth: '95%' }}> {/* cntrol the width of the whole table */}
           <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
               <div className="w-full md:w-1/2">
@@ -142,12 +133,9 @@ function Assets() {
                       type="text"
                       id="simple-search"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 "
-                      placeholder="Search by Asset ID, Name, Category, or Status"
-                      // required=""
+                      placeholder="Search"
                       value={searchText.join(" ")}
                       onChange={(e) => handleChange(e.target.value)}
-                      // value={searchQuery}
-                      // onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
                 </form>
@@ -220,19 +208,6 @@ function Assets() {
                     id="actionsDropdown"
                     className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                   >
-                    <ul
-                      className="py-1 text-sm text-gray-700 "
-                      aria-labelledby="actionsDropdownButton"
-                    >
-                      <li>
-                        <a
-                          href="#"
-                          className="block py-2 px-4 hover:bg-gray-100 "
-                        >
-                          Mass Edit
-                        </a>
-                      </li>
-                    </ul>
                     <div className="py-1">
                       <a
                         href="#"
@@ -281,7 +256,7 @@ function Assets() {
                     className="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700"
                   >
                     <h6 className="mb-3 text-sm font-medium text-gray-900 dark:text-white">
-                      Choose brand
+                      Choose Asset Status
                     </h6>
                     <ul
                       className="space-y-2 text-sm"
@@ -298,7 +273,7 @@ function Assets() {
                           htmlFor="apple"
                           className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
                         >
-                          Apple (56)
+                          Available
                         </label>
                       </li>
                       <li className="flex items-center">
@@ -312,7 +287,7 @@ function Assets() {
                           htmlFor="fitbit"
                           className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
                         >
-                          Microsoft (16)
+                          In Use
                         </label>
                       </li>
                       <li className="flex items-center">
@@ -326,7 +301,7 @@ function Assets() {
                           htmlFor="razor"
                           className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
                         >
-                          Razor (49)
+                          Disposed
                         </label>
                       </li>
                       <li className="flex items-center">
@@ -340,7 +315,7 @@ function Assets() {
                           htmlFor="nikon"
                           className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
                         >
-                          Nikon (12)
+                          Return
                         </label>
                       </li>
                       <li className="flex items-center">
@@ -354,7 +329,7 @@ function Assets() {
                           htmlFor="benq"
                           className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
                         >
-                          BenQ (74)
+                          Maintenance
                         </label>
                       </li>
                     </ul>
@@ -363,35 +338,32 @@ function Assets() {
               </div>
             </div>
 
-            <div className="overflow-y-auto" style={{ maxHeight: '670px' }}>
+            <div className="overflow-y-auto" style={{ maxHeight: '700px' }}>
               <table className="w-full text-sm text-left text-gray-500 ">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                   <tr>
                     <th scope="col" className="px-4 py-3">
                       #
                     </th>
-                    <th scope="col" className="px-4 py-3">
-                      Assets
+                    <th scope="col" className="px-4 py-3 text-center">
+                      Asset Name
                     </th>
-                    <th scope="col" className="px-4 py-3">
+                    <th scope="col" className="px-4 py-3 text-center">
                       Asset ID
                     </th>
-                    <th scope="col" className="px-4 py-3">
-                      Status
+                    <th scope="col" className="px-4 py-3 text-center">
+                      Asset Status
                     </th>
-                    <th scope="col" className="px-4 py-3">
-                      Serial Number
+                    <th scope="col" className="px-4 py-3 text-center">
+                      Asset Brand
                     </th>
-                    <th scope="col" className="px-4 py-3">
-                      Description
+                    <th scope="col" className="px-4 py-3 text-center">
+                      Asset Category
                     </th>
-                    <th scope="col" className="px-4 py-3">
-                      Category
+                    <th scope="col" className="px-4 py-3 text-center">
+                      Insertion Date
                     </th>
-                    <th scope="col" className="px-4 py-3">
-                      Date
-                    </th>
-                    <th scope="col" className="px-4 py-3">
+                    <th scope="col" className="px-4 py-3 text-center align-middle">
                       Actions
                     </th>
                   </tr>
@@ -402,9 +374,9 @@ function Assets() {
                       <tr className="border-b" data-testid="asset" key={i}>
                         <td className="px-4 py-3">{i + 1}</td>
 
-                        <td className="px-4 py-3">{asset.name}</td>
-                        <td className="px-4 py-3">{asset.AssetID}</td>
-                        <td className="px-4 py-3">
+                        <td className="px-4 py-3 text-center">{asset.name}</td>
+                        <td className="px-4 py-3 text-center">{asset.AssetID}</td>
+                        <td className="px-4 py-3 text-center">
                           {asset.Status === "Available" ? (
                             <span className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
                               Available
@@ -426,20 +398,21 @@ function Assets() {
                             </span>
                           ) : null}
                             {asset.Status === "Maintenance" ? (
-                            <span className="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                            <span className="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
                               Maintenance
                             </span>
                           ) : null}
                         </td>
-                        <td className="px-4 py-3">{asset.SerialNumber}</td>
-                        <td className="px-4 py-3">{asset.description}</td>
-                        <td className="px-4  py-3">
+                        <td className="px-4 py-3 text-center">{asset.Brand}</td>
+                        <td className="px-4  py-3 text-center">
                           <span className=" bg-blue-100 hover:bg-blue-200 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded border border-blue-400">
                             {asset.Category}
                           </span>
                         </td>
-                        <td className="px-4 py-3">{asset.date}</td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-3 text-center">{asset.date}</td>
+
+                        <div className="flex justify-center items-center">
+                        <td className="px-4 py-2" style={{ width: '150px' }}>
                           {/* show button. */}
                           <button
                             type="button"
@@ -464,11 +437,11 @@ function Assets() {
                             <Link to={`/Asset/show/${asset.id}`}>Preview</Link>
                           </button>
                         </td>
-                        <td className=" px-4 py-2">
+                        <td className=" px-4 py-2" style={{ width: '130px' }}>
                           {/* Edit button for the edit page. */}
                           <button
                             type="button"
-                            class=" inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 font-medium text-sm px-5 py-2.5 text-center "
+                            class=" inline-flex items-center text-white bg-gray-500 rounded-lg hover:bg-gray-800 font-medium text-sm px-5 py-2.5 text-center "
                           >
                             <svg
                               aria-hidden="true"
@@ -487,7 +460,7 @@ function Assets() {
                             <Link to={`/Asset/edit/${asset.id}`}>Edit</Link>
                           </button>
                         </td>
-                        <td className=" px-4 py-2">
+                        <td className=" px-4 py-2" style={{ width: '150px' }}>
                           {/* Delete Button. */}
                           <button
                             onClick={() => {
@@ -511,6 +484,8 @@ function Assets() {
                             Delete
                           </button>
                         </td>
+                        </div>
+
                       </tr>
                     ))
                   ) : (
@@ -527,97 +502,6 @@ function Assets() {
               className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
               aria-label="Table navigation"
             >
-              <span className="text-sm font-normal text-gray-500 ">
-                Showing
-                <span className="font-semibold text-gray-900 ">1-10</span>
-                of
-                <span className="font-semibold text-gray-900 ">1000</span>
-              </span>
-              <ul className="inline-flex items-stretch -space-x-px">
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-                  >
-                    <span className="sr-only">Previous</span>
-                    <svg
-                      className="w-5 h-5"
-                      aria-hidden="true"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-                  >
-                    1
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-                  >
-                    2
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    aria-current="page"
-                    className="flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 "
-                  >
-                    3
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-                  >
-                    ...
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-                  >
-                    100
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-                  >
-                    <span className="sr-only">Next</span>
-                    <svg
-                      className="w-5 h-5"
-                      aria-hidden="true"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </a>
-                </li>
-              </ul>
             </nav>
           </div>
         </div>

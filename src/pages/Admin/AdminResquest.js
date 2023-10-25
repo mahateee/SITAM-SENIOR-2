@@ -74,10 +74,10 @@ export default function AdminRequest() {
       <div className="flex items-center justify-between lg:flex space-x-4">
         <div className="mb-4 lg:mb-0">
           <h3 className="mb-2 text-xl font-bold text-gray-900">
-            Received Requests 🕗
+            Received New Assets Requests 🕗
           </h3>
           <span className="text-base font-normal text-gray-500">
-            Latest Request has been Approved
+            Latest Request has been Approved.
           </span>
         </div>
         <div className="w-full md:w-1/3">

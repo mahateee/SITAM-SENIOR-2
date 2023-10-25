@@ -78,6 +78,16 @@ function ShowPage() {
                     Disposed
                   </span>
                 ) : null}
+                {asset.Status === "Return" ? (
+                  <span className="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                    Return
+                  </span>
+                ) : null}
+                {asset.Status === "Maintenance" ? (
+                  <span className="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                    Maintenance
+                  </span>
+                ) : null}
               </span>
             </div>
             <div className="flex border-t border-gray-200 py-2">
@@ -142,7 +152,7 @@ function ShowPage() {
               <button
                 className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-white text-sm font-medium rounded-md bg-teal-800 hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                 onClick={() => generatePDF(asset, employee)}
-              >Generate PDF</button>
+              >Download</button>
 </div>
 
           </div>

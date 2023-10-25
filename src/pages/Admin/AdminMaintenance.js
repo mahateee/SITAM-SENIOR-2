@@ -117,7 +117,7 @@ export default function AdminMaintenance() {
             Received Maintenance Requests ⚙️
           </h3>
           <span className="text-base font-normal text-gray-500">
-            Latest Request has been Approved
+          Latest Request has been Approved.
           </span>
         </div>
         <div className="w-full md:w-1/3">
@@ -160,31 +160,31 @@ export default function AdminMaintenance() {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                   <tr>
-                    <th scope="col" className="px-4 py-3">
+                    <th scope="col" className="px-4 py-3 text-center">
                       Requester name
                     </th>
-                    <th scope="col" className="px-4 py-3">
+                    <th scope="col" className="px-4 py-3 text-center">
                       Maintainance Type
                     </th>
-                    <th scope="col" className="px-4 py-3">
-                      Category
+                    <th scope="col" className="px-4 py-3 text-center">
+                      Asset Category
                     </th>
-                    <th scope="col" className="px-4 py-3">
-                      remarks
+                    <th scope="col" className="px-4 py-3 text-center">
+                      Remarks
                     </th>
-                    <th scope="col" className="px-4 py-3">
+                    <th scope="col" className="px-4 py-3 text-center">
                       Asset ID
                     </th>
-                    <th scope="col" className="px-4 py-3">
-                      urgency
+                    <th scope="col" className="px-4 py-3 text-center">
+                      Urgency
                     </th>
-                    <th scope="col" class="px-4 py-3">
+                    <th scope="col" class="px-4 py-3 text-center">
                       Status
                     </th>
-                    <th scope="col" className="px-4 py-3">
+                    <th scope="col" className="px-4 py-3 text-center">
                       Assign
                     </th>
-                    <th scope="col" className="px-4 py-3">
+                    <th scope="col" className="px-4 py-3 text-center">
                       <span className="sr-only">Actions</span>
                     </th>
                   </tr>
@@ -199,12 +199,12 @@ export default function AdminMaintenance() {
                           >
                             {main.user}
                           </th>
-                          <td className="px-4 py-3">{main.maintenanceType}</td>
-                          <td className="px-4 py-3">{main.category}</td>
-                          <td className="px-4 py-3">{main.remarks}</td>
-                          <td className="px-4 py-3">{main.assetID}</td>
-                          <td className="px-4 py-3">{main.urgency}</td>
-                          <td className="px-4 py-3">
+                          <td className="px-4 py-3 text-center">{main.maintenanceType}</td>
+                          <td className="px-4 py-3 text-center">{main.category}</td>
+                          <td className="px-4 py-3 text-center">{main.remarks}</td>
+                          <td className="px-4 py-3 text-center">{main.assetID}</td>
+                          <td className="px-4 py-3 text-center">{main.urgency}</td>
+                          <td className="px-4 py-3 text-center">
                             <select
                               value={main.status || "Waiting"}
                               onChange={(e) =>

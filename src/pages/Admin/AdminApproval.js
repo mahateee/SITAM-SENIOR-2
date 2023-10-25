@@ -11,9 +11,9 @@ import { db } from "../../firebase/index";
 
 const AdminApprovalTable = ({ requests, onApprove, onReject }) => (
   <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
-    <h3 class="mb-2 text-xl font-bold text-gray-900">New Requests ✅ </h3>
+    <h3 class="mb-2 text-xl font-bold text-gray-900">New Assets Requests ✅ </h3>
     <span className="text-base font-normal text-gray-500">
-      Request need to be Approved
+    Requests Awaiting Approval or Rejection.
     </span>
     <div class="flex flex-col mt-6">
     <div class="overflow-x-auto rounded-lg max-h-96">
