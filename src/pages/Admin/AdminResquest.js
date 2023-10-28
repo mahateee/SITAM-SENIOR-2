@@ -7,7 +7,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase/index";
-
+import { formatDate } from "../../component/functions/formatDate";
 export default function AdminRequest() {
   const [requestsList, setRequestsList] = useState([]);
   const [searchText, setSearchText] = useState([]);
@@ -18,7 +18,11 @@ export default function AdminRequest() {
     const unsub = onSnapshot(q, (querySnapshot) => {
       let todosArray = [];
       querySnapshot.forEach((doc) => {
-        todosArray.push({ ...doc.data(), id: doc.id });
+        todosArray.push({
+          ...doc.data(),
+          id: doc.id,
+          formattedDate: formatDate(doc.data().date),
+        });
       });
       setRequestsList(todosArray);
       setData(todosArray);
@@ -156,7 +160,8 @@ export default function AdminRequest() {
                           <td class="px-4 py-3">{req.department}</td>
                           <td class="px-4 py-3">{req.type}</td>
                           <td class="px-4 py-3">{req.brand}</td>
-                          <td class="px-4 py-3">$</td>
+
+                          <td class="px-4 py-3">{req.formattedDate}</td>
                           <td class="px-4 py-3">
                             <select
                               value={req.status || "Waiting"}

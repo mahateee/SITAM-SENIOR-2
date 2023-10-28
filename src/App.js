@@ -23,6 +23,7 @@ import MaintenancePage from "./pages/Admin/MaintenacePage";
 import EmployeeList from "./pages/Admin/EmployeeList";
 import Productivity from "./pages/Productivity";
 import PersonalAssets from "./pages/PersonalAssets";
+import AdminSidebar from "./component/AdminSidebar";
 
 const USER_TYPE = {
   PUBLIC: "Public User",
@@ -34,7 +35,10 @@ function App() {
   const navigate = useNavigate();
 
   const adminUserRoutes = [
-    { path: "/", element: <Assets /> },
+    {
+      path: "/",
+      element: <Assets />,
+    },
     { path: "/add", element: <AddAsset /> },
     { path: "/edit/:id", element: <EditAsset /> },
     { path: "/show/:id", element: <ShowPage /> },

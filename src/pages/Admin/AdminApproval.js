@@ -8,15 +8,17 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../../firebase/index";
-
+import { formatDate } from "../../component/functions/formatDate";
 const AdminApprovalTable = ({ requests, onApprove, onReject }) => (
   <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
-    <h3 class="mb-2 text-xl font-bold text-gray-900">New Assets Requests ✅ </h3>
+    <h3 class="mb-2 text-xl font-bold text-gray-900">
+      New Assets Requests ✅{" "}
+    </h3>
     <span className="text-base font-normal text-gray-500">
-    Requests Awaiting Approval or Rejection.
+      Requests Awaiting Approval or Rejection.
     </span>
     <div class="flex flex-col mt-6">
-    <div class="overflow-x-auto rounded-lg max-h-96">
+      <div class="overflow-x-auto rounded-lg max-h-96">
         <div class="inline-block min-w-full align-middle">
           <div class="overflow-hidden shadow sm:rounded-lg">
             <table class="min-w-full divide-y divide-gray-200 ">
@@ -52,10 +54,9 @@ const AdminApprovalTable = ({ requests, onApprove, onReject }) => (
                       >
                         {req.name + " " + req.lastname}
                       </th>
-<td className="p-4 text-sm font-normal   text-gray-900 whitespace-nowrap">
-$$$$
-
-</td>
+                      <td className="p-4 text-sm font-normal   text-gray-900 whitespace-nowrap">
+                        {req.formattedDate}
+                      </td>
                       <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap">
                         <button
                           className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
@@ -99,7 +100,11 @@ const AdminNewRequestsTable = () => {
     const unsub = onSnapshot(q, (querySnapshot) => {
       let todosArray = [];
       querySnapshot.forEach((doc) => {
-        todosArray.push({ ...doc.data(), id: doc.id });
+        todosArray.push({
+          ...doc.data(),
+          id: doc.id,
+          formattedDate: formatDate(doc.data().date),
+        });
       });
       setRequestsList(todosArray);
     });
