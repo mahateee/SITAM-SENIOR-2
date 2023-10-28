@@ -77,6 +77,7 @@ const AssetsTable = () => {
       setAssets(updatedAssets);
       // Set showSuccessAlert to true and navigate to Request page
       navigate('/personalassets', { state: { showReturnAlert: true } });
+      
     } catch (error) {
       console.log("Error updating asset status:", error);
     }

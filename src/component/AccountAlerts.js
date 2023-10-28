@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
-//Return alert.
-function ReturnAlerts() {
+//Account Alert.
+function AccountAlerts(){
+
     const [isAlertVisible, setIsAlertVisible] = useState(true);
   
     const handleDismiss = () => {
@@ -10,7 +11,7 @@ function ReturnAlerts() {
     };
   
     return isAlertVisible ? (
-      <div role="alert" className="rounded-xl border border-green-300 bg-green-100 p-4">
+      <div role="alert" className="rounded-xl border border-green-300 bg-green-100 p-4 ml-24 mr-12">
         <div className="flex items-start gap-4">
           <span className="text-green-600">
             <svg
@@ -31,11 +32,11 @@ function ReturnAlerts() {
     
           <div className="flex-1">
             <strong className="block text-lg font-medium text-gray-900 font-bold">
-            Return Request Submitted
+            Account Information Updated
             </strong>
     
             <p className="mt-1 text-sm text-gray-700">
-            Your request to return an asset has been successfully submitted.
+            Your account information has been successfully updated.
             </p>
           </div>
     
@@ -59,5 +60,5 @@ function ReturnAlerts() {
         </div>
       </div>
     ) : null;
-  }
-export default ReturnAlerts;
+
+} export default AccountAlerts;

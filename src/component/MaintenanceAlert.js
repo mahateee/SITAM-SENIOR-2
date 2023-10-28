@@ -30,7 +30,7 @@ function MaintenanceAlert() {
         </span>
   
         <div className="flex-1">
-          <strong className="block font-medium text-gray-900 font-bold">
+          <strong className="block text-lg font-medium text-gray-900 font-bold">
           Maintenance Request Submitted
           </strong>
   
