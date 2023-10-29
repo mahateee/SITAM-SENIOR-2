@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import logo from "./logo3-1(2).png";
 
 function AdminSidebar({ children }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
+  const toggleUserDropdown = () => {
+    setIsUserDropdownOpen(!isUserDropdownOpen);
+  };
+  
   const [isPagesActive, setIsPagesActive] = useState(false); // State to track the active state of "Pages" button
 
   const handlePagesClick = () => {
@@ -45,11 +51,12 @@ function AdminSidebar({ children }) {
                 </svg>
               </button>
               <a href="https://flowbite.com" class="flex ml-2 md:mr-24">
-                <img
+                {/* <img
                   src="https://flowbite.com/docs/images/logo.svg"
                   class="h-8 mr-3"
                   alt="FlowBite Logo"
-                />
+                /> */}
+                <img src={logo} className="h-8 mr-3" alt="SITAM Logo" />
                 <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap ">
                   SITAM
                 </span>
@@ -61,68 +68,63 @@ function AdminSidebar({ children }) {
                   <button
                     type="button"
                     class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 "
-                    aria-expanded="false"
+                    aria-expanded={isUserDropdownOpen}
                     data-dropdown-toggle="dropdown-user"
+                    onClick={toggleUserDropdown}
                   >
                     <span class="sr-only">Open user menu</span>
-                    <img
-                      class="w-8 h-8 rounded-full"
-                      src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                      alt="user photo"
-                    />
+                    <div class="relative w-8 h-8 overflow-hidden bg-gray-200 rounded-full dark-bg-gray-600 ">
+                      <svg
+                        className="absolute inset-0 w-full h-full text-gray-500 top-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                        clipRule="evenodd"
+                      ></path>
+                      </svg>
+                    </div>
                   </button>
                 </div>
                 <div
-                  class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow "
+                  style={{
+                    flexDirection: 'column-reverse',
+                    position: 'absolute',
+                    bottom: '-82px',  // Adjust this value to move the dropdown up or down.
+                    right: '0',
+                   
+                  }}
+                  class={` ${
+                    isUserDropdownOpen ? "block" : "hidden"
+                  } my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow`}
                   id="dropdown-user"
                 >
-                  <div class="px-4 py-3" role="none">
-                    <p class="text-sm text-gray-900 " role="none">
-                      Neil Sims
-                    </p>
-                    <p
-                      class="text-sm font-medium text-gray-900 truncate "
-                      role="none"
-                    >
-                      neil.sims@flowbite.com
-                    </p>
-                  </div>
                   <ul class="py-1" role="none">
+                    
                     <li>
-                      <a
-                        href="#"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        role="menuitem"
-                      >
-                        Dashboard
-                      </a>
-                    </li>
-                    <li>
+                    <Link to="/adminAccount">
                       <a
                         href="#"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                         role="menuitem"
                       >
-                        Settings
+                        Account
                       </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-                        role="menuitem"
-                      >
-                        Earnings
-                      </a>
-                    </li>
-                    <li>
+                    <Link to="/">
                       <a
                         href="#"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         role="menuitem"
                       >
-                        Sign out
+                        Log out
                       </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -348,7 +350,7 @@ function AdminSidebar({ children }) {
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                  <span className="ml-3">log out</span>
+                  <span className="ml-3">Log out</span>
                 </a>
               </Link>
             </li>

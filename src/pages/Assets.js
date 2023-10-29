@@ -92,11 +92,14 @@ function Assets() {
     }
   };
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const categories = ["PC", "Phone", "Printer"];
+  const categories = ["Monitors", "Laptop", "PC", "Phone", "Printer"];
   const [columnVisibility, setColumnVisibility] = useState({
+    ID: true,
     Name: true,
-    Brand: true,
     Status: true,
+    Brand: true,
+    Category: true,
+    Date: true,
     // Add more columns as needed
   });
 
@@ -226,7 +229,20 @@ function Assets() {
                       class="flex   items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
                       type="button"
                     >
-                      column
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        class="w-4 h-4 mr-2 text-gray-400"
+                        viewbox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      Filter
                       <svg
                         class="-mr-1 ml-1.5 w-5 h-5"
                         fill="currentColor"
@@ -244,6 +260,9 @@ function Assets() {
 
                     {openColumn && (
                       <div class="z-10  absolute mt-14 top-6 w-48 p-3 bg-white rounded-lg shadow">
+                        <h6 class="mb-3 text-sm font-medium text-gray-900 ">
+                          Column
+                        </h6>
                         <ul
                           class="space-y-2 text-sm"
                           aria-labelledby="dropdownDefault"
@@ -358,9 +377,11 @@ function Assets() {
                     <th scope="col" className="px-4 py-3">
                       #
                     </th>
+                    {columnVisibility.ID && (
                     <th scope="col" className="px-4 py-3 text-center">
                       Asset ID
                     </th>
+                    )}
                     {columnVisibility.Name && (
                       <th scope="col" className="px-4 py-3 text-center">
                         Asset Name
@@ -378,12 +399,16 @@ function Assets() {
                       </th>
                     )}
 
+                    {columnVisibility.Category && (
                     <th scope="col" className="px-4 py-3 text-center">
                       Asset Category
                     </th>
+                    )}
+                    {columnVisibility.Date && (
                     <th scope="col" className="px-4 py-3 text-center">
                       Insertion Date
                     </th>
+                    )}
                     <th
                       scope="col"
                       className="px-4 py-3 text-center align-middle"
@@ -404,9 +429,11 @@ function Assets() {
                       .map((asset, i) => (
                         <tr className="border-b" data-testid="asset" key={i}>
                           <td className="px-4 py-3">{i + 1}</td>
+                          {columnVisibility.ID && (
                           <td className="px-4 py-3 text-center">
                             {asset.AssetID}
                           </td>
+                          )}
                           {columnVisibility.Name && (
                             <td className="px-4 py-3 text-center">
                               {asset.name}
@@ -446,15 +473,18 @@ function Assets() {
                               {asset.Brand}
                             </td>
                           )}
-
+                          {columnVisibility.Category && (
                           <td className="px-4  py-3 text-center">
                             <span className=" bg-blue-100 hover:bg-blue-200 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded border border-blue-400">
                               {asset.Category}
                             </span>
                           </td>
+                          )}
+                          {columnVisibility.Date && (
                           <td className="px-4 py-3 text-center">
                             {asset.date}
                           </td>
+                          )}
 
                           <div className="flex justify-center items-center">
                             <td
