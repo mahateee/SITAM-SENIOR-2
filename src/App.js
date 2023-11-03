@@ -37,10 +37,29 @@ function App() {
   const adminUserRoutes = [
     {
       path: "/",
-      element: <Assets />,
+      element: (
+        <>
+          <AdminSidebar /> <Assets />
+        </>
+      ),
     },
-    { path: "/add", element: <AddAsset /> },
-    { path: "/edit/:id", element: <EditAsset /> },
+    {
+      path: "/add",
+      element: (
+        <>
+          <AdminSidebar /> <AddAsset />{" "}
+        </>
+      ),
+    },
+    {
+      path: "/edit/:id",
+      element: (
+        <>
+          {" "}
+          <AdminSidebar /> <EditAsset />{" "}
+        </>
+      ),
+    },
     { path: "/show/:id", element: <ShowPage /> },
   ];
 
