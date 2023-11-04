@@ -9,16 +9,14 @@ export default function AssetRow({
   openCautionDialog,
 }) {
   const { AssetID, name, Status, Brand, Category, date, id } = asset;
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
     <tr className="border-b" data-testid="asset" key={index}>
-      <td className="px-4 py-3">{index + 1}</td>
+      <td className="px-4 py-3 text-center">{index + 1}</td>
       {columnVisibility.ID && (
         <td className="px-4 py-3 text-center">{AssetID}</td>
       )}

@@ -119,7 +119,6 @@ export default function AssetForm({
           >
             Description:
           </label>
-
           <textarea
             id="description"
             type="text"
@@ -136,7 +135,7 @@ export default function AssetForm({
           <>
             <div class="sm:col-span-2 pb-2 mb-2 rounded-t border-b sm:mb-2">
               <h3 class="text-lg font-semibold text-gray-900 ">
-                Employee info
+                Employee Info
               </h3>
             </div>
             <div className="">
@@ -154,7 +153,6 @@ export default function AssetForm({
                 }
               >
                 <option value="">Select Employee</option>
-
                 {employees.map((employee) => (
                   <option key={employee.id} value={employee.id}>
                     {employee.name}
@@ -166,7 +164,6 @@ export default function AssetForm({
           </>
         )}
         <FormSubheader title={"Optional Information"} />
-
         <TextInput
           label="Warranty Type"
           id="WarrantyType"
@@ -175,7 +172,6 @@ export default function AssetForm({
           onChange={handleChange}
           error={validation.WarrantyType}
         />
-
         <SelectInput
           label="Warranty Status"
           id="WarrantyStatus"
@@ -193,7 +189,6 @@ export default function AssetForm({
           onChange={handleChange}
           error={validation.WarrantyEndDate}
         />
-
         <FormSubheader title={"Order Related Information"} />
         <TextInput
           label="Order Number"
@@ -203,7 +198,6 @@ export default function AssetForm({
           onChange={handleChange}
           error={validation.OrderNumber}
         />
-
         <DateInput
           label="Purchase Date"
           id="PurchaseDate"

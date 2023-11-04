@@ -4,7 +4,7 @@ export default function AddAssetButton() {
   return (
     <button
       type="button"
-      className="flex items-center justify-center  bg-teal-700  text-white hover:bg-teal-800 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-4 py-2  focus:outline-none "
+      className="flex items-center justify-center  bg-teal-700  text-white hover:bg-teal-800 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-4 py-2  focus:outline-none"
     >
       <svg
         className="h-3.5 w-3.5 mr-2"

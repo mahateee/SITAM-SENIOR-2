@@ -8,7 +8,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase/index";
-import Example from "../component/Example"; // Import the caution dialog component here
+import Example from "../component/Example"; 
 import ScanQR from "../component/Admin/ScanQR";
 import AdminSidebar from "../component/AdminSidebar";
 import AssetRow from "../component/Admin/AssetRow";
@@ -36,11 +36,11 @@ function Assets() {
 
   const [showCautionDialog, setShowCautionDialog] = useState(false);
   const [selectedAssetId, setSelectedAssetId] = useState(null);
-
   const openCautionDialog = (id) => {
     setSelectedAssetId(id);
     setShowCautionDialog(true);
   };
+
   const [assetsList, setAssetsList] = useState([]);
   const [data, setData] = useState([]);
   React.useEffect(() => {
@@ -84,6 +84,7 @@ function Assets() {
       setData(filteredData);
     }
   };
+
   const [selectedCategories, setSelectedCategories] = useState([]);
   const categories = ["Monitors", "Laptop", "PC", "Phone", "Printer"];
   const [columnVisibility, setColumnVisibility] = useState({
@@ -93,7 +94,6 @@ function Assets() {
     Brand: true,
     Category: true,
     Date: true,
-    // Add more columns as needed
   });
 
   const handleCategoryChange = (Category) => {
@@ -154,7 +154,6 @@ function Assets() {
                 />
               </div>
             </div>
-
             {/* table */}
             <div className="overflow-y-auto" style={{ maxHeight: "700px" }}>
               <table className="w-full text-sm text-left text-gray-500 ">
@@ -192,7 +191,6 @@ function Assets() {
     </div>
   );
 }
-
 export default Assets;
 
 export function ScanButton({ handleOpen }) {
@@ -226,7 +224,7 @@ export function TableHeader({ columnVisibility }) {
   return (
     <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
       <tr>
-        <th scope="col" className="px-4 py-3">
+        <th scope="col" className="px-4 py-3 text-center">
           #
         </th>
         {columnVisibility.ID && (
@@ -250,7 +248,6 @@ export function TableHeader({ columnVisibility }) {
             Asset Brand
           </th>
         )}
-
         {columnVisibility.Category && (
           <th scope="col" className="px-4 py-3 text-center">
             Asset Category

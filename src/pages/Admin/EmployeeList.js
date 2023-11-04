@@ -85,7 +85,7 @@ export default function EmployeeList() {
                   Employee 👨‍💼
                 </h3>
                 <span className="text-base font-normal text-gray-500">
-                  List of Employee
+                  List of Employees.
                 </span>
               </div>
               <div className="w-full md:w-1/3">
@@ -126,16 +126,16 @@ export default function EmployeeList() {
               <table class="w-full text-sm text-left text-gray-500 ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                   <tr>
-                    <th scope="col" class="px-6 py-3">
-                      User name
+                    <th scope="col" class="px-6 py-3 text-center">
+                      Name
                     </th>
-                    <th scope="col" class="px-6 py-3">
-                      Email
+                    <th scope="col" class="px-6 py-3 text-center">
+                      Employee Email
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                       Role
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                       Department
                     </th>
                   </tr>
@@ -143,15 +143,15 @@ export default function EmployeeList() {
                 <tbody>
                   {data.length > 0
                     ? data.map((user, i) => (
-                        <tr class="bg-white border-b ">
+                        <tr class="bg-white border-b text-center">
                           <th
                             scope="row"
                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                           >
                             {user.name + " " + user.lastname}
                           </th>
-                          <td class="px-6 py-4">{user.email}</td>
-                          <td class="px-6 py-4">
+                          <td class="px-6 py-4 text-center">{user.email}</td>
+                          <td class="px-6 py-4 text-center">
                             <select
                               value={user.role || "None"}
                               onChange={(e) =>
@@ -164,7 +164,7 @@ export default function EmployeeList() {
                               <option value="user">user</option>
                             </select>
                           </td>
-                          <td class="px-6 py-4">{user.department}</td>
+                          <td class="px-6 py-4 text-center">{user.department}</td>
                         </tr>
                       ))
                     : null}
