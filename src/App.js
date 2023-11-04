@@ -25,6 +25,7 @@ import Productivity from "./pages/Productivity";
 import PersonalAssets from "./pages/PersonalAssets";
 import AdminSidebar from "./component/AdminSidebar";
 
+import Dashboard from "./pages/Dashboard";
 const USER_TYPE = {
   PUBLIC: "Public User",
   NORMAL_USER: "user",
@@ -154,6 +155,15 @@ function App() {
             element={
               <AdminElement userRole={userRole}>
                 <MaintenancePage />
+              </AdminElement>
+            }
+          />
+          <Route
+            path="/dashboardPage"
+            element={
+              <AdminElement userRole={userRole}>
+                <AdminSidebar />
+                <Dashboard />
               </AdminElement>
             }
           />
