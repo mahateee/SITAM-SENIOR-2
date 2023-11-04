@@ -106,7 +106,7 @@ function Assets() {
 
   return (
     <div data-testid="asset-table">
-      <AdminSidebar />
+      {/* <AdminSidebar /> */}
       {showCautionDialog && (
         <Example
           open={showCautionDialog}
