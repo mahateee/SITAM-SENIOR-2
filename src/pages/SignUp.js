@@ -1,7 +1,9 @@
 import ReactDOM from "react-dom/client";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useRef, useState } from "react";
-import logo from "./logo3-1(2).png";
+import logo from "../images/logoS.svg";
+import frame from "../images/Frame.svg"
+
 import { useAuth } from "../context/AuthContext";
 // import axios from "axios";
 import {
@@ -59,7 +61,7 @@ function SignUp() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen "  style={{ backgroundImage: `url(${frame})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
       <div className="w-full max-w-sm p-4 mx-auto bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8">
         <form
           className="space-y-6"
@@ -170,8 +172,8 @@ function SignUp() {
           <button
             type="submit"
             onSubmit={handleSubmit}
-            className="flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-teal-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-          >
+            className="flex w-full justify-center rounded-md text-sm font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500"
+            >
             Sign up
           </button>
         </form>
@@ -179,7 +181,7 @@ function SignUp() {
           Already using SITAM?{" "}
           <Link
             to="/signin"
-            className="font-semibold leading-6 text-teal-600 hover:text-teal-500"
+            className="font-semibold leading-6 text-purple-600 hover:text-purple-500"
           >
             Sign in
           </Link>

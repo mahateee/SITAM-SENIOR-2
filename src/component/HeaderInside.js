@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FiUser, FiSettings } from "react-icons/fi";
-import logo from "./logo3-1(2).png";
+import logo from "../images/logoS.svg";
 
 export default function HeaderInside() {
   return (
@@ -9,9 +9,6 @@ export default function HeaderInside() {
       <div className="max-w-screen-xl relative mx-auto p-4">
         <Link to="/" className="flex items-center">
           <img src={logo} className="h-8 mr-3" alt="SITAM Logo" />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap">
-            SITAM
-          </span>
         </Link>
    
         </div>

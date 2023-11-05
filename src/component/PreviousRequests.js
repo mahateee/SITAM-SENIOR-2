@@ -91,7 +91,7 @@ const PreviousRequests = () => {
       {/* <!-- Card header --> */}
       <div class="items-center justify-between lg:flex">
         <div class="mb-4 lg:mb-0">
-          <h3 class="mb-2 text-xl font-bold text-gray-900">Assets Requests</h3>
+          <h3 class="mb-2 text-xl font-bold text-gray-900">Assets Requests 📤</h3>
           <span class="text-base font-normal text-gray-500 ">
             List of Latest Request.
           </span>

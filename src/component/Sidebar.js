@@ -1,9 +1,40 @@
 import React, { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import logo from "./logo3-1(2).png";
+import logo from "../images/logoS.svg";
+import { useEffect } from "react";
+import {doc,getDoc,} from "firebase/firestore";
+import { db } from "../firebase/index";
+import { useAuth } from "../context/AuthContext";
 
 function Sidebar({ children }) {
+  const [formData, setFormData] = useState({
+    profileImage: "",
+  });
+  const { currentUser, logout } = useAuth();
+  const userRef = doc(db, "Account", currentUser.uid);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          console.log(userData);
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+        
+            profileImage: userData.profileImage,
+          }));
+        } else {
+          console.log("User document does not exist");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    fetchUserData();
+  }, [currentUser.uid]);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
@@ -51,16 +82,16 @@ function Sidebar({ children }) {
                   ></path>
                 </svg>
               </button>
-              <a href="https://flowbite.com" class="flex ml-2 md:mr-24">
+              <a href="/" class="flex ml-2 md:mr-24">
                 {/* <img
                   src="https://flowbite.com/docs/images/logo.svg"
                   class="h-8 mr-3"
                   alt="FlowBite Logo"
                 /> */}
                 <img src={logo} className="h-8 mr-3" alt="SITAM Logo" />
-                <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap ">
+                {/* <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap ">
                   SITAM
-                </span>
+                </span> */}
               </a>
             </div>
             <div class="flex items-center">
@@ -75,18 +106,11 @@ function Sidebar({ children }) {
                   >
                     <span class="sr-only">Open user menu</span>
                     <div class="relative w-8 h-8 overflow-hidden bg-gray-200 rounded-full dark-bg-gray-600 ">
-                      <svg
-                        className="absolute inset-0 w-full h-full text-gray-500 top-1"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                        clipRule="evenodd"
-                      ></path>
-                      </svg>
+                    <img
+                src={formData.profileImage}
+                alt="Profile"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
                     </div>
                   </button>
                 </div>

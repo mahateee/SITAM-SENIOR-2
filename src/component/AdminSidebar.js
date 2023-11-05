@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import logo from "./logo3-1(2).png";
+import logo from "../images/logoS.svg";
 
 function AdminSidebar({ children }) {
   const [isOpen, setIsOpen] = useState(false);

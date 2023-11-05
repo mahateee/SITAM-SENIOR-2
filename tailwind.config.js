@@ -2,7 +2,13 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    fontFamily:{
+      'mono': ['ui-monospace', 'SFMono-Regular',]
+    },
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-animated')
+  
+  ],
 };

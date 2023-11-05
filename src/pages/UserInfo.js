@@ -6,6 +6,7 @@ import { firestore } from "../firebase/index";
 import { useState } from "react";
 import AccountAlerts from "../component/AccountAlerts";
 import { useNavigate } from 'react-router-dom';
+import frame from "../images/FrameInside.svg";
 import {
   collection,
   doc,
@@ -24,6 +25,7 @@ export default function UserInfo() {
     lastname: "",
     department: "",
     email: "",
+    profileImage: "",
   });
 
   const handleChange = (e) => {
@@ -52,6 +54,7 @@ export default function UserInfo() {
             lastname: userData.lastname,
             department: userData.department,
             email: userData.email,
+            profileImage: userData.profileImage,
           }));
         } else {
           console.log("User document does not exist");
@@ -75,6 +78,7 @@ export default function UserInfo() {
           lastname: formData.lastname,
           department: formData.department,
           email: formData.email,
+           profileImage: formData.profileImage,
         });
         console.log("Document successfully updated!");
         setShowUsertAlert(true);
@@ -95,37 +99,37 @@ export default function UserInfo() {
     <div>
       <Sidebar />
       {showAccountAlert && <AccountAlerts />}
-      <div className="flex items-center justify-center h-screen">
-        <div className="mx-auto max-w-screen-lg p-6 bg-white border rounded shadow-xl w-[900px]" style={{ height: '100vh' }}>
-          <div className="flex items-center">
-            <div class="relative w-20 h-20 overflow-hidden bg-gray-100 rounded-full dark-bg-gray-600 mr-8 ml-8">
-              <svg
-                className="absolute inset-0 w-full h-full text-gray-400 top-2"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clipRule="evenodd"
-                ></path>
-              </svg>
+
+      <div className="flex items-center justify-center h-screen" style={{ backgroundImage: `url(${frame})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+       
+        <div className="p-6 bg-white border rounded-lg shadow-xl w-[80%]">
+          <div class="mb-4 lg:mb-0">
+            <h1 class="mb-2 text-3xl font-bold text-gray-900">Settings ⚙️ </h1>
+            <span class="text-base font-normal text-gray-500">
+              Edit your personal information
+            </span>
+          </div>
+          <div className="flex items-center mt-6">
+            <div className="relative w-20 h-20 overflow-hidden bg-gray-100 rounded-full dark-bg-gray-600 mr-8 ml-8">
+            <img
+      src={formData.profileImage}
+      alt="Profile"
+      className="absolute inset-0 w-full h-full object-cover"
+    />
             </div>
             <div>
-              <h3 className="text-3xl font-semibold leading-10 text-gray-900">
+              <h3 className="text-xl font-semibold leading-10 text-gray-900">
                 Account Profile
-                {/* {userData} */}
               </h3>
-              <p className="mt-1 max-w-2xl text-md leading-10 text-gray-500">
+              <p className="mt-1 max-w-2xl text-sm leading-10 text-gray-500">
                 View and Edit Your Account Information.
               </p>
             </div>
-            <div className="ml-auto mr-4"> {/* Use ml-auto to push the button to the right */}
+            <div className="ml-auto mr-4">
               <button
                 onClick={handleOpen}
                 type="button"
-                class="inline-flex items-center text-teal-800 bg-white-700 rounded-lg hover:bg-white-800 font-medium text-lg px-5 py-2.5 text-center"
+                class="inline-flex items-center text-blue-500 bg-white-700 rounded-lg hover:bg-white-800 font-medium text-lg px-5 py-2.5 text-center"
               >
                 <svg
                   aria-hidden="true"
@@ -145,10 +149,13 @@ export default function UserInfo() {
               </button>
             </div>
           </div>
-          <div className="mt-6 border-t border-gray-100">
+          <div className=" p-6 border-t w-[80%] border-gray-100">
             <dl className="divide-y divide-gray-100">
               <form onSubmit={handleSubmit}>
-                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+ 
+
+         
                   <dt className="text-lg font-medium leading-6 text-gray-900 pr-6">
                     Full Name
                   </dt>
@@ -180,6 +187,24 @@ export default function UserInfo() {
                       formData && formData.name + " " + formData.lastname
                     )}
                   </dd>
+                  {open && (
+    <>
+      <dt className="text-lg font-medium leading-6 text-gray-900 pr-6">
+        Profile Image URL
+      </dt>
+      <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+        <input
+          type="text"
+          name="profileImage"
+          id="profileImage"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="Enter profile image URL"
+          onChange={handleChange}
+          value={formData.profileImage}
+        />
+      </dd>
+    </>
+  )}
                 </div>
                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-lg font-medium leading-6 text-gray-900 pr-6">
@@ -231,14 +256,14 @@ export default function UserInfo() {
                   <div className="flex items-center justify-center space-x-12">
                     <button
                       type="submit"
-                      class=" inline-flex items-center text-white bg-teal-700 rounded-lg hover:bg-teal-800 font-medium text-md px-14 py-2 text-center "
+                      class=" inline-flex items-center text-black  rounded-lg font-medium text-md px-14 py-2 text-center font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500 "
                       style={{ marginTop: '280px' }}
                     >
                       Save Changes
                     </button>
                     <button
                       onClick={handleOpen}
-                      className="inline-flex items-center text-gray-500 border border-gray-500 bg-white rounded-lg hover:bg-white font-medium text-md px-10 py-2 text-center"
+                      class=" inline-flex items-center text-black  rounded-lg font-medium text-md px-14 py-2 text-center font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500 "
                       style={{ marginTop: '280px' }}
                     >
                       Done</button>
@@ -250,5 +275,6 @@ export default function UserInfo() {
         </div>
       </div>
     </div>
+    
   );
 }

@@ -94,7 +94,7 @@ const AssetsTable = () => {
       {/* <!-- Card header --> */}
       <div class="items-center justify-between lg:flex">
         <div class="mb-4 lg:mb-0">
-          <h3 class="mb-2 text-xl font-bold text-gray-900">Current Assets </h3>
+          <h3 class="mb-2 text-xl font-bold text-gray-900">Current Assets 🖥️ </h3>
           <span class="text-base font-normal text-gray-500 ">
             A List of Current Assets.
           </span>
@@ -161,12 +161,12 @@ const AssetsTable = () => {
                         <button
                           onClick={() => handleReturn(asset.id, id)}
                           type="button"
-                          className="text-white bg-teal-800 hover:bg-teal-700 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-6 mb-2 focus:outline-none">
+                          className="inline-flex items-center text-black  rounded-lg font-medium text-md px-14 py-2 text-center font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500 ">
                           Return
                         </button>
                         <Link
                           to={`/Request/Maintenance/${asset.id}`}
-                          className="text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-6 mb-2 focus:outline-none">
+                          className="inline-flex items-center text-black  rounded-lg font-medium text-md px-14 py-2 text-center font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500 ">
                             Maintenance</Link>
                       </td>
                     </tr>

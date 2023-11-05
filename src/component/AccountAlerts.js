@@ -11,7 +11,7 @@ function AccountAlerts(){
     };
   
     return isAlertVisible ? (
-      <div role="alert" className="rounded-xl border border-green-300 bg-green-100 p-4 ml-24 mr-12">
+      <div role="alert" className="rounded-xl border border-green-300 bg-green-100 p-4 ml-24 mr-12" >
         <div className="flex items-start gap-4">
           <span className="text-green-600">
             <svg
