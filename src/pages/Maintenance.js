@@ -92,11 +92,11 @@ const Maintenance = () => {
   }, [id]);
 
   return (
-    <section className="bg-white overflow-y-auto overflow-x-hidden flex justify-center items-center w-full md:inset-0 h-modal md:h-full" style={{ height: '100vh' }}>
+    <section className="bg-gray-200 overflow-y-auto overflow-x-hidden flex justify-center items-center w-full md:inset-0 h-modal md:h-full" style={{ height: '100vh' }}>
       <div className="relative p-4 w-full max-w-2xl h-full md:h-auto">
         <div class="relative p-4 bg-white rounded-lg shadow-xl sm:p-5">
-          <div class="pb-4 mb-4 rounded-t border-b sm:mb-5">
-            <h3 className="text-lg font-semibold text-gray-900 ">Request Maintenance</h3>
+          <div class="pb-4 mb-4 rounded-t border-b-2 sm:mb-5">
+            <h3 className="text-lg font-semibold text-blue-800 ">Request Maintenance Form</h3>
           </div>
           <form onSubmit={handleSubmit} className="mb-4 px-10">
             <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
@@ -249,13 +249,13 @@ const Maintenance = () => {
               <button
                 type="button"
                 onClick={() => navigate('/personalassets')}
-                className="ml-2 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                className=" inline-flex items-center text-black  rounded-lg font-medium text-md px-14 py-2 text-center font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500 "
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="bg-teal-700 hover:bg-teal-900 text-white font-bold my-5 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="inline-flex justify-center items-center my-6 py-2 px-4 text-base font-medium text-center text-white rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-purple-500 focus:ring-4 focus:ring-green-300 "
               >
                 Submit Request
               </button>

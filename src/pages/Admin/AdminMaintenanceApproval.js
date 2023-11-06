@@ -34,7 +34,7 @@ const AdminMaintenanceApproval = ({ requests, onApprove, onReject }) => (
                     scope="col"
                     class="p-4 text-center text-xs font-medium tracking-wider text-left text-gray-500 uppercase "
                   >
-                    Date & Time
+                    Desired Date
                   </th>
                   <th
                     scope="col"

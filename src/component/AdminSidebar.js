@@ -2,8 +2,40 @@ import React, { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import logo from "../images/logoS.svg";
+import { useEffect } from "react";
+import { doc, getDoc, } from "firebase/firestore";
+import { db } from "../firebase/index";
+import { useAuth } from "../context/AuthContext";
 
 function AdminSidebar({ children }) {
+
+  const [formData, setFormData] = useState({
+    profileImage: "",
+  });
+  const { currentUser, logout } = useAuth();
+  const userRef = doc(db, "Account", currentUser.uid);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          console.log(userData);
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+
+            profileImage: userData.profileImage,
+          }));
+        } else {
+          console.log("User document does not exist");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    fetchUserData();
+  }, [currentUser.uid]);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
@@ -74,18 +106,11 @@ function AdminSidebar({ children }) {
                   >
                     <span class="sr-only">Open user menu</span>
                     <div class="relative w-8 h-8 overflow-hidden bg-gray-200 rounded-full dark-bg-gray-600 ">
-                      <svg
-                        className="absolute inset-0 w-full h-full text-gray-500 top-1"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
+                      <img
+                        src={formData.profileImage}
+                        alt="Profile"
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
                     </div>
                   </button>
                 </div>
@@ -96,9 +121,8 @@ function AdminSidebar({ children }) {
                     bottom: "-82px", // Adjust this value to move the dropdown up or down.
                     right: "0",
                   }}
-                  class={` ${
-                    isUserDropdownOpen ? "block" : "hidden"
-                  } my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow`}
+                  class={` ${isUserDropdownOpen ? "block" : "hidden"
+                    } my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow`}
                   id="dropdown-user"
                 >
                   <ul class="py-1" role="none">
@@ -134,9 +158,8 @@ function AdminSidebar({ children }) {
       <button onClick={toggleSidebar}>button</button>
       <aside>
         <div
-          className={`fixed left-0 px-4 top-0 drop-shadow-2xl h-screen w-64  pt-20 bg-white z-40 text-white transition-transform duration-300 transform ${
-            isOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+          className={`fixed left-0 px-4 top-0 drop-shadow-2xl h-screen w-64  pt-20 bg-white z-40 text-white transition-transform duration-300 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
         >
           <ul class="space-y-2 text-gray-900 py-4 font-medium">
             <li>
@@ -150,7 +173,7 @@ function AdminSidebar({ children }) {
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
-                    viewBox="0 0 20 18"
+                    viewBox="0 0 18 18"
                   >
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                     <path
@@ -182,18 +205,16 @@ function AdminSidebar({ children }) {
                       d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
                     />
                   </svg>
-                  <span class="ml-3">Employee</span>
+                  <span class="ml-3">Employees</span>
                 </a>
               </Link>
             </li>
-
             {/* Pages button with active class based on isPagesActive state */}
             <li>
               <button
                 type="button"
-                className={`flex items-center  p-2 w-full text-base rounded-lg transition duration-75 group hover:bg-gray-100 ${
-                  isPagesActive ? "bg-gray-200 " : ""
-                }`}
+                className={`flex items-center  p-2 w-full text-base rounded-lg transition duration-75 group hover:bg-gray-100 ${isPagesActive ? "bg-gray-200 " : ""
+                  }`}
                 aria-controls="dropdown-pages"
                 data-collapse-toggle="dropdown-pages"
                 onClick={handlePagesClick}
@@ -231,29 +252,25 @@ function AdminSidebar({ children }) {
                   </svg>
                 </div>
               </button>
-
               {/* Dropdown menu */}
               <ul
                 id="dropdown-pages"
-                className={`py-2 space-y-2 text-gray-900 ${
-                  isPagesActive ? "block" : "hidden"
-                }`}
+                className={`py-2 space-y-2 text-gray-900 ${isPagesActive ? "block" : "hidden"
+                  }`}
               >
                 <li>
                   <Link to="/Asset">
                     <a
                       href="#"
-                      className={`flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group ${
-                        isPagesActive
+                      className={`flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group ${isPagesActive
                           ? "hover:bg-gray-100 "
                           : "hover:bg-gray-100 "
-                      }`}
+                        }`}
                     >
                       Assets
                     </a>
                   </Link>
                 </li>
-
                 <li>
                   <Link to="/requestPage">
                     {/* Replace "/settings" with your desired URL */}
@@ -264,7 +281,6 @@ function AdminSidebar({ children }) {
                     </a>
                   </Link>
                 </li>
-
                 <li>
                   <Link to="/returnPage">
                     <a
@@ -286,7 +302,7 @@ function AdminSidebar({ children }) {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
-                    viewBox="0 0 24 24"
+                    viewBox="0 0 24 20"
                     stroke-width="1.5"
                     stroke="currentColor"
                     class="w-6 h-6 text-gray-500 hover:text-gray-900"
@@ -302,7 +318,6 @@ function AdminSidebar({ children }) {
                       d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-
                   <span class="ml-3">Maintenance</span>
                 </a>
               </Link>
@@ -323,13 +338,11 @@ function AdminSidebar({ children }) {
                     <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                     <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                   </svg>
-
                   <span class="ml-3">Dashboard</span>
                 </div>
               </Link>
             </li>
           </ul>
-
           {/* Additional sections in the sidebar */}
           <ul className="pt-4 mt-4 space-y-2  text-gray-900 font-medium border-t border-gray-200 light:border-gray-700">
             <li>

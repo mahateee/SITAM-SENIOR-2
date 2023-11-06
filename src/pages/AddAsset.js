@@ -175,13 +175,13 @@ export default function AddAsset() {
   }, []);
 
   return (
-    <section class="bg-white overflow-y-auto overflow-x-hidden flex justify-center items-center w-full md:inset-0 h-modal md:h-full">
+    <section class="bg-gray-200 overflow-y-auto overflow-x-hidden flex justify-center items-center w-full md:inset-0 h-modal md:h-full">
       <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
         {/* <!-- Modal content --> */}
         <div class="relative p-4 bg-white rounded-lg shadow-xl sm:p-5">
           {/* <!-- Modal header --> */}
-          <div class="pb-4 mb-4 rounded-t border-b sm:mb-5">
-            <h3 class="text-lg font-semibold text-gray-900 ">Add Asset</h3>
+          <div class="pb-4 mb-4 rounded-t border-b-2 sm:mb-5">
+            <h3 class="text-2xl font-semibold text-blue-800 ">Add Asset Form</h3>
           </div>
           <AssetForm
             showEmployeeField={showEmployeeField}

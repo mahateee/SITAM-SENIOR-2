@@ -78,7 +78,7 @@ export default function UserInfo() {
           lastname: formData.lastname,
           department: formData.department,
           email: formData.email,
-           profileImage: formData.profileImage,
+          profileImage: formData.profileImage,
         });
         console.log("Document successfully updated!");
         setShowUsertAlert(true);
@@ -98,64 +98,56 @@ export default function UserInfo() {
   return (
     <div>
       <Sidebar />
-      {showAccountAlert && <AccountAlerts />}
-
-      <div className="flex items-center justify-center h-screen" style={{ backgroundImage: `url(${frame})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
-       
-        <div className="p-6 bg-white border rounded-lg shadow-xl w-[80%]">
-          <div class="mb-4 lg:mb-0">
-            <h1 class="mb-2 text-3xl font-bold text-gray-900">Settings ⚙️ </h1>
-            <span class="text-base font-normal text-gray-500">
-              Edit your personal information
-            </span>
-          </div>
-          <div className="flex items-center mt-6">
-            <div className="relative w-20 h-20 overflow-hidden bg-gray-100 rounded-full dark-bg-gray-600 mr-8 ml-8">
-            <img
-      src={formData.profileImage}
-      alt="Profile"
-      className="absolute inset-0 w-full h-full object-cover"
-    />
-            </div>
+      <div className="flex items-center justify-center h-screen" style={{ backgroundImage: `url(${frame})`, backgroundSize: 'cover', backgroundPosition: 'center' }} >
+        {showAccountAlert && <AccountAlerts />}
+        <div className="p-6 bg-white border rounded-lg shadow-xl w-[80%]" style={{ height: '82vh' }}>
+          <div class="mb-4 lg:mb-0  flex justify-between pb-4 mb-4 rounded-t border-b-2 sm:mb-5">
             <div>
-              <h3 className="text-xl font-semibold leading-10 text-gray-900">
-                Account Profile
-              </h3>
-              <p className="mt-1 max-w-2xl text-sm leading-10 text-gray-500">
+              <h1 class="mb-2 text-3xl font-bold text-gray-900">Account Settings 👤 </h1>
+              <span class="text-base font-normal text-gray-500">
                 View and Edit Your Account Information.
-              </p>
+              </span>
             </div>
-            <div className="ml-auto mr-4">
-              <button
-                onClick={handleOpen}
-                type="button"
-                class="inline-flex items-center text-blue-500 bg-white-700 rounded-lg hover:bg-white-800 font-medium text-lg px-5 py-2.5 text-center"
+            <button
+              onClick={handleOpen}
+              type="button"
+              class="inline-flex items-center text-blue-500 bg-white-700 rounded-lg hover:bg-white-800 font-medium text-lg px-5 py-2.5 text-center"
+            >
+              <svg
+                aria-hidden="true"
+                class="mr-1 -ml-1 w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  aria-hidden="true"
-                  class="mr-1 -ml-1 w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
-                  <path
-                    fill-rule="evenodd"
-                    d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                Edit
-              </button>
-            </div>
+                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
+                <path
+                  fill-rule="evenodd"
+                  d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              Edit
+            </button>
           </div>
-          <div className=" p-6 border-t w-[80%] border-gray-100">
+          <div className="flex items-center mt-8">
+            <div className="relative w-24 h-24 overflow-hidden bg-gray-100 rounded-full dark-bg-gray-600 mr-8 ml-12">
+              <img
+                src={formData.profileImage}
+                alt="Profile"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+            {/* <div>
+              <h3 className="text-xl font-semibold leading-10 text-gray-900">
+              Profile Information
+              </h3>
+            </div> */}
+          </div>
+          <div className=" p-6 w-[80%] border-gray-200">
             <dl className="divide-y divide-gray-100">
               <form onSubmit={handleSubmit}>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
- 
-
-         
+                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" >
                   <dt className="text-lg font-medium leading-6 text-gray-900 pr-6">
                     Full Name
                   </dt>
@@ -188,23 +180,23 @@ export default function UserInfo() {
                     )}
                   </dd>
                   {open && (
-    <>
-      <dt className="text-lg font-medium leading-6 text-gray-900 pr-6">
-        Profile Image URL
-      </dt>
-      <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-        <input
-          type="text"
-          name="profileImage"
-          id="profileImage"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="Enter profile image URL"
-          onChange={handleChange}
-          value={formData.profileImage}
-        />
-      </dd>
-    </>
-  )}
+                    <>
+                      <dt className="text-lg font-medium leading-6 text-gray-900 pr-6">
+                        Profile Image URL
+                      </dt>
+                      <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        <input
+                          type="text"
+                          name="profileImage"
+                          id="profileImage"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                          placeholder="Enter profile image URL"
+                          onChange={handleChange}
+                          value={formData.profileImage}
+                        />
+                      </dd>
+                    </>
+                  )}
                 </div>
                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-lg font-medium leading-6 text-gray-900 pr-6">
@@ -251,22 +243,22 @@ export default function UserInfo() {
                     )}
                   </dd>
                 </div>
-
                 {open ? (
-                  <div className="flex items-center justify-center space-x-12">
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={handleOpen}
+                      class=" inline-flex ml-6 items-center text-black  rounded-lg font-medium text-md px-14 py-2 text-center font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500 "
+                    // style={{ marginTop: '6px' }}
+                    >
+                      Done
+                    </button>
                     <button
                       type="submit"
-                      class=" inline-flex items-center text-black  rounded-lg font-medium text-md px-14 py-2 text-center font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500 "
-                      style={{ marginTop: '280px' }}
+                      class="inline-flex mr-6 justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-purple-500 "
+                    // style={{ marginTop: '6px' }}
                     >
                       Save Changes
                     </button>
-                    <button
-                      onClick={handleOpen}
-                      class=" inline-flex items-center text-black  rounded-lg font-medium text-md px-14 py-2 text-center font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500 "
-                      style={{ marginTop: '280px' }}
-                    >
-                      Done</button>
                   </div>
                 ) : null}
               </form>
@@ -275,6 +267,5 @@ export default function UserInfo() {
         </div>
       </div>
     </div>
-    
   );
 }

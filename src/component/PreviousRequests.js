@@ -132,7 +132,7 @@ const PreviousRequests = () => {
           <div className="">
             <Link
               to="/newRequest"
-              className="flex items-center justify-center  bg-teal-700  text-white hover:bg-teal-800 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-4 py-2  focus:outline-none"
+              className="inline-flex justify-center items-center py-2 px-4 text-base font-medium text-center text-white rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-purple-500"
             >
               <svg
                 className="h-3.5 w-3.5 mr-2"
@@ -156,7 +156,7 @@ const PreviousRequests = () => {
                 onClick={handleOpenFilter}
                 id="filterDropdownButton"
                 data-dropdown-toggle="filterDropdown"
-                class="flex   items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
+                class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
                 type="button"
               >
                 <svg
