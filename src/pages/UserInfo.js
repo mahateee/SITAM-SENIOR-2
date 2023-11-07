@@ -211,9 +211,18 @@ export default function UserInfo() {
                           onChange={handleChange}
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
                         >
-                          <option value="">Select Category</option>
+                          <option value="">Select Department</option>
+                          <option value="Business">Business Development</option>
+                          <option value="Finance">Finance</option>
                           <option value="HR">HR</option>
-                          <option value="FIN">FIN</option>
+                          <option value="Internal">Internal Auditors</option>
+                          <option value="IT">IT</option>
+                          <option value="Legal">Legal</option>
+                          <option value="Marketing">Marketing</option>
+                          <option value="Operation">Operations</option>
+                          <option value="Quality">Quality Control</option>
+                          <option value="Research">Research</option>
+                          <option value="Sales">Sales</option>
                         </select>
                       </div>
                     ) : (

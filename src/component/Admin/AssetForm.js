@@ -134,7 +134,7 @@ export default function AssetForm({
           <>
             <div class="sm:col-span-2 pb-2 mb-2 rounded-t border-b sm:mb-2">
               <h3 class="text-lg font-semibold text-gray-900 ">
-                Employee Info
+                Employee Information
               </h3>
             </div>
             <div className="">
