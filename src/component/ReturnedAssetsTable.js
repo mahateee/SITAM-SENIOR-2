@@ -31,7 +31,7 @@ const ReturnedAssetsTable = () => {
 
   return (
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
-      <h3 class="mb-2 text-xl font-bold text-gray-900">Returned Assets ✅ </h3>
+      <h3 class="mb-2 text-xl font-bold text-gray-900">Returned Assets 🔄 </h3>
       <span className="text-base font-normal text-gray-500">
         Returned Assets
       </span>

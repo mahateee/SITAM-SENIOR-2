@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import TextInput from "../Shared/Input/TextInput";
 import DateInput from "../Shared/Input/DateInput";
 import SelectInput from "../Shared/Input/SelectInput";
-
 export default function AssetForm({
   handleChange,
   handleSubmit,
@@ -33,7 +32,7 @@ export default function AssetForm({
     { label: "Phone", value: "Phone" },
   ];
   return (
-    <form onSubmit={handleSubmit} className="mb-4 px-10">
+    <form onSubmit={handleSubmit} className="mb-4 px-10" >
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
         <TextInput
           label="Asset Name"
