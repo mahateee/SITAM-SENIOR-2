@@ -99,10 +99,14 @@ export default function AdminAccount() {
   };
 
   return (
-    <div>
+    <div style={{ position: 'relative' }}>
       <AdminSidebar />
       <div className="flex items-center justify-center h-screen" style={{ backgroundImage: `url(${frame})`, backgroundSize: 'cover', backgroundPosition: 'center' }} >
-        {showAccountAlert && <AccountAlerts />}
+        {showAccountAlert && (
+          <div style={{ position: 'absolute', top: '90px', right: '10px' }}>
+            <AccountAlerts />
+          </div>
+        )}
         <div className="p-6 bg-white border rounded-lg shadow-xl w-[80%]" style={{ height: '82vh' }}>
           <div class="mb-4 lg:mb-0  flex justify-between pb-4 mb-4 rounded-t border-b-2 sm:mb-5">
             <div>
@@ -141,11 +145,6 @@ export default function AdminAccount() {
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
-            {/* <div>
-              <h3 className="text-xl font-semibold leading-10 text-gray-900">
-              Profile Information
-              </h3>
-            </div> */}
           </div>
           <div className=" p-6 w-[80%] border-gray-200">
             <dl className="divide-y divide-gray-100">
@@ -251,14 +250,12 @@ export default function AdminAccount() {
                     <button
                       onClick={handleOpen}
                       class=" inline-flex ml-6 items-center text-black  rounded-lg font-medium text-md px-14 py-2 text-center font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500 "
-                    // style={{ marginTop: '6px' }}
                     >
                       Done
                     </button>
                     <button
                       type="submit"
                       class="inline-flex mr-6 justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-purple-500 "
-                    // style={{ marginTop: '6px' }}
                     >
                       Save Changes
                     </button>

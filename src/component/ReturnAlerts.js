@@ -2,49 +2,39 @@ import { useState } from 'react';
 
 //Return alert.
 function ReturnAlerts() {
-    const [isAlertVisible, setIsAlertVisible] = useState(true);
-  
-    const handleDismiss = () => {
-      // When the button is clicked, hide the alert
-      setIsAlertVisible(false);
-    };
-  
-    return isAlertVisible ? (
-      <div role="alert" className="rounded-xl border border-green-300 bg-green-100 p-4">
-        <div className="flex items-start gap-4">
-          <span className="text-green-600">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-6 w-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </span>
-    
-          <div className="flex-1">
-            <strong className="block text-lg font-medium text-gray-900 font-bold">
-            Return Request Submitted
-            </strong>
-    
-            <p className="mt-1 text-sm text-gray-700">
-            Your request to return an asset has been successfully submitted.
+  const [isAlertVisible, setIsAlertVisible] = useState(true);
+
+  const handleDismiss = () => {
+    // When the button is clicked, hide the alert
+    setIsAlertVisible(false);
+  };
+
+  return isAlertVisible ? (
+    <div className="flex w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg bg-white border border-emerald-200">
+      <div className="flex items-center justify-center w-12 bg-emerald-500">
+        <svg
+          className="w-6 h-6 text-white fill-current"
+          viewBox="0 0 40 40"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
+        </svg>
+      </div>
+      <div className="px-4 py-2 -mx-3">
+        <div className="mx-3 flex justify-between items-center">
+          <div>
+            <span className="text-lg font-semibold text-emerald-500 dark:text-emerald-400">
+              Success
+            </span>
+            <p className="text-md text-gray-600 dark:text-gray-800">
+              Return asset request submitted successfully.
             </p>
           </div>
-    
           <button
+            onClick={handleDismiss}
             className="text-gray-500 transition hover:text-gray-600"
-            onClick={handleDismiss} // Add the onClick event handler here
           >
             <span className="sr-only">Dismiss popup</span>
-    
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -58,6 +48,7 @@ function ReturnAlerts() {
           </button>
         </div>
       </div>
-    ) : null;
-  }
+    </div>
+  ) : null;
+}
 export default ReturnAlerts;
