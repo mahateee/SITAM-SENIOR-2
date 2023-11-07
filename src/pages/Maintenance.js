@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc, addDoc, collection, updateDoc } from 'firebase/firestore';
-import { db } from '../firebase/index';
+import { db, Timestamp} from '../firebase/index';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,9 +14,14 @@ const Maintenance = () => {
     remarks: '',
     urgency: '',
     user: '',
-  });
+    predictedUrgency:'',
+    approved: false,
+    status: "Waiting",
+    date: Timestamp.fromDate(new Date()),  });
 
-  const handleChange = (e) => {
+
+
+    const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -37,10 +42,19 @@ const Maintenance = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const currentDate = new Date();
+      
+      // Update the formData with the current date
+      setFormData((prevData) => ({
+        ...prevData,
+        date: Timestamp.fromDate(currentDate),
+      }));
+  
       const maintanceRequestRef = collection(db, 'Maintainance_Requests');
       const newDocRef = await addDoc(maintanceRequestRef, formData);
       console.log('Document written with ID: ', newDocRef.id);
-      await updateAssetStatus(formData.assetID);
+  
+      // Reset the form data
       setFormData({
         assetID: id || '',
         category: '',
@@ -48,14 +62,23 @@ const Maintenance = () => {
         remarks: '',
         urgency: '',
         user: '',
+        predictedUrgency:'',
+        approved: false,
+        status: 'Waiting',
+        date: Timestamp.fromDate(new Date()), // Reset date to current date
       });
-      // Set showSuccessAlert to true and navigate to Request page
+  
+      // Update the asset status after adding the document
+      await updateAssetStatus(formData.assetID);
+  
+      // Set showSuccessAlert to true and navigate to the Request page
       navigate('/personalassets', { state: { showMaintenanceAlert: true } });
-
+  
     } catch (error) {
-      console.error('Error adding document: ', error);
+      console.error('Error adding document:', error);
     }
   };
+  
 
   useEffect(() => {
     const fetchAssetData = async () => {

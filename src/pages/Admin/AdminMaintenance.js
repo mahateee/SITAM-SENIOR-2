@@ -8,7 +8,6 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../../firebase/index";
-
 export default function AdminMaintenance() {
   const [MaintainanceList, setMaintainance] = useState([]);
   const [searchText, setSearchText] = useState([]);
@@ -178,6 +177,9 @@ export default function AdminMaintenance() {
                     <th scope="col" className="px-4 py-3 text-center">
                       Urgency
                     </th>
+                    <th scope="col" className="px-4 py-3 text-center">
+                     Predicted Urgency
+                    </th>
                     <th scope="col" class="px-4 py-3 text-center">
                       Status
                     </th>
@@ -204,6 +206,7 @@ export default function AdminMaintenance() {
                           <td className="px-4 py-3 text-center">{main.remarks}</td>
                           <td className="px-4 py-3 text-center">{main.assetID}</td>
                           <td className="px-4 py-3 text-center">{main.urgency}</td>
+                          <td className="px-4 py-3 text-center">{main.predictedUrgency}</td>
                           <td className="px-4 py-3 text-center">
                             <select
                               value={main.status || "Waiting"}
