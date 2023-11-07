@@ -8,6 +8,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../../firebase/index";
+import { formatDate } from "../../component/functions/formatDate";
 
 const AdminMaintenanceApproval = ({ requests, onApprove, onReject }) => (
   <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
@@ -46,27 +47,27 @@ const AdminMaintenanceApproval = ({ requests, onApprove, onReject }) => (
               </thead>
               <tbody class="bg-white text-center ">
                 {requests.length > 0 ? (
-                  requests.map((req, id) => (
+                  requests.map((main, id) => (
                     <tr key={id} className="border-b">
                       <th
                         scope="row"
                         className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap"
                       >
-                        {req.user}
+                        {main.user}
                       </th>
                       <td className="p-4 text-sm font-normal   text-gray-900 whitespace-nowrap">
-                        $$$$
+                      {main.formattedDate}
                       </td>
                       <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap">
                         <button
                           className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
-                          onClick={() => onApprove(req.id)}
+                          onClick={() => onApprove(main.id)}
                         >
                           Approve
                         </button>
                         <button
                           className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
-                          onClick={() => onReject(req.id)}
+                          onClick={() => onReject(main.id)}
                         >
                           Reject
                         </button>
@@ -90,7 +91,7 @@ const AdminMaintenanceApproval = ({ requests, onApprove, onReject }) => (
 );
 
 const AdminNewRequestsTable = () => {
-  const [requestsList, setRequestsList] = useState([]);
+  const [MaintainanceList, setMaintainance] = useState([]);
 
   useEffect(() => {
     const q = query(
@@ -100,13 +101,20 @@ const AdminNewRequestsTable = () => {
     const unsub = onSnapshot(q, (querySnapshot) => {
       let todosArray = [];
       querySnapshot.forEach((doc) => {
-        todosArray.push({ ...doc.data(), id: doc.id });
+        const data = doc.data();
+        const dateField = data.date;
+        todosArray.push({
+          ...data,
+          id: doc.id,
+          formattedDate: dateField ? formatDate(dateField) : "N/A", // Use "N/A" or any default value if date is undefined
+        });
       });
-      setRequestsList(todosArray);
+      console.log("Fetched data:", todosArray); // Add this line
+      setMaintainance(todosArray);
     });
     return () => unsub();
   }, []);
-
+  
   const handleApprove = (requestId) => {
     updateRequestStatus(requestId, "Pending");
   };
@@ -121,7 +129,7 @@ const AdminNewRequestsTable = () => {
       // Update the status field to "Approved" and set approved to true
       await updateDoc(requestRef, { status: newStatus, approved: true });
 
-      setRequestsList((prevRequests) =>
+      setMaintainance((prevRequests) =>
         prevRequests.filter((request) => request.id !== requestId)
       );
       console.log(`Request ${requestId} status updated to ${newStatus}`);
@@ -133,7 +141,7 @@ const AdminNewRequestsTable = () => {
     <div className="overflow-x-auto">
       {/* Display the table for new requests awaiting approval */}
       <AdminMaintenanceApproval
-        requests={requestsList}
+        requests={MaintainanceList}
         onApprove={handleApprove}
         onReject={handleReject}
       />

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-import frame from "../../images/FrameInside.svg"
+import frame from "../../images/InsideFrame.svg"
 
 import {
   collection,
