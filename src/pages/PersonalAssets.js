@@ -12,8 +12,16 @@ function PersonalAssets(){
         <>
         <Sidebar />
         <div class="px-24 pt-6">
-        {showReturnAlert && <ReturnAlerts />}
-        {showMaintenanceAlert && <MaintenanceAlert />}
+        {showReturnAlert && (
+          <div style={{ position: 'absolute', top: '90px', right: '10px' }}>
+            <ReturnAlerts />
+          </div>
+        )}
+        {showMaintenanceAlert && (
+          <div style={{ position: 'absolute', top: '90px', right: '10px' }}>
+            <MaintenanceAlert />
+          </div>
+        )}
         {/* Adding space between components */}
         <div className="mb-8 lg:mb-12" />{" "}
         <AssetsTable />

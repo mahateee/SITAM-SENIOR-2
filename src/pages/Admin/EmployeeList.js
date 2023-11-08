@@ -48,9 +48,9 @@ export default function EmployeeList() {
             excludeColumns.includes(key)
               ? false
               : item[key]
-                  .toString()
-                  .toLowerCase()
-                  .includes(searchValue.toLowerCase())
+                .toString()
+                .toLowerCase()
+                .includes(searchValue.toLowerCase())
           );
         });
       });
@@ -73,6 +73,7 @@ export default function EmployeeList() {
       console.error("Error updating request status:", error);
     }
   };
+
   return (
     <>
       <AdminSidebar />
@@ -121,8 +122,7 @@ export default function EmployeeList() {
                 </form>
               </div>
             </div>
-
-            <div class="relative overflow-x-auto">
+            <div class="relative overflow-x-auto max-h-[600px]">
               <table class="w-full text-sm text-left text-gray-500 ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                   <tr>
@@ -143,36 +143,35 @@ export default function EmployeeList() {
                 <tbody>
                   {data.length > 0
                     ? data.map((user, i) => (
-                        <tr class="bg-white border-b text-center">
-                          <th
-                            scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                      <tr class="bg-white border-b text-center">
+                        <th
+                          scope="row"
+                          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                        >
+                          {user.name + " " + user.lastname}
+                        </th>
+                        <td class="px-6 py-4 text-center">{user.email}</td>
+                        <td class="px-6 py-4 text-center">
+                          <select
+                            value={user.role || "None"}
+                            onChange={(e) =>
+                              updateMaintancAssign(user.id, e.target.value)
+                            }
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                           >
-                            {user.name + " " + user.lastname}
-                          </th>
-                          <td class="px-6 py-4 text-center">{user.email}</td>
-                          <td class="px-6 py-4 text-center">
-                            <select
-                              value={user.role || "None"}
-                              onChange={(e) =>
-                                updateMaintancAssign(user.id, e.target.value)
-                              }
-                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                            >
-                              <option value="None">None</option>
-                              <option value="admin">admin</option>
-                              <option value="user">user</option>
-                            </select>
-                          </td>
-                          <td class="px-6 py-4 text-center">{user.department}</td>
-                        </tr>
-                      ))
+                            <option value="None">None</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">Employee</option>
+                          </select>
+                        </td>
+                        <td class="px-6 py-4 text-center">{user.department}</td>
+                      </tr>
+                    ))
                     : null}
                 </tbody>
               </table>
             </div>
           </div>
-
           {/* Adding space between components */}
           {/* < AdminMaintenanceApproval/> */}
         </div>

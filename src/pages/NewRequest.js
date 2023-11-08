@@ -99,7 +99,7 @@ function NewRequest() {
     fetchUserData();
   }, [currentUser.uid]);
 
-  
+
 
   return (
     <section className="bg-gray-200 overflow-y-auto overflow-x-hidden flex justify-center items-center w-full md:inset-0 h-modal md:h-full">
@@ -277,8 +277,17 @@ function NewRequest() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
                 >
                   <option value="">Select Employee Department</option>
+                  <option value="Business">Business Development</option>
+                  <option value="Finance">Finance</option>
                   <option value="HR">HR</option>
-                  <option value="FIN">FIN</option>
+                  <option value="Internal">Internal Auditors</option>
+                  <option value="IT">IT</option>
+                  <option value="Legal">Legal</option>
+                  <option value="Marketing">Marketing</option>
+                  <option value="Operation">Operations</option>
+                  <option value="Quality">Quality Control</option>
+                  <option value="Research">Research</option>
+                  <option value="Sales">Sales</option>
                 </select>
               </div>
             </div>
@@ -291,7 +300,7 @@ function NewRequest() {
               </Link>
               <button
                 type="submit"
-                className="inline-flex justify-center items-center my-6 py-2 px-4 text-base font-medium text-center text-white rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-purple-500 focus:ring-4 focus:ring-green-300 "
+                className="inline-flex justify-center items-center my-6 py-2 px-4 text-base font-medium text-center text-white rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-purple-500"
               >
                 Submit Request
               </button>

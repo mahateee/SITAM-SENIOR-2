@@ -134,7 +134,7 @@ export default function AssetForm({
           <>
             <div class="sm:col-span-2 pb-2 mb-2 rounded-t border-b sm:mb-2">
               <h3 class="text-lg font-semibold text-gray-900 ">
-                Employee Info
+                Employee Information
               </h3>
             </div>
             <div className="">
@@ -230,7 +230,7 @@ export default function AssetForm({
           Cancel
         </Link>
         <button
-          className="inline-flex justify-center items-center my-6 py-2 px-4 text-base font-medium text-center text-white rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-purple-500 focus:ring-4 focus:ring-green-300 "
+          className="inline-flex justify-center items-center my-6 py-2 px-4 text-base font-medium text-center text-white rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-purple-500"
           type="submit"
         >
           {isEdit ? "Edit Asset" : "Add Asset"}

@@ -15,13 +15,16 @@ import {
   getDocs,
 } from "../firebase/index";
 import { doc, setDoc } from "firebase/firestore";
+
 function SignUp() {
+
   const navigate = useNavigate();
   const { signup } = useAuth();
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
 
   const emailRef = useRef();
+  // const phoneNumRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
   const [error, setError] = useState(null);
@@ -36,8 +39,10 @@ function SignUp() {
       setError("");
       setLoading(true);
       const { user } = await signup(
+        // phoneNumRef.current.value,
         emailRef.current.value,
         passwordRef.current.value
+
       );
       const userId = user.uid; // Get the user's UID from the signup response
       console.log(userId);
@@ -46,6 +51,7 @@ function SignUp() {
         const docRef = await setDoc(doc(db, "Account", userId), {
           name: name,
           lastname: lastname,
+          // phoneNumber: phoneNumRef.current.value,
           email: emailRef.current.value,
           role: "user",
           department: "",
@@ -61,7 +67,7 @@ function SignUp() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen "  style={{ backgroundImage: `url(${frame})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+    <div className="flex justify-center items-center h-screen " style={{ backgroundImage: `url(${frame})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="w-full max-w-sm p-4 mx-auto bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8">
         <form
           className="space-y-6"
@@ -80,14 +86,14 @@ function SignUp() {
               htmlFor="name"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
-              Name <span className="text-red-600">*</span>
+              First Name <span className="text-red-600">*</span>
             </label>
             <input
               type="text"
               name="name"
               id="name"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="Enter your name"
+              placeholder="Enter your first name"
               required
               value={name}
               onChange={(event) => setName(event.target.value)}
@@ -98,25 +104,42 @@ function SignUp() {
               htmlFor="lastname"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
-              Name <span className="text-red-600">*</span>
+              Last Name <span className="text-red-600">*</span>
             </label>
             <input
               type="text"
               name="lastname"
               id="lastname"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="Enter your lastname"
+              placeholder="Enter your last name"
               required
               value={lastname}
               onChange={(event) => setLastname(event.target.value)}
             />
           </div>
+          {/* <div>
+            <label
+              htmlFor="lastname"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Phone Number <span className="text-red-600">*</span>
+            </label>
+            <input
+              type="text"
+              name="phonenumber"
+              id="phonenumber"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="000 000 0000"
+              required
+              ref={phoneNumRef}
+            />
+          </div> */}
           <div>
             <label
               htmlFor="email"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
-              Email <span className="text-red-600">*</span>
+              Email Address<span className="text-red-600">*</span>
             </label>
             <input
               type="email"
@@ -126,8 +149,8 @@ function SignUp() {
               placeholder="name@company.com"
               required
               ref={emailRef}
-              // value={email}
-              // onChange={(event) => setEmail(event.target.value)}
+            // value={email}
+            // onChange={(event) => setEmail(event.target.value)}
             />
           </div>
           <div>
@@ -145,8 +168,8 @@ function SignUp() {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               required
               ref={passwordRef}
-              // value={password}
-              // onChange={(event) => setPassword(event.target.value)}
+            // value={password}
+            // onChange={(event) => setPassword(event.target.value)}
             />
           </div>
           <div>
@@ -164,8 +187,8 @@ function SignUp() {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               required
               ref={passwordConfirmRef}
-              // value={password}
-              // onChange={(event) => setPassword(event.target.value)}
+            // value={password}
+            // onChange={(event) => setPassword(event.target.value)}
             />
           </div>
 
@@ -173,7 +196,7 @@ function SignUp() {
             type="submit"
             onSubmit={handleSubmit}
             className="flex w-full justify-center rounded-md text-sm font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500"
-            >
+          >
             Sign up
           </button>
         </form>

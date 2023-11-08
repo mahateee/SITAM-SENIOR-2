@@ -12,7 +12,11 @@ function Requests() {
       <Sidebar />
       <div class="px-24 pt-6">
         {/* Your Request page content here */}
-        {showSuccessAlert && <Alerts />}
+        {showSuccessAlert && (
+          <div style={{ position: 'absolute', top: '90px', right: '10px' }}>
+            <Alerts />
+          </div>
+        )}
         {/* Adding space between components */}
         <div className="mb-8 lg:mb-12" />{" "}
         <PreviousRequests />
