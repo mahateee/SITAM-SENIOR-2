@@ -19,13 +19,16 @@ export default function AdminMaintenance() {
     const unsub = onSnapshot(q, (querySnapshot) => {
       let todosArray = [];
       querySnapshot.forEach((doc) => {
-        todosArray.push({ ...doc.data(), id: doc.id });
+        todosArray.push({ ...doc.data(), id: doc.id, timestamp: doc.data().timestamp });
       });
+      // Sort the array by timestamp in descending order
+      todosArray.sort((a, b) => b.timestamp - a.timestamp);
       setMaintainance(todosArray);
       setData(todosArray);
     });
     return () => unsub();
   }, []);
+  
 
   const handleChange = (value) => {
     const searchValues = value.split(" ").map((v) => v.trim());

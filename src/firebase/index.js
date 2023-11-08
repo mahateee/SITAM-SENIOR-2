@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
-import { collection, addDoc, getDoc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, getDoc, updateDoc , getDocs} from "firebase/firestore";
 import { getFirestore, Timestamp } from "firebase/firestore"; // Import Timestamp from firestore
 import { doc, deleteDoc } from "firebase/firestore";
 // Your web app's Firebase configuration
@@ -29,7 +29,7 @@ export {
   getFirestore,
   collection,
   addDoc,
-  getDoc,
+  getDoc,getDocs,
   doc,
   deleteDoc,
   updateDoc,
@@ -37,3 +37,4 @@ export {
   firestore,
   Timestamp, // Include Timestamp in the exports
 };
+
