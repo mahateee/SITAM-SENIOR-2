@@ -8,7 +8,8 @@ const Maintenance = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [formData, setFormData] = useState({
-    assetID: id || '',
+    ID:id ||'',
+    assetID: '',
     category: '',
     maintenanceType: '',
     remarks: '',
@@ -17,9 +18,9 @@ const Maintenance = () => {
     predictedUrgency:'',
     approved: false,
     status: "Waiting",
+    role:"",
     date: Timestamp.fromDate(new Date()),  });
-
-
+  
 
     const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,9 +30,9 @@ const Maintenance = () => {
     }));
   };
 
-  const updateAssetStatus = async (assetId) => {
+  const updateAssetStatus = async (id) => {
     try {
-      const assetDocRef = doc(db, 'asset', assetId);
+      const assetDocRef = doc(db, 'asset', id);
       await updateDoc(assetDocRef, { Status: 'Maintenance' });
       console.log('Asset status updated successfully');
     } catch (error) {
@@ -56,16 +57,19 @@ const Maintenance = () => {
   
       // Reset the form data
       setFormData({
-        assetID: id || '',
+        ID:id ||'',
+        assetID: '',
         category: '',
         maintenanceType: '',
         remarks: '',
         urgency: '',
         user: '',
         predictedUrgency:'',
+        role:"",
         approved: false,
         status: 'Waiting',
-        date: Timestamp.fromDate(new Date()), // Reset date to current date
+        date: Timestamp.fromDate(new Date()), 
+       
       });
   
       // Update the asset status after adding the document
@@ -79,27 +83,28 @@ const Maintenance = () => {
     }
   };
   
-
   useEffect(() => {
     const fetchAssetData = async () => {
       try {
         const assetDocRef = doc(db, 'asset', id);
         const assetDocSnapshot = await getDoc(assetDocRef);
-
+  
         if (assetDocSnapshot.exists()) {
           const assetData = assetDocSnapshot.data();
+          const assetID = assetData.AssetID; 
           const employeeId = assetData.employeeId;
           const employeeDocRef = doc(db, 'Account', employeeId);
           const employeeDocSnapshot = await getDoc(employeeDocRef);
-
+  
           if (employeeDocSnapshot.exists()) {
             const employeeData = employeeDocSnapshot.data();
-
-
+  
             setFormData((prevData) => ({
               ...prevData,
+              assetID: assetID || '', 
               category: assetData.Category || '',
               user: `${employeeData.name || ''} ${employeeData.lastname || ''}`,
+              role: employeeData.role || '', // Add the role here
             }));
           } else {
             console.error('Employee not found.');
@@ -111,8 +116,10 @@ const Maintenance = () => {
         console.error('Error fetching asset data:', error);
       }
     };
+  
     fetchAssetData();
   }, [id]);
+  
 
   return (
     <section className="bg-gray-200 overflow-y-auto overflow-x-hidden flex justify-center items-center w-full md:inset-0 h-modal md:h-full" style={{ height: '100vh' }}>
@@ -163,6 +170,27 @@ const Maintenance = () => {
                   required
                 />
               </div>
+              {/* Role */}
+<div className="w-full">
+  <label
+    htmlFor="role"
+    className="block mb-2 text-sm font-medium text-gray-900 white:text-white"
+  >
+    Role
+  </label>
+  <input
+    readOnly
+    type="text"
+    name="role"
+    id="role"
+    value={formData.role}
+    onChange={handleChange}
+    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
+    placeholder="Role"
+    required
+  />
+</div>
+
               {/* Assign */}
               <div className="w-full">
                 <label
@@ -226,6 +254,7 @@ const Maintenance = () => {
                   <option value="other">Other</option>
                 </select>
               </div>
+              
               {/* Urgency */}
               <div className="w-full">
                 <label
@@ -243,9 +272,9 @@ const Maintenance = () => {
                   required
                 >
                   <option value="" disabled>Select Maintenance Urgency</option>
-                  <option value="within3Days">Within 3 Days</option>
-                  <option value="withinAWeek">Within a Week</option>
-                  <option value="withinAMonth">Within a Month</option>
+                  <option value="within 3 Days">Within 3 Days</option>
+                  <option value="within A Week">Within a Week</option>
+                  <option value="within A Month">Within a Month</option>
                 </select>
               </div>
               {/* Remarks */}
@@ -289,4 +318,8 @@ const Maintenance = () => {
     </section>
   );
 };
+
+
+
 export default Maintenance;
+
