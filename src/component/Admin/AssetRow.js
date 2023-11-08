@@ -47,7 +47,7 @@ export default function AssetRow({
         <div className="relative inline-block text-left">
           <button
             type="button"
-            className="inline-flex items-center text-gray-500 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-primary-500"
+            className="inline-flex items-center text-gray-500 rounded-md hover:bg-gray-100 focus:outline-none  focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-primary-500"
             id={`options-menu-${index}`}
             aria-expanded={isMenuOpen ? "true" : "false"}
             aria-haspopup="true"
@@ -89,7 +89,23 @@ export default function AssetRow({
                         d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
                       ></path>
                     </svg>
-                    <Link to={`/Asset/show/${asset.id}`}>Preview</Link>
+                    <Link to={`/Asset/show/${asset.id}`}>Information</Link>
+                  </li>
+                  <li class="block px-4 py-2 hover:bg-gray-100">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      className=" w-4 h-4 inline-block mr-2"
+                      viewBox="0 0 22 22"
+                    >
+                      <path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path>
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
+                      ></path>
+                    </svg>
+                    <Link to={`/Asset/showhistory/${asset.id}`}>History</Link>
                   </li>
                   <li class="block px-4 py-2 hover:bg-gray-100 ">
                     <Link to={`/Asset/edit/${asset.id}`}>

@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { doc, updateDoc, getDoc } from "../firebase/index";
 import { db } from "../firebase/index";
-import { collection, onSnapshot, query } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  query,
+  serverTimestamp,
+} from "firebase/firestore";
 import AssetForm from "../component/Admin/AssetForm";
 
 export default function EditAsset() {
@@ -42,11 +48,19 @@ export default function EditAsset() {
     const selectedStatus = event.target.value;
     const fieldName = event.target.name;
     setAsset({ ...asset, [event.target.name]: event.target.value });
-    // setShowEmployeeField(selectedStatus === "InUse");
 
-    if (fieldName === "Status" && selectedStatus === "InUse") {
-      setShowEmployeeField(true);
-    } else if (fieldName !== "Status" && asset.Status === "InUse") {
+    // if (fieldName === "Status" && selectedStatus === "InUse") {
+    //   setShowEmployeeField(true);
+    // } else if (fieldName !== "Status" && asset.Status === "InUse") {
+    //   setShowEmployeeField(true);
+    // } else {
+    //   setShowEmployeeField(false);
+    // }
+    if (
+      selectedStatus === "InUse" ||
+      selectedStatus === "Return" ||
+      selectedStatus === "Maintenance"
+    ) {
       setShowEmployeeField(true);
     } else {
       setShowEmployeeField(false);
@@ -128,6 +142,33 @@ export default function EditAsset() {
     return isValid;
   };
 
+  // useEffect(() => {
+  //   // Fetch asset data based on the id parameter when the component mounts
+  //   const fetchAssetData = async () => {
+  //     try {
+  //       const assetRef = doc(db, "asset", id);
+  //       const assetDoc = await getDoc(assetRef);
+
+  //       if (assetDoc.exists()) {
+  //         const assetData = assetDoc.data();
+  //         // Set the asset state with the fetched data
+  //         setShowEmployeeField(assetData.Status === "InUse");
+
+  //         setAsset(assetData);
+  //       } else {
+  //         // Handle the case where the asset doesn't exist
+  //         console.log("Asset not found");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching document: ", error);
+  //     }
+  //   };
+
+  //   // Call the fetchAssetData function
+  //   fetchAssetData();
+  // }, [id]); // Trigger the fetch when the id parameter changes
+  // const [employees, setEmployees] = useState([]);
+
   useEffect(() => {
     // Fetch asset data based on the id parameter when the component mounts
     const fetchAssetData = async () => {
@@ -138,7 +179,11 @@ export default function EditAsset() {
         if (assetDoc.exists()) {
           const assetData = assetDoc.data();
           // Set the asset state with the fetched data
-          setShowEmployeeField(assetData.Status === "InUse");
+          setShowEmployeeField(
+            assetData.Status === "InUse" ||
+              assetData.Status === "Return" ||
+              assetData.Status === "Maintenance"
+          );
 
           setAsset(assetData);
         } else {
@@ -167,50 +212,110 @@ export default function EditAsset() {
     });
     return () => unsub();
   }, []);
-  const handleSubmit = (event) => {
-    const shouldResetEmployeeId = asset.Status !== "InUse";
+
+  // const handleSubmit = (event) => {
+  //   const shouldResetEmployeeId = asset.Status !== "InUse";
+  //   event.preventDefault();
+  //   const isValid = checkValidation();
+  //   if (isValid) {
+  //     const assetRef = doc(db, "asset", id);
+  //     updateDoc(assetRef, {
+  //       name: asset.name,
+  //       AssetID: asset.AssetID,
+  //       SerialNumber: asset.SerialNumber,
+  //       Model: asset.Model,
+  //       Brand: asset.Brand,
+  //       Category: asset.Category,
+  //       os: asset.os,
+  //       description: asset.description,
+  //       Status: asset.Status,
+  //       date: asset.date,
+  //       employeeId: shouldResetEmployeeId ? "" : asset.employeeId,
+  //       WarrantyStatus: asset.WarrantyStatus,
+  //       WarrantyType: asset.WarrantyType,
+  //       WarrantyEndDate: asset.WarrantyEndDate,
+  //       OrderNumber: asset.OrderNumber,
+  //       PurchaseDate: asset.PurchaseDate,
+  //       PurchaseCost: asset.PurchaseCost,
+  //       Supplier: asset.Supplier,
+  //     })
+  //       .then(() => {
+  //         console.log("Document successfully updated!");
+  //         navigate("/Asset");
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error updating document: ", error);
+  //       });
+  //   }
+  // };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const isValid = checkValidation();
     if (isValid) {
+      let updatedEmployeeId = "";
+      if (
+        asset.Status === "InUse" ||
+        asset.Status === "Return" ||
+        asset.Status === "Maintenance"
+      ) {
+        updatedEmployeeId = asset.employeeId;
+      }
       const assetRef = doc(db, "asset", id);
-      updateDoc(assetRef, {
-        name: asset.name,
-        AssetID: asset.AssetID,
-        SerialNumber: asset.SerialNumber,
-        Model: asset.Model,
-        Brand: asset.Brand,
-        Category: asset.Category,
-        os: asset.os,
-        description: asset.description,
-        Status: asset.Status,
-        date: asset.date,
-        employeeId: shouldResetEmployeeId ? "" : asset.employeeId,
-        WarrantyStatus: asset.WarrantyStatus,
-        WarrantyType: asset.WarrantyType,
-        WarrantyEndDate: asset.WarrantyEndDate,
-        OrderNumber: asset.OrderNumber,
-        PurchaseDate: asset.PurchaseDate,
-        PurchaseCost: asset.PurchaseCost,
-        Supplier: asset.Supplier,
-      })
-        .then(() => {
-          console.log("Document successfully updated!");
-          navigate("/Asset");
-        })
-        .catch((error) => {
-          console.error("Error updating document: ", error);
+      const historyRef = collection(db, "History"); // Reference to the history collection
+
+      // Get the current timestamp
+      const timestamp = serverTimestamp();
+
+      try {
+        // Update the asset data
+        await updateDoc(assetRef, {
+          name: asset.name,
+          AssetID: asset.AssetID,
+          SerialNumber: asset.SerialNumber,
+          Model: asset.Model,
+          Brand: asset.Brand,
+          Category: asset.Category,
+          os: asset.os,
+          description: asset.description,
+          Status: asset.Status,
+          date: asset.date,
+          employeeId: updatedEmployeeId,
+          WarrantyStatus: asset.WarrantyStatus,
+          WarrantyType: asset.WarrantyType,
+          WarrantyEndDate: asset.WarrantyEndDate,
+          OrderNumber: asset.OrderNumber,
+          PurchaseDate: asset.PurchaseDate,
+          PurchaseCost: asset.PurchaseCost,
+          Supplier: asset.Supplier,
         });
+
+        // Save the updated asset data to the history collection
+        await addDoc(historyRef, {
+          assetId: id,
+          timestamp,
+          updatedData: {
+            Status: asset.Status,
+            employeeId: updatedEmployeeId,
+          },
+        });
+
+        console.log("Document successfully updated and saved to history!");
+        navigate("/Asset");
+      } catch (error) {
+        console.error("Error updating document: ", error);
+      }
     }
   };
 
   return (
-    <section class="bg-white overflow-y-auto overflow-x-hidden flex justify-center items-center w-full md:inset-0 h-modal md:h-full">
+    <section class="bg-gray-200 overflow-y-auto overflow-x-hidden flex justify-center items-center w-full md:inset-0 h-modal md:h-full">
       <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
         {/* <!-- Modal content --> */}
         <div class="relative p-4 bg-white rounded-lg shadow-xl sm:p-5">
           {/* <!-- Modal header --> */}
-          <div class="pb-4 mb-4 rounded-t border-b sm:mb-5">
-            <h3 class="text-lg font-semibold text-gray-900 ">Edit Asset</h3>
+          <div class="pb-4 mb-4 rounded-t border-b-2 sm:mb-5">
+            <h3 class="text-2xl font-semibold text-blue-800 ">Edit Asset</h3>
           </div>
 
           <AssetForm

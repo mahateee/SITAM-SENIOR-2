@@ -2,38 +2,47 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/index";
-// import QRCodeGenerator from './Barcode'; // Import your BarcodeComponent
 import QRcode from "qrcode.react";
-import generatePDF from "./Admin/generatePDF";
+import {generateInformationPDF} from "./Admin/generatePDF";
+import StatusColumn from "../component/StatusSpan";
 import frame from "../images/FrameInside.svg";
 
 function ShowPage() {
+
   const { id } = useParams();
   const [asset, setAsset] = useState({});
   const [employee, setEmployee] = useState({});
+
   useEffect(() => {
-    const fetchAsset = async () => {
-      try {
-        const docRef = doc(db, "asset", id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setAsset(docSnap.data());
-          const empRef = doc(db, "Account", asset.employeeId);
-          const empDoc = await getDoc(empRef);
-          if (empDoc.exists()) {
+    const fetchAssetAndAccount = () => {
+      const docRef = doc(db, "asset", id);
+      getDoc(docRef)
+        .then((docSnap) => {
+          if (docSnap.exists()) {
+            const assetData = docSnap.data();
+            setAsset(assetData);
+
+            const empRef = doc(db, "Account", assetData.employeeId);
+            return getDoc(empRef);
+          } else {
+            console.log("No such asset!");
+          }
+        })
+        .then((empDoc) => {
+          if (empDoc && empDoc.exists()) {
             setEmployee(empDoc.data());
           } else {
             console.log("No such Account!");
           }
-        } else {
-          console.log("No such asset!");
-        }
-      } catch (error) {
-        console.error("Error fetching asset:", error);
-      }
+        })
+        .catch((error) => {
+          console.error("Error fetching asset and account:", error);
+        });
     };
 
-    fetchAsset();
+    if (id) {
+      fetchAssetAndAccount();
+    }
   }, [id]);
 
   return (
@@ -79,31 +88,7 @@ function ShowPage() {
             <div className="flex border-t border-gray-200 py-2">
               <span className="text-gray-500">Asset Status</span>
               <span className="ml-auto text-gray-900">
-                {asset.Status === "Available" ? (
-                  <span className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
-                    Available
-                  </span>
-                ) : null}
-                {asset.Status === "InUse" ? (
-                  <span className="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
-                    In Use
-                  </span>
-                ) : null}
-                {asset.Status === "Disposed" ? (
-                  <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
-                    Disposed
-                  </span>
-                ) : null}
-                {asset.Status === "Return" ? (
-                  <span className="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
-                    Return
-                  </span>
-                ) : null}
-                {asset.Status === "Maintenance" ? (
-                  <span className="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
-                    Maintenance
-                  </span>
-                ) : null}
+                {<StatusColumn status={asset.Status} />}
               </span>
             </div>
             <div className="flex border-t border-gray-200 py-2">
@@ -130,20 +115,18 @@ function ShowPage() {
               </span>
             </div>
             <div className="flex border-t border-gray-200 py-2">
-              <span className="text-gray-500 pl-4">Email</span>
+              <span className="text-gray-500 pl-4">Email Address</span>
               <span className="ml-auto text-gray-900">{employee.email}</span>
             </div>
             {/* Cancel and Generate PDF BUttons*/}
-
             <div className="flex justify-between mt-4">
               <Link
                 to={`/Asset`}
-                className=" inline-flex items-center text-black  rounded-lg font-medium text-md px-14 py-2 text-center font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500 "
+                className=" inline-flex items-center text-black  rounded-lg font-medium text-md px-14 py-2 text-center font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500 "
               >Done</Link>
-
               <button
-                className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-purple-500 focus:ring-4 focus:ring-green-300 "
-                onClick={() => generatePDF(asset, employee)}
+                className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-purple-500 "
+                onClick={() => generateInformationPDF(asset, employee)}
               >Download</button>
             </div>
           </div>
