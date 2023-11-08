@@ -21,7 +21,7 @@ export default function ColumnFilter({
           onClick={handleOpenColumn}
           id="filterDropdownButton"
           data-dropdown-toggle="filterDropdown"
-          class="flex   items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
+          class="flex   items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-gray-200"
           type="button"
         >
           <svg

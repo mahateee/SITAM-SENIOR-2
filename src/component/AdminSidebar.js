@@ -38,7 +38,6 @@ function AdminSidebar({ children }) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
@@ -48,7 +47,6 @@ function AdminSidebar({ children }) {
   };
 
   const [isPagesActive, setIsPagesActive] = useState(false); // State to track the active state of "Pages" button
-
   const handlePagesClick = () => {
     setIsPagesActive(!isPagesActive);
   };
@@ -58,14 +56,13 @@ function AdminSidebar({ children }) {
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
           <div class="flex items-center justify-between">
             <div class="flex items-center justify-start">
-              {/* <button onClick={toggleSidebar}>button</button> */}
               <button
                 onClick={toggleSidebar}
                 data-drawer-target="logo-sidebar"
                 data-drawer-toggle="logo-sidebar"
                 aria-controls="logo-sidebar"
                 type="button"
-                class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
+                class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-gray-200 "
               >
                 <span class="sr-only">Open sidebar</span>
                 <svg
@@ -83,11 +80,6 @@ function AdminSidebar({ children }) {
                 </svg>
               </button>
               <a href="https://flowbite.com" class="flex ml-2 md:mr-24">
-                {/* <img
-                  src="https://flowbite.com/docs/images/logo.svg"
-                  class="h-8 mr-3"
-                  alt="FlowBite Logo"
-                /> */}
                 <img src={logo} className="h-8 mr-3" alt="SITAM Logo" />
                 <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap ">
                   SITAM
@@ -99,7 +91,7 @@ function AdminSidebar({ children }) {
                 <div>
                   <button
                     type="button"
-                    class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 "
+                    class="flex text-sm bg-gray-800 rounded-full focus:ring-gray-300 "
                     aria-expanded={isUserDropdownOpen}
                     data-dropdown-toggle="dropdown-user"
                     onClick={toggleUserDropdown}
@@ -144,7 +136,7 @@ function AdminSidebar({ children }) {
                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           role="menuitem"
                         >
-                          Log out
+                          Logout
                         </a>
                       </Link>
                     </li>
@@ -273,7 +265,6 @@ function AdminSidebar({ children }) {
                 </li>
                 <li>
                   <Link to="/requestPage">
-                    {/* Replace "/settings" with your desired URL */}
                     <a
                       className={`flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100`}
                     >

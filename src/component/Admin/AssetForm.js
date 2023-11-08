@@ -130,38 +130,6 @@ export default function AssetForm({
             required
           ></textarea>
         </div>
-        {showEmployeeField && (
-          <>
-            <div class="sm:col-span-2 pb-2 mb-2 rounded-t border-b sm:mb-2">
-              <h3 class="text-lg font-semibold text-gray-900 ">
-                Employee Information
-              </h3>
-            </div>
-            <div className="">
-              <label
-                className="block text-gray-700 font-bold mb-2"
-                htmlFor="employee"
-              >
-                Employee:
-              </label>
-              <select
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                value={asset.employeeId}
-                onChange={(e) =>
-                  setAsset({ ...asset, employeeId: e.target.value })
-                }
-              >
-                <option value="">Select Employee</option>
-                {employees.map((employee) => (
-                  <option key={employee.id} value={employee.id}>
-                    {employee.name}
-                  </option>
-                ))}
-                {/* Other employee options */}
-              </select>
-            </div>
-          </>
-        )}
         <FormSubheader title={"Optional Information"}/>
         <TextInput
           label="Warranty Type"
@@ -221,7 +189,36 @@ export default function AssetForm({
           onChange={handleChange}
           error={validation.Supplier}
         />
+        {showEmployeeField && (
+          <>
+            <FormSubheader title={"Employee Information"}/>
+            <div className="">
+              <label
+                className="block mb-2 text-sm font-medium text-gray-900"
+                htmlFor="employee"
+              >
+                Employee
+              </label>
+              <select
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                value={asset.employeeId}
+                onChange={(e) =>
+                  setAsset({ ...asset, employeeId: e.target.value })
+                }
+              >
+                <option value="">Select Employee</option>
+                {employees.map((employee) => (
+                  <option key={employee.id} value={employee.id}>
+                    {employee.name}
+                  </option>
+                ))}
+                {/* Other employee options */}
+              </select>
+            </div>
+          </>
+        )}
       </div>
+      
       <div className="flex items-center justify-between">
         <Link
           to={`/Asset`}

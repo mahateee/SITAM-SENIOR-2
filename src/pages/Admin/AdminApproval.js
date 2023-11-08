@@ -9,6 +9,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase/index";
 import { formatDate } from "../../component/functions/formatDate";
+
 const AdminApprovalTable = ({ requests, onApprove, onReject }) => (
   <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
     <h3 class="mb-2 text-xl font-bold text-gray-900">

@@ -65,7 +65,7 @@ function Sidebar({ children }) {
                 data-drawer-toggle="logo-sidebar"
                 aria-controls="logo-sidebar"
                 type="button"
-                class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
+                class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-gray-200 "
               >
                 <span class="sr-only">Open sidebar</span>
                 <svg
@@ -94,7 +94,7 @@ function Sidebar({ children }) {
                 <div>
                   <button
                     type="button"
-                    class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 "
+                    class="flex text-sm bg-gray-800 rounded-full focus:ring-gray-300 "
                     aria-expanded={isUserDropdownOpen}
                     data-dropdown-toggle="dropdown-user"
                     onClick={toggleUserDropdown}
@@ -142,7 +142,7 @@ function Sidebar({ children }) {
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         role="menuitem"
                       >
-                        Log out
+                        Logout
                       </a>
                       </Link>
                     </li>

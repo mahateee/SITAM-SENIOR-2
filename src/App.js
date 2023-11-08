@@ -9,6 +9,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import EditAsset from "./pages/EditAsset";
 import ShowPage from "./pages/ShowPage";
+import ShowHistory from "./pages/ShowHistory"
 import { useEffect, useState } from "react";
 // import Request from "./component/Request";
 import AuthProvider from "./context/AuthContext";
@@ -62,6 +63,7 @@ function App() {
       ),
     },
     { path: "/show/:id", element: <ShowPage /> },
+    { path: "/showhistory/:id", element: <ShowHistory /> },
   ];
 
   useEffect(() => {
