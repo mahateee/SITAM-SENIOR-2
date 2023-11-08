@@ -149,7 +149,6 @@ export default function AdminMaintenance() {
         return "";
     }
   };
-  const UrgencyColor = getUrgencyColor(predictUrgency);
 
   return (
     <div className="p-12 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
