@@ -3,9 +3,8 @@ import logoImage from '../../images/logoNew.png'; // Replace with the actual pat
 export function generateInformationPDF(asset, employee) {
   const doc = new jsPDF();
   let yPosition = 10; // Initial Y position
-    // Add company logo to the PDF (adjust the dimensions for a smaller logo)
-  doc.addImage(logoImage, 'PNG', 100, 10, 10, 10); // Adjust the coordinates and dimensions as needed
-  yPosition += 20; // Increment Y position for the content below the logo
+  doc.addImage(logoImage, 'PNG', 100, 10, 10, 10); 
+  yPosition += 20; 
 
   // Set smaller font sizen
   doc.setFontSize(13);
@@ -19,8 +18,8 @@ export function generateInformationPDF(asset, employee) {
 
   const paragraph = `We are pleased to present the comprehensive Asset Report for {currentdate}. This report serves as an in-depth overview of the assets managed by SITAM, providing valuable insights into the status, utilization, and maintenance history of our valuable resources.`;
   doc.text(30, yPosition, paragraph, { align: 'justify', maxWidth: 150 });
-  yPosition += doc.splitTextToSize(paragraph, 150).length * 10; // Adjust the line height multiplier and maxWidth as needed
-
+  yPosition += doc.splitTextToSize(paragraph, 150).length * 10; 
+  
   // General Asset Information
   doc.setFontSize(12);
   doc.setFont('TimesRoman', 'bold');
