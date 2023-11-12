@@ -8,7 +8,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase/index";
-import Example from "../component/Example"; 
+import Example from "../component/Example";
 import ScanQR from "../component/Admin/ScanQR";
 import AdminSidebar from "../component/AdminSidebar";
 import AssetRow from "../component/Admin/AssetRow";
@@ -75,9 +75,9 @@ function Assets() {
             excludeColumns.includes(key)
               ? false
               : item[key]
-                  .toString()
-                  .toLowerCase()
-                  .includes(searchValue.toLowerCase())
+                .toString()
+                .toLowerCase()
+                .includes(searchValue.toLowerCase())
           );
         });
       });
@@ -105,7 +105,9 @@ function Assets() {
   };
 
   return (
-    <div data-testid="asset-table">
+    
+    <div data-testid="asset-table" className="mt-14">
+
       {showCautionDialog && (
         <Example
           open={showCautionDialog}
@@ -122,71 +124,76 @@ function Assets() {
         />
       )}
       {open && <ScanQR onClose={handleClose} />}
-      {/* table */}
-      <section className="bg-gray-50  p-3 sm:p-5">
-        <div
-          className="mx-auto max-w-screen-xl px-4 lg:px-12 "
-          style={{ maxWidth: "95%" }}
-        >
-          {/* cntrol the width of the whole table */}
-          <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
-            <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-              <div className="w-full flex flex-row md:space-x-4  md:flex-row">
-                <SearchInput
-                  searchText={searchText}
-                  handleChange={handleChange}
-                />
-                <ScanButton handleOpen={handleOpen} />
-              </div>
 
-              <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                <AddAssetButton />
-                <ColumnFilter
-                  columnVisibility={columnVisibility}
-                  setColumnVisibility={setColumnVisibility}
-                />
-                <CategoryFilter
-                  selectedCategories={selectedCategories}
-                  setSelectedCategories={selectedCategories}
-                  handleCategoryChange={handleCategoryChange}
-                  categories={categories}
-                />
-              </div>
+      <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 max-w-screen-xl mx-auto">
+        {/* Flex container for the header */}
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-4 lg:mb-0">
+          <div className="mb-4 lg:mb-0">
+            <h3 class="mb-2 text-xl font-bold text-gray-900">Assets 🖥️</h3>
+          </div>
+          {/* Flex container for search and buttons */}
+          <div className="flex items-center space-x-4">
+            {/* Adjusted the width of the SearchInput */}
+            <div className="w-72">
+              <SearchInput
+                searchText={searchText}
+                handleChange={handleChange}
+              />
             </div>
-            {/* table */}
-            <div className="overflow-y-auto" style={{ maxHeight: "700px" }}>
-              <table className="w-full text-sm text-left text-gray-500 ">
-                <TableHeader columnVisibility={columnVisibility} />
-                <tbody>
-                  {data.length > 0 ? (
-                    data
-                      .filter(
-                        (asset) =>
-                          selectedCategories.length === 0 ||
-                          selectedCategories.includes(asset.Category)
-                      )
-                      .map((asset, i) => (
-                        <AssetRow
-                          asset={asset}
-                          columnVisibility={columnVisibility}
-                          index={i}
-                          openCautionDialog={openCautionDialog}
-                        />
-                      ))
-                  ) : (
-                    <tr>
-                      <td className="border px-4 py-2" colSpan={7}>
-                        No Assets
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+            <ScanButton handleOpen={handleOpen} />
+          </div>
+          <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+            <AddAssetButton />
+            <ColumnFilter
+              columnVisibility={columnVisibility}
+              setColumnVisibility={setColumnVisibility}
+            />
+            <CategoryFilter
+              selectedCategories={selectedCategories}
+              setSelectedCategories={selectedCategories}
+              handleCategoryChange={handleCategoryChange}
+              categories={categories}
+            />
+          </div>
+        </div>
+        {/* table */}
+        <div className="flex flex-col mt-6" >
+          <div className="overflow-y-auto" style={{ maxHeight: '600px' }}>
+            <div className="inline-block min-w-full align-middle">
+              <div className="overflow-hidden shadow sm:rounded-lg">
+                <table className="min-w-full divide-y divide-gray-200 ">
+                  <TableHeader columnVisibility={columnVisibility} />
+                  <tbody>
+                    {data.length > 0 ? (
+                      data
+                        .filter(
+                          (asset) =>
+                            selectedCategories.length === 0 ||
+                            selectedCategories.includes(asset.Category)
+                        )
+                        .map((asset, i) => (
+                          <AssetRow
+                            asset={asset}
+                            columnVisibility={columnVisibility}
+                            index={i}
+                            openCautionDialog={openCautionDialog}
+                          />
+                        ))
+                    ) : (
+                      <tr>
+                        <td className="border px-4 py-2" colSpan={7}>
+                          No Assets
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </section>
-      {/* Content */}
+
+      </div>
     </div>
   );
 }
@@ -221,43 +228,68 @@ export function ScanButton({ handleOpen }) {
 
 export function TableHeader({ columnVisibility }) {
   return (
-    <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+
+    <thead className="bg-gray-50 ">
       <tr>
-        <th scope="col" className="px-4 py-3 text-center">
+        <th
+          scope="col"
+          className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+        >
           #
         </th>
         {columnVisibility.ID && (
-          <th scope="col" className="px-4 py-3 text-center">
+          <th
+            scope="col"
+            className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+          >
             Asset ID
           </th>
         )}
         {columnVisibility.Name && (
-          <th scope="col" className="px-4 py-3 text-center">
+          <th
+            scope="col"
+            className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+          >
             Asset Name
           </th>
         )}
 
         {columnVisibility.Status && (
-          <th scope="col" className="px-4 py-3 text-center">
+          <th
+            scope="col"
+            className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+          >
             Asset Status
           </th>
         )}
         {columnVisibility.Brand && (
-          <th scope="col" className="px-4 py-3 text-center">
+          <th
+            scope="col"
+            className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+          >
             Asset Brand
           </th>
         )}
         {columnVisibility.Category && (
-          <th scope="col" className="px-4 py-3 text-center">
+          <th
+            scope="col"
+            className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+          >
             Asset Category
           </th>
         )}
         {columnVisibility.Date && (
-          <th scope="col" className="px-4 py-3 text-center">
+          <th
+            scope="col"
+            className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+          >
             Insertion Date
           </th>
         )}
-        <th scope="col" className="px-4 py-3 text-center align-middle">
+        <th
+          scope="col"
+          className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+        >
           Actions
         </th>
       </tr>

@@ -173,6 +173,27 @@ function AdminSidebar({ children }) {
                       d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
                     />
                   </svg>
+                  {/* New Design*/}
+                  {/* <svg
+                    class="flex-shrink-0 w-6 h-5 text-gray-500 transition duration-75 hover:text-gray-900 "
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="18" cy="15" r="3" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M10 15H6a4 4 0 0 0-4 4v2" />
+                    <path d="m21.7 16.4-.9-.3" />
+                    <path d="m15.2 13.9-.9-.3" />
+                    <path d="m16.6 18.7.3-.9" />
+                    <path d="m19.1 12.2.3-.9" />
+                    <path d="m19.6 18.7-.4-1" />
+                    <path d="m16.8 12.3-.4-1" />
+                    <path d="m14.3 16.6 1-.4" />
+                    <path d="m20.7 13.8 1-.4" />
+                  </svg> */}
                   <span class="ml-3">Account</span>
                 </a>
               </Link>
@@ -255,8 +276,8 @@ function AdminSidebar({ children }) {
                     <a
                       href="#"
                       className={`flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group ${isPagesActive
-                          ? "hover:bg-gray-100 "
-                          : "hover:bg-gray-100 "
+                        ? "hover:bg-gray-100 "
+                        : "hover:bg-gray-100 "
                         }`}
                     >
                       Assets
@@ -268,7 +289,7 @@ function AdminSidebar({ children }) {
                     <a
                       className={`flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100`}
                     >
-                      Requests
+                      Asset Requests
                     </a>
                   </Link>
                 </li>
@@ -278,7 +299,7 @@ function AdminSidebar({ children }) {
                       href="#"
                       className={`flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100`}
                     >
-                      Returns
+                      Returned Assets
                     </a>
                   </Link>
                 </li>

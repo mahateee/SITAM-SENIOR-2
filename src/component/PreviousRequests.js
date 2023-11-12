@@ -12,22 +12,25 @@ import { useAuth } from "../context/AuthContext";
 import "firebase/functions";
 import { Link } from "react-router-dom";
 import { formatDate } from "./functions/formatDate";
+
 const PreviousRequests = () => {
   const [assets, setAssets] = useState([]);
   const { currentUser } = useAuth();
   const [originalAssets, setOriginalAssets] = useState([]); // Store original data
+  const [searchText, setSearchText] = useState("");
+  const [selectedStatuses, setSelectedStatuses] = useState([]);
+  const statuses = ["Waiting", "Pending", "Completed", "Canceled", "In Progress"];
+  const [openFilter, setOpenFilter] = React.useState(false);
 
-  
   useEffect(() => {
+
     const fetchRequests = async () => {
       try {
         if (!currentUser || !currentUser.uid) {
           console.error("Current user or user ID is undefined.");
           return;
         }
-
         console.log("Fetching requests for user ID:", currentUser.uid);
-
         // Fetch requests
         const requestsQuery = query(
           collection(db, "request"),
@@ -43,9 +46,7 @@ const PreviousRequests = () => {
             date: formatDate(data.date), // Assuming your date field is named 'date'
           };
         });
-
         console.log("Fetched requests:", requestsData);
-
         setAssets(requestsData);
         setOriginalAssets(requestsData); // Store original data
       } catch (error) {
@@ -56,7 +57,6 @@ const PreviousRequests = () => {
     fetchRequests();
   }, [currentUser]);
 
-  const [searchText, setSearchText] = useState("");
   // handle change event of search input
   const handleChange = (value) => {
     setSearchText(value);
@@ -77,32 +77,55 @@ const PreviousRequests = () => {
     }
   };
 
-  const [selectedStatuses, setSelectedStatuses] = useState([]);
-  const statuses = ["Waiting", "Pending", "Completed", "Canceled", "In Progress"];
   const handleStatusChange = (status) => {
     if (selectedStatuses.includes(status)) {
-      setSelectedStatuses(selectedStatuses.filter((c) => c !== status));
+      setSelectedStatuses(selectedStatuses.filter((s) => s !== status));
     } else {
-      setSelectedStatuses([...selectedStatuses, statuses]);
+      setSelectedStatuses([...selectedStatuses, status]);
     }
   };
-  const [openFilter, setOpenFilter] = React.useState(false);
+
   const handleOpenFilter = () => {
     setOpenFilter(!openFilter);
   };
+
+  useEffect(() => {
+    const filterData = () => {
+      let filteredData = originalAssets;
+
+      if (searchText) {
+        filteredData = filteredData.filter((asset) =>
+          Object.values(asset)
+            .join(" ")
+            .toLowerCase()
+            .includes(searchText.toLowerCase())
+        );
+      }
+
+      if (selectedStatuses.length > 0) {
+        filteredData = filteredData.filter((asset) =>
+          selectedStatuses.includes(asset.status)
+        );
+      }
+
+      setAssets(filteredData);
+    };
+
+    filterData();
+  }, [searchText, selectedStatuses, originalAssets]);
 
   return (
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
       {/* <!-- Card header --> */}
       <div class="items-center justify-between lg:flex">
         <div class="mb-4 lg:mb-0">
-          <h3 class="mb-2 text-xl font-bold text-gray-900">Assets Requests 📤</h3>
+          <h3 class="mb-2 text-xl font-bold text-gray-900">Asset Requests 📤</h3>
           <span class="text-base font-normal text-gray-500 ">
-            List of Latest Request.
+            List of Latest Requests.
           </span>
         </div>
         <div className="items-center sm:flex">
-          <div className="flex-grow pr-10">
+          <div className="flex-grow pr-14">
             <form className="flex items-center">
               <label htmlFor="simple-search" className="sr-only">
                 Search
@@ -126,7 +149,7 @@ const PreviousRequests = () => {
                 <input
                   type="text"
                   id="simple-search"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-full pl-10 p-2"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-full lg:w-96 pl-10 p-2"
                   placeholder="Search"
                   value={searchText}
                   onChange={(e) => handleChange(e.target.value)}
@@ -195,7 +218,7 @@ const PreviousRequests = () => {
               {openFilter && (
                 <div
                   id="filterDropdown"
-                  class="  z-10 absolute mt-14 top-22 right-28 w-40 p-3 bg-white rounded-lg shadow"
+                  class="z-50 absolute mt-18 top-26 right-28 w-44 p-3 bg-white rounded-lg shadow"
                 >
                   <h6 class="mb-3 text-sm font-medium text-gray-900 ">
                     Status
@@ -241,51 +264,62 @@ const PreviousRequests = () => {
                   <tr>
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase text-center"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
+                      #
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Transaction
                     </th>
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase text-center"
+                      // class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase text-center"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Desired Date
                     </th>
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase text-center"
+                      // class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase text-center"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Asset Brand
                     </th>
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase text-center"
+                      // class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase text-center"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Request Status
                     </th>
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase text-center"
+                      // class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase text-center"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Description
                     </th>
 
                   </tr>
                 </thead>
-                <tbody class="bg-white ">
+                <tbody className="bg-white ">
                   {assets.map((asset, id) => (
                     <tr key={id}>
-                      <td class="p-4 text-sm font-normal text-gray-900 whitespace-nowrap text-center">
+                      <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{id + 1}</td>
+                      <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
                         Request a{" "}
-                        <span class="font-semibold">{asset.type}</span>
+                        <span className="font-semibold">{asset.type}</span>
                       </td>
-                      <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
-                        {asset.date} 
-                        </td>
-                      <td class="p-4 text-sm font-semibold text-gray-900 whitespace-nowr text-center">
+                      <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
+                        {asset.date}
+                      </td>
+                      <td class="p-4 text-sm font-semibold text-gray-500 whitespace-nowr text-center">
                         {asset.brand}
                       </td>
-                      <td class="p-4 whitespace-nowrap text-center">
+                      <td className="p-4 whitespace-nowrap text-center">
                         <span className="ml-auto text-gray-900">
                           {(!asset.status || asset.status === "Waiting") ? (
                             <span className="bg-violet-100 text-violet-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
@@ -314,8 +348,11 @@ const PreviousRequests = () => {
                           ) : null}
                         </span>
                       </td>
-                      <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
+                      {/* <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
                         {asset.system}
+                      </td> */}
+                      <td className="px-4 py-3 text-center">
+                        <Descriptions system={asset.system} />
                       </td>
                     </tr>
                   ))}
@@ -325,6 +362,55 @@ const PreviousRequests = () => {
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+
+const Descriptions = ({ system }) => {
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <button
+        id="dropdownMenuIconHorizontalButton"
+        data-dropdown-toggle="dropdownDotsHorizontal"
+        className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-gray-50"
+        type="button"
+        onClick={() => setDropdownOpen(!isDropdownOpen)}
+      >
+        <svg
+          className="w-5 h-5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 16 3"
+        >
+          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+        </svg>
+      </button>
+
+      {isDropdownOpen && (
+        <div
+          id="dropdownDotsHorizontal"
+          className="absolute z-20 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
+          style={{ top: '2.5rem' }} // Adjust this value as needed
+        >
+          <ul
+            className="py-2 text-sm text-gray-700 bg-white"
+            aria-labelledby="dropdownMenuIconHorizontalButton"
+          >
+            <li>
+              <a
+                href="#"
+                className="block px-4 py-2 text-gray-700 overflow-hidden"
+              >
+                {system}
+              </a>
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

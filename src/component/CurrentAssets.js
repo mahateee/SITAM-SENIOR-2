@@ -77,7 +77,7 @@ const AssetsTable = () => {
       setAssets(updatedAssets);
       // Set showSuccessAlert to true and navigate to Request page
       navigate('/personalassets', { state: { showReturnAlert: true } });
-      
+
     } catch (error) {
       console.log("Error updating asset status:", error);
     }
@@ -90,19 +90,18 @@ const AssetsTable = () => {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-    <div style={{ flex: 1, maxWidth: '90%' }} class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm  sm:p-6">
-      {/* <!-- Card header --> */}
-      <div class="items-center justify-between lg:flex">
-        <div class="mb-4 lg:mb-0">
-          <h3 class="mb-2 text-xl font-bold text-gray-900">Current Assets 🖥️ </h3>
-          <span class="text-base font-normal text-gray-500 ">
-            A List of Current Assets.
-          </span>
+      <div style={{ flex: 1, maxWidth: '90%' }} class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm  sm:p-6">
+        {/* <!-- Card header --> */}
+        <div class="items-center justify-between lg:flex">
+          <div class="mb-4 lg:mb-0">
+            <h3 class="mb-2 text-xl font-bold text-gray-900">Current Assets 🖥️ </h3>
+            <span class="text-base font-normal text-gray-500 ">
+              A List of Current Assets.
+            </span>
+          </div>
         </div>
-      </div>
-      {/* <!-- Table --> */}
-      <div class="flex flex-col mt-6">
-        <div class="overflow-x-auto rounded-lg">
+        {/* <!-- Table --> */}
+        <div class="flex flex-col mt-6 overflow-x-auto overflow-y-auto rounded-lg max-h-[600px]">
           <div class="inline-block min-w-full align-middle">
             <div class="overflow-hidden shadow sm:rounded-lg">
               <table class="min-w-full divide-y divide-gray-200 ">
@@ -110,32 +109,38 @@ const AssetsTable = () => {
                   <tr>
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
+                      #
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Asset Name
                     </th>
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Asset Category
                     </th>
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Asset Brand
                     </th>
 
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Operating System
                     </th>
                     <th
                       scope="col"
-                      class="p-4 text-xs font-medium tracking-wider text-center text-gray-500 uppercase "
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Actions
                     </th>
@@ -144,17 +149,17 @@ const AssetsTable = () => {
                 <tbody class="bg-white ">
                   {assets.map((asset, id) => (
                     <tr key={id}>
-                      <td class="p-4 text-sm font-normal text-center text-gray-900 whitespace-nowrap ">
-                       {asset.name}
+                      <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{id + 1}</td>
+                      <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
+                        {asset.name}
                       </td>
-                      <td class="p-4 text-sm font-normal text-center text-gray-500 whitespace-nowrap ">
+                      <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
                         {asset.Category}
                       </td>
-                      <td class="p-4 text-sm font-semibold text-center text-gray-900 whitespace-nowr">
+                      <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
                         {asset.Brand}
                       </td>
-
-                      <td class="p-4 text-sm font-normal text-center text-gray-500 whitespace-nowrap ">
+                      <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
                         {asset.os}
                       </td>
                       <td class="p-4 text-sm font-normal text-center text-gray-500 whitespace-nowrap " style={{ width: '135px' }}>
@@ -167,7 +172,7 @@ const AssetsTable = () => {
                         <Link
                           to={`/Request/Maintenance/${asset.id}`}
                           className="inline-flex items-center text-black  rounded-lg font-medium text-md px-14 py-2 text-center font-semibold leading-6 bg-transparent hover:bg-gradient-to-r from-blue-500 to-purple-500 hover:text-white focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center mr-3 border-2 border-gradient-to-r from-blue-500 to-purple-500 ">
-                            Maintenance</Link>
+                          Maintenance</Link>
                       </td>
                     </tr>
                   ))}
@@ -178,8 +183,6 @@ const AssetsTable = () => {
         </div>
       </div>
     </div>
-    </div>
-
   );
 };
 

@@ -78,7 +78,7 @@ export default function AdminRequest() {
       <div className="flex items-center justify-between lg:flex space-x-4">
         <div className="mb-4 lg:mb-0">
           <h3 className="mb-2 text-xl font-bold text-gray-900">
-            Received New Assets Requests 🕗
+            Received New Asset Requests 🕗
           </h3>
           <span className="text-base font-normal text-gray-500">
             Latest Request has been Approved.
@@ -124,25 +124,52 @@ export default function AdminRequest() {
               <table className="min-w-full divide-y divide-gray-200 ">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                   <tr>
-                    <th scope="col" class="px-4 py-3">
-                      Product name
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
+                      #
                     </th>
-                    <th scope="col" class="px-4 py-3">
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
+                      Requester
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       Department
                     </th>
-                    <th scope="col" class="px-4 py-3">
-                      Category
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
+                      Asset Category
                     </th>
-                    <th scope="col" class="px-4 py-3">
-                      Description
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
+                      Asset Brand
                     </th>
-                    <th scope="col" class="px-4 py-3">
-                      Date
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
+                      Desired Date
                     </th>
-                    <th scope="col" class="px-4 py-3">
-                      Status
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
+                      Request Status
                     </th>
-                    <th scope="col" class="px-4 py-3">
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       <span class="sr-only">Actions</span>
                     </th>
                   </tr>
@@ -150,36 +177,37 @@ export default function AdminRequest() {
                 <tbody>
                   {data.length > 0
                     ? data.map((req, id) => (
-                        <tr key={id} class="border-b">
-                          <th
-                            scope="row"
-                            class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap"
-                          >
-                            {req.name + " " + req.lastname}
-                          </th>
-                          <td class="px-4 py-3">{req.department}</td>
-                          <td class="px-4 py-3">{req.type}</td>
-                          <td class="px-4 py-3">{req.brand}</td>
+                      <tr key={id} class="border-b">
+                        <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{id + 1}</td>
+                        <th
+                          scope="row"
+                          className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center"
+                        >
+                          {req.name + " " + req.lastname}
+                        </th>
+                        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">{req.department}</td>
+                        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">{req.type}</td>
+                        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">{req.brand}</td>
 
-                          <td class="px-4 py-3">{req.formattedDate}</td>
-                          <td class="px-4 py-3">
-                            <select
-                              value={req.status || "Waiting"}
-                              onChange={(e) =>
-                                updateRequestStatus(req.id, e.target.value)
-                              }
-                              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                            >
-                              <option value="Waiting">Waiting</option>
-                              <option value="Pending">Pending</option>
-                              <option value="In Progress">In Progress</option>
-                              <option value="Completed">Completed</option>
-                              <option value="Canceled">Canceled</option>
-                            </select>
-                          </td>
-                          <td class="px-4 py-3 flex items-center justify-end"></td>
-                        </tr>
-                      ))
+                        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">{req.formattedDate}</td>
+                        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
+                          <select
+                            value={req.status || "Waiting"}
+                            onChange={(e) =>
+                              updateRequestStatus(req.id, e.target.value)
+                            }
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                          >
+                            <option value="Waiting">Waiting</option>
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Canceled">Canceled</option>
+                          </select>
+                        </td>
+                        <td class="px-4 py-3 flex items-center justify-end"></td>
+                      </tr>
+                    ))
                     : null}
                 </tbody>
               </table>

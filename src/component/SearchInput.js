@@ -1,6 +1,6 @@
 export default function SearchInput({ searchText, handleChange }) {
   return (
-    <div className="w-full md:w-1/2">
+    <div className="w-full ">
       <form className="flex items-center">
         <label htmlFor="simple-search" className="sr-only">
           Search

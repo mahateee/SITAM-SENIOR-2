@@ -83,7 +83,7 @@ export default function EmployeeList() {
             <div className="flex items-center justify-between lg:flex space-x-4">
               <div className="mb-4 lg:mb-0">
                 <h3 className="mb-2 text-xl font-bold text-gray-900">
-                  Employee 👨‍💼
+                  Employees 👨‍💼
                 </h3>
                 <span className="text-base font-normal text-gray-500">
                   List of Employees.
@@ -126,32 +126,51 @@ export default function EmployeeList() {
               <table class="w-full text-sm text-left text-gray-500 ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                   <tr>
-                    <th scope="col" class="px-6 py-3 text-center">
+                  <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
+                      #
+                    </th>
+                    <th 
+                    scope="col" 
+                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       Name
                     </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                      Employee Email
+                    <th 
+                    scope="col" 
+                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
+                      Email Address
                     </th>
-                    <th scope="col" class="px-6 py-3 text-center">
+                    <th 
+                    scope="col" 
+                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       Role
                     </th>
-                    <th scope="col" class="px-6 py-3 text-center">
+                    <th 
+                    scope="col" 
+                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       Department
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.length > 0
-                    ? data.map((user, i) => (
-                      <tr class="bg-white border-b text-center">
+                    ? data.map((user, id) => (
+                      <tr key={id} class="bg-white border-b text-center">
+                        <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{id + 1}</td>
                         <th
                           scope="row"
-                          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                          className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center"
                         >
                           {user.name + " " + user.lastname}
                         </th>
-                        <td class="px-6 py-4 text-center">{user.email}</td>
-                        <td class="px-6 py-4 text-center">
+                        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">{user.email}</td>
+                        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
                           <select
                             value={user.role || "None"}
                             onChange={(e) =>
@@ -164,7 +183,7 @@ export default function EmployeeList() {
                             <option value="user">Employee</option>
                           </select>
                         </td>
-                        <td class="px-6 py-4 text-center">{user.department}</td>
+                        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">{user.department}</td>
                       </tr>
                     ))
                     : null}
@@ -172,8 +191,6 @@ export default function EmployeeList() {
               </table>
             </div>
           </div>
-          {/* Adding space between components */}
-          {/* < AdminMaintenanceApproval/> */}
         </div>
       </section>
     </>

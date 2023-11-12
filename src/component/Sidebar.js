@@ -275,7 +275,7 @@ function Sidebar({ children }) {
                           : "hover:bg-gray-100 "
                       }`}
                     >
-                      Assets
+                      Current Assets
                     </a>
                   </Link>
                 </li>
@@ -286,7 +286,7 @@ function Sidebar({ children }) {
                     <a
                       className={`flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100`}
                     >
-                      Requests
+                      Asset Requests
                     </a>
                   </Link>
                 </li>

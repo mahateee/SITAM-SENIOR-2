@@ -37,7 +37,7 @@ export default function ColumnFilter({
               clip-rule="evenodd"
             />
           </svg>
-          Column
+          Filter
           <svg
             class="-mr-1 ml-1.5 w-5 h-5"
             fill="currentColor"
@@ -54,7 +54,7 @@ export default function ColumnFilter({
         </button>
 
         {openColumn && (
-          <div class="z-50  absolute mt-14 top-6 w-48 p-3 bg-white rounded-lg shadow">
+          <div class="z-50  absolute mt-22 bottom-26 left-26 w-42 p-3 bg-white rounded-lg shadow">
             <h6 class="mb-3 text-sm font-medium text-gray-900 ">Column</h6>
             <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
               {Object.entries(columnVisibility).map(
