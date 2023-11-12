@@ -34,6 +34,7 @@ function NewRequest() {
     operatingSystem: "",
     description: "",
     department: "",
+    date: '',
   });
 
   const handleChange = (e) => {
@@ -253,14 +254,10 @@ function NewRequest() {
                   type="tel"
                   name="phoneNumber"
                   id="phoneNumber"
+                  readOnly
                   value={formData.phoneNumber}
-                  onChange={handleChange}
-                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
-                  placeholder="111-222-3333"
-                  required
                 />
-                <small className="text-gray-500">Format: 111-222-3333</small>
               </div>
               <div>
                 <label
@@ -269,26 +266,14 @@ function NewRequest() {
                 >
                   Employee Department
                 </label>
-                <select
-                  id="department"
-                  name="department"
-                  value={formData.department}
-                  onChange={handleChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
-                >
-                  <option value="">Select Employee Department</option>
-                  <option value="Business">Business Development</option>
-                  <option value="Finance">Finance</option>
-                  <option value="HR">HR</option>
-                  <option value="Internal">Internal Auditors</option>
-                  <option value="IT">IT</option>
-                  <option value="Legal">Legal</option>
-                  <option value="Marketing">Marketing</option>
-                  <option value="Operation">Operations</option>
-                  <option value="Quality">Quality Control</option>
-                  <option value="Research">Research</option>
-                  <option value="Sales">Sales</option>
-                </select>
+                <input
+  readOnly
+  id="department"
+  name="department"
+  value={formData.department}
+  onChange={handleChange}
+  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
+/>
               </div>
             </div>
             <div className="flex items-center justify-between">

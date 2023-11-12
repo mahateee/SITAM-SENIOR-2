@@ -27,40 +27,43 @@ function SignIn({ setUserRole }) {
     try {
       setError("");
       setLoading(true);
-      // await login(emailRef.current.value, passwordRef.current.value);
+  
       const userCredential = await login(
         emailRef.current.value,
         passwordRef.current.value
       );
       const user = userCredential.user;
-      console.log(user);
+  
       // Retrieve user document from Firestore based on the signed-in user's email
       const usersCollectionRef = collection(db, "Account");
       const q = query(usersCollectionRef, where("email", "==", user.email));
       const querySnapshot = await getDocs(q);
-
+  
       if (!querySnapshot.empty) {
         // Handle the user document data here
         const userData = querySnapshot.docs[0].data();
         console.log(userData);
-
+  
         // Determine the user role and navigate accordingly
         if (userData.role === "admin") {
           setUserRole("admin");
-          // navigate("/admin");
+          // Additional logic for admins if needed
         } else {
           setUserRole("user");
-          navigate("/user");
+          // Additional logic for users if needed
         }
+  
+        // Redirect to the OTP page
+        navigate("/otp", { state: { phoneNumber: user.phoneNumber } });
       } else {
         setError("User data not found.");
       }
-    } catch {
-      setError("Failed to login");
+    } catch (error) {
+      setError("Failed to login. Invalid email or password.");
     }
     setLoading(false);
   };
-
+  
   return (
     <div className="flex justify-center items-center h-screen "  style={{ backgroundImage: `url(${frame})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">

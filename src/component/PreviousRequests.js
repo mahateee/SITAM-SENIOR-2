@@ -11,12 +11,13 @@ import { db } from "../firebase/index";
 import { useAuth } from "../context/AuthContext";
 import "firebase/functions";
 import { Link } from "react-router-dom";
-
+import { formatDate } from "./functions/formatDate";
 const PreviousRequests = () => {
   const [assets, setAssets] = useState([]);
   const { currentUser } = useAuth();
   const [originalAssets, setOriginalAssets] = useState([]); // Store original data
 
+  
   useEffect(() => {
     const fetchRequests = async () => {
       try {
@@ -34,10 +35,14 @@ const PreviousRequests = () => {
         );
 
         const requestsSnapshot = await getDocs(requestsQuery);
-        const requestsData = requestsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const requestsData = requestsSnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...data,
+            date: formatDate(data.date), // Assuming your date field is named 'date'
+          };
+        });
 
         console.log("Fetched requests:", requestsData);
 
@@ -275,8 +280,8 @@ const PreviousRequests = () => {
                         <span class="font-semibold">{asset.type}</span>
                       </td>
                       <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
-                        {/* {asset.date} */}
-                      </td>
+                        {asset.date} 
+                        </td>
                       <td class="p-4 text-sm font-semibold text-gray-900 whitespace-nowr text-center">
                         {asset.brand}
                       </td>

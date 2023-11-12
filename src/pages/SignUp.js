@@ -24,7 +24,7 @@ function SignUp() {
   const [lastname, setLastname] = useState("");
 
   const emailRef = useRef();
-  // const phoneNumRef = useRef();
+  const phoneNumRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
   const [error, setError] = useState(null);
@@ -51,7 +51,7 @@ function SignUp() {
         const docRef = await setDoc(doc(db, "Account", userId), {
           name: name,
           lastname: lastname,
-          // phoneNumber: phoneNumRef.current.value,
+       phoneNumber: phoneNumRef.current.value,
           email: emailRef.current.value,
           role: "user",
           department: "",
@@ -117,7 +117,7 @@ function SignUp() {
               onChange={(event) => setLastname(event.target.value)}
             />
           </div>
-          {/* <div>
+         <div>
             <label
               htmlFor="lastname"
               className="block mb-2 text-sm font-medium text-gray-900"
@@ -133,7 +133,7 @@ function SignUp() {
               required
               ref={phoneNumRef}
             />
-          </div> */}
+          </div> 
           <div>
             <label
               htmlFor="email"
