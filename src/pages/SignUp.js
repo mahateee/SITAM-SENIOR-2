@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useRef, useState } from "react";
 import logo from "../images/logoS.svg";
 import frame from "../images/Frame.svg"
-
+ import EmailVerficationPage from "./EmailVerficationPage";
 import { useAuth } from "../context/AuthContext";
 // import axios from "axios";
 import {
@@ -19,7 +19,7 @@ import { doc, setDoc } from "firebase/firestore";
 function SignUp() {
 
   const navigate = useNavigate();
-  const { signup } = useAuth();
+  const { signup, sendEmailVerificationLink } = useAuth();
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
 
@@ -29,7 +29,6 @@ function SignUp() {
   const passwordConfirmRef = useRef();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
@@ -41,12 +40,12 @@ function SignUp() {
       const { user } = await signup(
         // phoneNumRef.current.value,
         emailRef.current.value,
-        passwordRef.current.value
-
+        passwordRef.current.value,
+        await sendEmailVerificationLink(emailRef.current.value),
       );
       const userId = user.uid; // Get the user's UID from the signup response
       console.log(userId);
-      navigate("/");
+      navigate("/emailPage");
       try {
         const docRef = await setDoc(doc(db, "Account", userId), {
           name: name,

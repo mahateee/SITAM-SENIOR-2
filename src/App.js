@@ -27,6 +27,7 @@ import PersonalAssets from "./pages/PersonalAssets";
 import AdminSidebar from "./component/AdminSidebar";
 import OTPPage from "./pages/OTPPage"; 
 import Dashboard from "./pages/Dashboard";
+import EmailVerficationPage from "./pages/EmailVerficationPage";
 const USER_TYPE = {
   PUBLIC: "Public User",
   NORMAL_USER: "user",
@@ -108,6 +109,14 @@ function App() {
             element={
               <PublicElement>
                 <SignUp />
+              </PublicElement>
+            }
+          />
+             <Route
+            path="/emailPage"
+            element={
+              <PublicElement>
+                <EmailVerficationPage />
               </PublicElement>
             }
           />
