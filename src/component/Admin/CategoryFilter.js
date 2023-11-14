@@ -51,7 +51,7 @@ export default function CategoryFilter({
         {openFilter && (
           <div
             id="filterDropdown"
-            class="z-10  absolute mt-14 top-6 right-0 w-48 p-3 bg-white rounded-lg shadow"
+            class="z-50  absolute mt-22 bottom-26 left-26 w-42 p-3 bg-white rounded-lg shadow"
           >
             <h6 class="mb-3 text-sm font-medium text-gray-900 ">Category</h6>
             <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">

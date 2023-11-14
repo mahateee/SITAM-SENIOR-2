@@ -16,23 +16,23 @@ export default function AssetRow({
 
   return (
     <tr className="border-b" data-testid="asset" key={index}>
-      <td className="px-4 py-3 text-center">{index + 1}</td>
+      <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{index + 1}</td>
       {columnVisibility.ID && (
-        <td className="px-4 py-3 text-center">{AssetID}</td>
+        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">{AssetID}</td>
       )}
       {columnVisibility.Name && (
-        <td className="px-4 py-3 text-center">{name}</td>
+        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">{name}</td>
       )}
       {columnVisibility.Status && (
-        <td className="px-4 py-3 text-center">
+        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
           <StatusSpan status={Status} />
         </td>
       )}
       {columnVisibility.Brand && (
-        <td className="px-4 py-3 text-center">{Brand}</td>
+        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">{Brand}</td>
       )}
       {columnVisibility.Category && (
-        <td className="px-4 py-3 text-center">
+        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
           <span
             className={`bg-blue-100 hover:bg-blue-200 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded border border-blue-400`}
           >
@@ -41,9 +41,9 @@ export default function AssetRow({
         </td>
       )}
       {columnVisibility.Date && (
-        <td className="px-4 py-3 text-center">{date}</td>
+        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">{date}</td>
       )}
-      <td className="px-4 py-2  text-center">
+      <td className="px-4 py-3  text-center">
         <div className="relative inline-block text-left">
           <button
             type="button"

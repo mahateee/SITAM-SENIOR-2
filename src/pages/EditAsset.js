@@ -315,7 +315,7 @@ export default function EditAsset() {
         <div class="relative p-4 bg-white rounded-lg shadow-xl sm:p-5">
           {/* <!-- Modal header --> */}
           <div class="pb-4 mb-4 rounded-t border-b-2 sm:mb-5">
-            <h3 class="text-2xl font-semibold text-blue-800 ">Edit Asset</h3>
+            <h3 class="text-2xl font-semibold text-blue-800 ">Edit Asset Form</h3>
           </div>
 
           <AssetForm

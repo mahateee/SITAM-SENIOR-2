@@ -13,7 +13,7 @@ import { formatDate } from "../../component/functions/formatDate";
 const AdminApprovalTable = ({ requests, onApprove, onReject }) => (
   <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
     <h3 class="mb-2 text-xl font-bold text-gray-900">
-      New Assets Requests ✅{" "}
+      New Asset Requests ✅{" "}
     </h3>
     <span className="text-base font-normal text-gray-500">
       Requests Awaiting Approval or Rejection.
@@ -27,21 +27,27 @@ const AdminApprovalTable = ({ requests, onApprove, onReject }) => (
                 <tr>
                   <th
                     scope="col"
-                    class="p-4 text-center text-xs font-medium tracking-wider text-left text-gray-500 uppercase "
+                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                  >
+                    #
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                   >
                     Requester
                   </th>
                   <th
                     scope="col"
-                    class="p-4 text-center text-xs font-medium tracking-wider text-left text-gray-500 uppercase "
+                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                   >
-                    Date & Time
+                    Desired Date
                   </th>
                   <th
                     scope="col"
-                    class="p-4 text-xs text-center font-medium tracking-wider text-left text-gray-500 uppercase "
+                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                   >
-                    Action
+                    Actions
                   </th>
                 </tr>
               </thead>
@@ -49,24 +55,25 @@ const AdminApprovalTable = ({ requests, onApprove, onReject }) => (
                 {requests.length > 0 ? (
                   requests.map((req, id) => (
                     <tr key={id} className="border-b">
+                      <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{id + 1}</td>
                       <th
                         scope="row"
-                        className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap"
+                        className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center"
                       >
                         {req.name + " " + req.lastname}
                       </th>
                       <td className="p-4 text-sm font-normal   text-gray-900 whitespace-nowrap">
                         {req.formattedDate}
                       </td>
-                      <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap">
+                      <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap space-x-6">
                         <button
-                          className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
+                          className="text-white bg-green-700 hover:bg-green-800 focus:ring-green-300 font-medium rounded-lg text-md px-5 py-2.5 focus:outline-none"
                           onClick={() => onApprove(req.id)}
                         >
                           Approve
                         </button>
                         <button
-                          className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
+                          className="text-white bg-red-700 hover:bg-red-800 focus:ring-red-300 font-medium rounded-lg text-md px-6 py-2.5 focus:outline-none"
                           onClick={() => onReject(req.id)}
                         >
                           Reject

@@ -33,31 +33,36 @@ const ReturnedAssetsTable = () => {
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
       <h3 class="mb-2 text-xl font-bold text-gray-900">Returned Assets 🔄 </h3>
       <span className="text-base font-normal text-gray-500">
-        Returned Assets
+        List of Returned Assets.
       </span>
-      <div class="flex flex-col mt-6">
-        <div class="overflow-x-auto rounded-lg max-h-96">
+      <div class="flex flex-col mt-6 overflow-x-auto overflow-y-auto rounded-lg max-h-[600px]">
         
           <div class="inline-block min-w-full align-middle">
             <div class="overflow-hidden shadow sm:rounded-lg">
               <table class="min-w-full divide-y divide-gray-200 ">
                 <thead class="bg-gray-50 ">
                   <tr>
+                  <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
+                      #
+                    </th>
                     <th
                       scope="col"
-                      class="p-4 text-center text-xs font-medium tracking-wider text-left text-gray-500 uppercase "
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Category
                     </th>
                     <th
                       scope="col"
-                      class="p-4 text-center text-xs font-medium tracking-wider text-left text-gray-500 uppercase "
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Brand
                     </th>
                     <th
                       scope="col"
-                      class="p-4 text-xs text-center font-medium tracking-wider text-left text-gray-500 uppercase "
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Model
                     </th>
@@ -67,17 +72,18 @@ const ReturnedAssetsTable = () => {
                   {returnedAssets.length > 0 ? (
                     returnedAssets.map((returned, id) => (
                       <tr key={id} className="border-b">
+                        <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{id + 1}</td>
                         <th
                           scope="row"
-                          className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap"
+                          className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center"
                         >
                           {returned.Category}
                         </th>
-                        <td className="p-4 text-sm font-normal   text-gray-900 whitespace-nowrap">
+                        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
                           {returned.Brand}
                           {/* {returned.employeeName} */}
                         </td>
-                        <td className="p-4 text-sm font-normal   text-gray-900 whitespace-nowrap">
+                        <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
                           {returned.Model}
                           {/* {returned.employeeName} */}
                         </td>
@@ -89,7 +95,7 @@ const ReturnedAssetsTable = () => {
                         colSpan="3"
                         className="text-center text-gray-600  py-4"
                       >
-                        No new requests for approval.
+                        No returned assets.
                       </td>
                     </tr>
                   )}
@@ -97,7 +103,7 @@ const ReturnedAssetsTable = () => {
               </table>
             </div>
           </div>
-        </div>
+        
       </div>
     </div>
   );

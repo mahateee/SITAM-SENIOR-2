@@ -25,23 +25,29 @@ const AdminMaintenanceApproval = ({ requests, onApprove, onReject }) => (
             <table class="min-w-full divide-y divide-gray-200 ">
               <thead class="bg-gray-50 ">
                 <tr>
+                <th
+                    scope="col"
+                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                  >
+                    #
+                  </th>
                   <th
                     scope="col"
-                    class="p-4 text-center text-xs font-medium tracking-wider text-left text-gray-500 uppercase "
+                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                   >
                     Requester
                   </th>
                   <th
                     scope="col"
-                    class="p-4 text-center text-xs font-medium tracking-wider text-left text-gray-500 uppercase "
+                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                   >
                     Desired Date
                   </th>
                   <th
                     scope="col"
-                    class="p-4 text-xs text-center font-medium tracking-wider text-left text-gray-500 uppercase "
+                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                   >
-                    Action
+                    Actions
                   </th>
                 </tr>
               </thead>
@@ -49,24 +55,25 @@ const AdminMaintenanceApproval = ({ requests, onApprove, onReject }) => (
                 {requests.length > 0 ? (
                   requests.map((main, id) => (
                     <tr key={id} className="border-b">
+                      <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{id + 1}</td>
                       <th
                         scope="row"
-                        className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap"
+                        className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center"
                       >
                         {main.user}
                       </th>
-                      <td className="p-4 text-sm font-normal   text-gray-900 whitespace-nowrap">
+                      <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
                       {main.formattedDate}
                       </td>
-                      <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap">
+                      <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap space-x-6">
                         <button
-                          className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
+                          className="text-white bg-green-700 hover:bg-green-800 focus:ring-green-300 font-medium rounded-lg text-md px-5 py-2.5 focus:outline-none"
                           onClick={() => onApprove(main.id)}
                         >
                           Approve
                         </button>
                         <button
-                          className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
+                          className="text-white bg-red-700 hover:bg-red-800 focus:ring-red-300 font-medium rounded-lg text-md px-6 py-2.5 focus:outline-none"
                           onClick={() => onReject(main.id)}
                         >
                           Reject
