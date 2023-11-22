@@ -11,7 +11,7 @@ import { db } from "../../firebase/index";
 import { formatDate } from "../../component/functions/formatDate";
 
 const AdminApprovalTable = ({ requests, onApprove, onReject }) => (
-  <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
+  <div class="p-4 bg-white sm:p-6">
     <h3 class="mb-2 text-xl font-bold text-gray-900">
       New Asset Requests ✅{" "}
     </h3>
@@ -143,7 +143,7 @@ const AdminNewRequestsTable = () => {
   };
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto border border-gray-300 rounded-lg shadow-lg">
       {/* Display the table for new requests awaiting approval */}
       <AdminApprovalTable
         requests={requestsList}

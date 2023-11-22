@@ -79,15 +79,15 @@ export default function EmployeeList() {
       <AdminSidebar />
       <section className="bg-gray-50 min-h-screen p-3 sm:p-5">
         <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
-          <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
+          <div className="mt-12 p-4 bg-white border border-gray-300 rounded-lg shadow-lg sm:p-6">
             <div className="flex items-center justify-between lg:flex space-x-4">
               <div className="mb-4 lg:mb-0">
                 <h3 className="mb-2 text-xl font-bold text-gray-900">
                   Employees 👨‍💼
                 </h3>
-                <span className="text-base font-normal text-gray-500">
+                {/* <span className="text-base font-normal text-gray-500">
                   List of Employees.
-                </span>
+                </span> */}
               </div>
               <div className="w-full md:w-1/3">
                 <form className="flex items-left">
