@@ -16,7 +16,7 @@ import SearchInput from "../component/SearchInput";
 import CategoryFilter from "../component/Admin/CategoryFilter";
 import AddAssetButton from "../component/Admin/AddAssetButton";
 import ColumnFilter from "../component/Admin/ColumnFilter";
-
+ import AdminHomePage from "../pages/Admin/AdminHomePage";
 function Assets() {
   const [open, setOpen] = React.useState(false);
 
@@ -107,7 +107,8 @@ function Assets() {
   return (
     
     <div data-testid="asset-table" className="mt-14">
-
+            <AdminHomePage/>
+{/* 
       {showCautionDialog && (
         <Example
           open={showCautionDialog}
@@ -127,14 +128,14 @@ function Assets() {
 
       <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 max-w-screen-xl mx-auto">
         {/* Flex container for the header */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-4 lg:mb-0">
+        {/* <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-4 lg:mb-0">
           <div className="mb-4 lg:mb-0">
             <h3 class="mb-2 text-xl font-bold text-gray-900">Assets 🖥️</h3>
           </div>
           {/* Flex container for search and buttons */}
-          <div className="flex items-center space-x-4">
+          {/* <div className="flex items-center space-x-4"> */}
             {/* Adjusted the width of the SearchInput */}
-            <div className="w-72">
+            {/* <div className="w-72">
               <SearchInput
                 searchText={searchText}
                 handleChange={handleChange}
@@ -155,9 +156,9 @@ function Assets() {
               categories={categories}
             />
           </div>
-        </div>
+        </div> */}
         {/* table */}
-        <div className="flex flex-col mt-6" >
+        {/* <div className="flex flex-col mt-6" >
           <div className="overflow-y-auto" style={{ maxHeight: '600px' }}>
             <div className="inline-block min-w-full align-middle">
               <div className="overflow-hidden shadow sm:rounded-lg">
@@ -193,106 +194,107 @@ function Assets() {
           </div>
         </div>
 
-      </div>
+      </div> */} 
+
+      
     </div>
   );
 }
 export default Assets;
 
-export function ScanButton({ handleOpen }) {
-  return (
-    <button onClick={handleOpen}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        className="w-5 h-5 text-gray-500 "
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="w-6 h-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"
-        />
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z"
-        />
-      </svg>
-    </button>
-  );
-}
+// export function ScanButton({ handleOpen }) {
+//   return (
+//     <button onClick={handleOpen}>
+//       <svg
+//         xmlns="http://www.w3.org/2000/svg"
+//         fill="none"
+//         className="w-5 h-5 text-gray-500 "
+//         viewBox="0 0 24 24"
+//         stroke-width="1.5"
+//         stroke="currentColor"
+//         class="w-6 h-6"
+//       >
+//         <path
+//           stroke-linecap="round"
+//           stroke-linejoin="round"
+//           d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"
+//         />
+//         <path
+//           stroke-linecap="round"
+//           stroke-linejoin="round"
+//           d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z"
+//         />
+//       </svg>
+//     </button>
+//   );
+// }
 
-export function TableHeader({ columnVisibility }) {
-  return (
+// export function TableHeader({ columnVisibility }) {
+//   return (
 
-    <thead className="bg-gray-50 ">
-      <tr>
-        <th
-          scope="col"
-          className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
-        >
-          #
-        </th>
-        {columnVisibility.ID && (
-          <th
-            scope="col"
-            className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
-          >
-            Asset ID
-          </th>
-        )}
-        {columnVisibility.Name && (
-          <th
-            scope="col"
-            className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
-          >
-            Asset Name
-          </th>
-        )}
+//     <thead className="bg-gray-50 ">
+//       <tr>
+//         <th
+//           scope="col"
+//           className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+//         >
+//           #
+//         </th>
+//         {columnVisibility.ID && (
+//           <th
+//             scope="col"
+//             className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+//           >
+//             Asset ID
+//           </th>
+//         )}
+//         {columnVisibility.Name && (
+//           <th
+//             scope="col"
+//             className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+//           >
+//             Asset Name
+//           </th>
+//         )}
 
-        {columnVisibility.Status && (
-          <th
-            scope="col"
-            className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
-          >
-            Asset Status
-          </th>
-        )}
-        {columnVisibility.Brand && (
-          <th
-            scope="col"
-            className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
-          >
-            Asset Brand
-          </th>
-        )}
-        {columnVisibility.Category && (
-          <th
-            scope="col"
-            className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
-          >
-            Asset Category
-          </th>
-        )}
-        {columnVisibility.Date && (
-          <th
-            scope="col"
-            className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
-          >
-            Insertion Date
-          </th>
-        )}
-        <th
-          scope="col"
-          className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
-        >
-          Actions
-        </th>
-      </tr>
-    </thead>
-  );
-}
+//         {columnVisibility.Status && (
+//           <th
+//             scope="col"
+//             className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+//           >
+//             Asset Status
+//           </th>
+//         )}
+//         {columnVisibility.Brand && (
+//           <th
+//             scope="col"
+//             className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+//           >
+//             Asset Brand
+//           </th>
+//         )}
+//         {columnVisibility.Category && (
+//           <th
+//             scope="col"
+//             className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+//           >
+//             Asset Category
+//           </th>
+//         )}
+//         {columnVisibility.Date && (
+//           <th
+//             scope="col"
+//             className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+//           >
+//             Insertion Date
+//           </th>
+//         )}
+//         <th
+//           scope="col"
+//           className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+//         >
+//           Actions
+//         </th>
+//       </tr>
+//     </thead>
+
