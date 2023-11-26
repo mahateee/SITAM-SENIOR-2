@@ -34,7 +34,7 @@ const TaskManager = () => {
   };
 
   return (
-    <section className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm  sm:p-6">
+    <section className="p-4 bg-white border border-gray-200 rounded-lg shadow-xl sm:p-6">
       <div className="flex justify-center px-6 py-8 mx-auto xs:h-screen overflow-y-auto ">
         <div className="">
           <div className="flex justify-center cursor-default bg-gray-200 rounded-3xl px-4 py-1 color-gray ">

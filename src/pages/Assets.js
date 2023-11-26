@@ -105,28 +105,28 @@ function Assets() {
   };
 
   return (
-    
-    <div data-testid="asset-table" className="mt-14">
-            <AdminHomePage/>
-{/* 
-      {showCautionDialog && (
-        <Example
-          open={showCautionDialog}
-          onClose={() => {
-            setShowCautionDialog(false);
-          }}
-          onDelete={() => {
-            deleteAssetItem(selectedAssetId); // Pass the selected asset ID
-            setShowCautionDialog(false); // Close the dialog after deletion
-          }}
-          assetId={selectedAssetId}
-          setShowCautionDialog={setShowCautionDialog} // Pass setShowCautionDialog as a prop
-          deleteAssetItem={deleteAssetItem} // Pass deleteAssetItem as a prop
-        />
-      )}
-      {open && <ScanQR onClose={handleClose} />}
 
-      <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 max-w-screen-xl mx-auto">
+    <div className="bg-gray-50 min-h-screen p-3 sm:p-5">
+
+      <div data-testid="asset-table" className=" mt-12 p-6 bg-white border border-gray-300 rounded-lg shadow-lg sm:p-6 max-w-screen-xl mx-auto">
+
+        {showCautionDialog && (
+          <Example
+            open={showCautionDialog}
+            onClose={() => {
+              setShowCautionDialog(false);
+            }}
+            onDelete={() => {
+              deleteAssetItem(selectedAssetId); // Pass the selected asset ID
+              setShowCautionDialog(false); // Close the dialog after deletion
+            }}
+            assetId={selectedAssetId}
+            setShowCautionDialog={setShowCautionDialog} // Pass setShowCautionDialog as a prop
+            deleteAssetItem={deleteAssetItem} // Pass deleteAssetItem as a prop
+          />
+        )}
+        {open && <ScanQR onClose={handleClose} />}
+
         {/* Flex container for the header */}
         {/* <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-4 lg:mb-0">
           <div className="mb-4 lg:mb-0">
@@ -158,8 +158,8 @@ function Assets() {
           </div>
         </div> */}
         {/* table */}
-        {/* <div className="flex flex-col mt-6" >
-          <div className="overflow-y-auto" style={{ maxHeight: '600px' }}>
+        <div className="flex flex-col mt-6" >
+          <div className="overflow-y-auto" style={{ maxHeight: '640px' }}>
             <div className="inline-block min-w-full align-middle">
               <div className="overflow-hidden shadow sm:rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200 ">
@@ -194,7 +194,7 @@ function Assets() {
           </div>
         </div>
 
-      </div> */} 
+      </div>
 
       
     </div>

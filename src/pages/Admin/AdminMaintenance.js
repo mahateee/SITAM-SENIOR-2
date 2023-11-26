@@ -155,7 +155,7 @@ export default function AdminMaintenance() {
   };
 
   return (
-    <div className="p-12 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
+    <div className="mt-12 p-12 bg-white border border-gray-300 rounded-lg shadow-lg sm:p-6" style={{ width: '1200px' }}>
       <div className="flex items-center justify-between lg:flex space-x-12">
         <div className="mb-4 lg:mb-0">
           <h3 className="mb-2 text-xl font-bold text-gray-900">
@@ -198,8 +198,8 @@ export default function AdminMaintenance() {
           </form>
         </div>
       </div>
-      <div className="flex flex-col mt-8">
-        <div className="overflow-x-auto rounded-lg max-h-96">
+      <div className="flex flex-col mt-8 ">
+        <div className="overflow-x-auto rounded-lg max-h-96 ">
           <div className="inline-block min-w-full align-middle">
             <div className="overflow-hidden shadow sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
@@ -269,7 +269,7 @@ export default function AdminMaintenance() {
                             onChange={(e) =>
                               updateMaintancStatus(main.id, e.target.value)
                             }
-                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-25 p-2.5"
                           >
                             <option value="Waiting">Waiting</option>
                             <option value="Pending">Pending</option>
@@ -284,7 +284,7 @@ export default function AdminMaintenance() {
                             onChange={(e) =>
                               updateMaintancAssign(main.id, e.target.value)
                             }
-                            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-25 p-2.5"
                           >
                             <option value="None">None</option>
                             {employees.map((employee) => (

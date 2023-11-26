@@ -74,7 +74,7 @@ export default function AdminRequest() {
   };
 
   return (
-    <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
+    <div className="mt-12 p-4 bg-white border border-gray-300 rounded-lg shadow-lg sm:p-6">
       <div className="flex items-center justify-between lg:flex space-x-4">
         <div className="mb-4 lg:mb-0">
           <h3 className="mb-2 text-xl font-bold text-gray-900">

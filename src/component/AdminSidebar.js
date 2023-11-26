@@ -160,7 +160,7 @@ function AdminSidebar({ children }) {
                   href="#"
                   class="flex items-center p-2  rounded-lg hover:bg-gray-100"
                 >
-                  <svg
+                  {/* <svg
                     class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 hover:text-gray-900 "
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
@@ -172,9 +172,9 @@ function AdminSidebar({ children }) {
                       fill-rule="evenodd"
                       d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
                     />
-                  </svg>
+                  </svg> */}
                   {/* New Design*/}
-                  {/* <svg
+                  <svg
                     class="flex-shrink-0 w-6 h-5 text-gray-500 transition duration-75 hover:text-gray-900 "
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -193,7 +193,7 @@ function AdminSidebar({ children }) {
                     <path d="m16.8 12.3-.4-1" />
                     <path d="m14.3 16.6 1-.4" />
                     <path d="m20.7 13.8 1-.4" />
-                  </svg> */}
+                  </svg>
                   <span class="ml-3">Account</span>
                 </a>
               </Link>

@@ -30,7 +30,7 @@ const ReturnedAssetsTable = () => {
   }, []);
 
   return (
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6">
+    <div class="mt-12 p-4 bg-white border border-gray-300 rounded-lg shadow-lg sm:p-6">
       <h3 class="mb-2 text-xl font-bold text-gray-900">Returned Assets 🔄 </h3>
       <span className="text-base font-normal text-gray-500">
         List of Returned Assets.
@@ -52,19 +52,19 @@ const ReturnedAssetsTable = () => {
                       scope="col"
                       className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
-                      Category
+                      Asset Category
                     </th>
                     <th
                       scope="col"
                       className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
-                      Brand
+                      Asset Brand
                     </th>
                     <th
                       scope="col"
                       className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
-                      Model
+                      Asset Model
                     </th>
                   </tr>
                 </thead>
