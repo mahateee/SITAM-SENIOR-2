@@ -1,61 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineRobot } from "react-icons/ai";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-
-// Import your firebase configuration
-import { firestore } from "../firebase";
+import { collection, addDoc, onSnapshot } from "firebase/firestore";
+import { firestore } from "../firebase/index";
 
 const ChatGPT = () => {
   const [input, setInput] = useState("");
-  const [response, setResponse] = useState("");
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    const messagesCollection = collection(firestore, "messages");
+    const unsubscribe = onSnapshot(messagesCollection, (snapshot) => {
+      const newMessages = snapshot.docs.map((doc) => doc.data());
+      setMessages(newMessages);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleChat = async () => {
     try {
-      // Custom logic to check user's input for specific keywords
-      if (input.toLowerCase().includes("hello")) {
-        setResponse("Hello! How can I help you today?");
-      } else if (input.toLowerCase().includes("how are you")) {
-        setResponse("I am just a virtual assistant, but thanks for asking!");
-      } else {
-        // If no specific keyword is detected, use the OpenAI API
-        const openaiResponse = await fetchOpenAIResponse(input);
-        setResponse(openaiResponse);
-      }
-
-      // Save conversation to Firestore
-      await addDoc(collection(firestore, "message"), {
-        input,
-        response,
+      const userDocRef = await addDoc(collection(firestore, "messages"), {
+        prompt: input,
         timestamp: new Date(),
+        type: "user",
       });
+
+      // Wait for Firestore to trigger an update
+      const responseDoc = await userDocRef.get();
+      const responseContent = responseDoc.data()?.response;
+
+      // Update local state with bot response
+      setMessages([...messages, { type: "IAM ", response: responseContent }]);
     } catch (error) {
       console.error("Error handling chat:", error);
     }
-  };
-
-  const fetchOpenAIResponse = async (userInput) => {
-    const response = await fetch("https://api.openai.com/v1/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          "Bearer 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",
-      },
-      body: JSON.stringify({
-        model: "text-davinci-003",
-        prompt: userInput,
-      }),
-    });
-
-    if (!response.ok) {
-      console.error("Failed to fetch data. Status:", response.status);
-      const errorText = await response.text();
-      console.error("Error message:", errorText);
-      return "Oops! Something went wrong.";
-    }
-
-    const result = await response.json();
-    return result.choices[0].text;
   };
 
   return (
@@ -73,34 +51,43 @@ const ChatGPT = () => {
               <div className="flex-grow overflow-y-auto">
                 {/* Chat messages */}
                 <div className="flex flex-col mb-4 gap-4 py-4">
-                  {response && (
-                    <div className="flex justify-end">
-                      <div className="bg-blue-500 rounded-lg px-4 py-2 max-w-[80%]">
-                        <p className="text-white text-sm">{response}</p>
+                  {messages.map((msg, index) => (
+                    <div key={index} className={msg.type === "user" ? "flex justify-end" : "flex justify-start"}>
+                      <div
+                        className={`${msg.type === "user" ? "bg-blue-500 text-white" : "bg-gray-300 text-black"
+                          } rounded-lg px-4 py-2 max-w-[80%]`}
+                      >
+                        {/* Display user input for user messages */}
+
+                        {msg.type === "user" && <p className="text-sm">{msg.prompt}</p>}
+
+                        {/* Display bot response for bot messages */}
+                        <p className="text-sm">{msg.response}</p>
                       </div>
                     </div>
-                  )}
+                  ))}
                 </div>
+
+                <form onSubmit={(e) => e.preventDefault()}>
+                  <div className="flex justify-center items-center h-16">
+                    {/* Chat input */}
+                    <input
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      className="border border-gray-300 rounded-lg py-2 px-4 w-full max-w-lg mr-4"
+                      placeholder="Type a message..."
+                    />
+                    <button
+                      type="button"
+                      onClick={handleChat}
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Send
+                    </button>
+                  </div>
+                </form>
               </div>
-              <form onSubmit={(e) => e.preventDefault()}>
-                <div className="flex justify-center items-center h-16">
-                  {/* Chat input */}
-                  <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    className="border border-gray-300 rounded-lg py-2 px-4 w-full max-w-lg mr-4"
-                    placeholder="Type a message..."
-                  />
-                  <button
-                    type="button"
-                    onClick={handleChat}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  >
-                    Send
-                  </button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
