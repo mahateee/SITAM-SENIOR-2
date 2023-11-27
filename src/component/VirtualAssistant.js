@@ -30,16 +30,16 @@ const ChatGPT = () => {
       const responseContent = responseDoc.data()?.response;
 
       // Update local state with bot response
-      setMessages([...messages, { type: "IAM ", response: responseContent }]);
+      setMessages([...messages, { type: "IAM", response: responseContent }]);
     } catch (error) {
       console.error("Error handling chat:", error);
     }
   };
 
   return (
-    <section className="p-4 bg-white border border-gray-200 rounded-lg shadow-xl sm:p-6">
-      <div className="flex justify-center px-6 py-8 mx-auto xs:h-screen overflow-y-auto ">
-        <div className="">
+    <section className="mt-6 p-4 bg-white border border-gray-200 rounded-lg shadow-xl sm:p-6">
+      <div className="flex justify-center px-6 py-8 mx-auto xs:h-screen overflow-y-auto">
+        <div className="max-h-[550px] w-full">
           <div>
             {/* Header */}
             <div className="flex items-center mb-4">
@@ -81,7 +81,7 @@ const ChatGPT = () => {
                     <button
                       type="button"
                       onClick={handleChat}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Send
                     </button>
