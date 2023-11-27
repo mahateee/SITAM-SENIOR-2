@@ -104,7 +104,7 @@ export default function AssetForm({
           error={validation.Category}
         />
         <TextInput
-          label="Operating System:"
+          label="Operating System"
           id="os"
           name="os"
           value={asset.os}

@@ -46,9 +46,9 @@ function ShowPage() {
   }, [id]);
 
   return (
-    <section className="flex items-center justify-center h-screen" style={{ backgroundImage: `url(${frame})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '1100px' }}>
+    <section className="flex items-center justify-center h-screen" style={{ backgroundImage: `url(${frame})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '1455px' }}>
       <div className="container px-5 py-24 mx-auto">
-        <div className="lg:w-4/5 mx-auto bg-white rounded-lg border border-white p-8 items-center content-center flex shadow-xl">
+        <div className="lg:w-4/5 mx-auto bg-white rounded-lg border border-gray-200 p-8 items-center content-center flex shadow-2xl">
           <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
             <div class="flex border-b-4 border-gray-300 pt-4 pb-2">
               <h1 className="text-blue-500 text-3xl title-font font-medium mb-2">Asset Information</h1>
@@ -98,6 +98,40 @@ function ShowPage() {
             <div className="flex border-t border-gray-200 py-2">
               <span className="text-gray-500">Description</span>
               <span className="ml-auto text-gray-900">{asset.description}</span>
+            </div>
+            <div class="flex border-b-4 border-gray-300 pt-4 pb-2">
+              <h1 className="text-blue-500 text-3xl title-font font-medium mb-2">Optional Information</h1>
+            </div>
+            <div className="flex border-t border-gray-200 py-2">
+              <span className="text-gray-500">Warranty Type</span>
+              <span className="ml-auto text-gray-900">{asset.WarrantyType}</span>
+            </div>
+            <div className="flex border-t border-gray-200 py-2">
+              <span className="text-gray-500">Warranty Status</span>
+              <span className="ml-auto text-gray-900">{asset.WarrantyStatus}</span>
+            </div>
+            <div className="flex border-t border-gray-200 py-2">
+              <span className="text-gray-500">Warranty End Date</span>
+              <span className="ml-auto text-gray-900">{asset.WarrantyEndDate}</span>
+            </div>
+            <div class="flex border-b-4 border-gray-300 pt-4 pb-2">
+              <h1 className="text-blue-500 text-3xl title-font font-medium mb-2">Order Related Information</h1>
+            </div>
+            <div className="flex border-t border-gray-200 py-2">
+              <span className="text-gray-500">Order Number</span>
+              <span className="ml-auto text-gray-900">{asset.OrderNumber}</span>
+            </div>
+            <div className="flex border-t border-gray-200 py-2">
+              <span className="text-gray-500">Purchase Cost (SAR)</span>
+              <span className="ml-auto text-gray-900">{asset.PurchaseCost}</span>
+            </div>
+            <div className="flex border-t border-gray-200 py-2">
+              <span className="text-gray-500">Supplier</span>
+              <span className="ml-auto text-gray-900">{asset.Supplier}</span>
+            </div>
+            <div className="flex border-t border-gray-200 py-2">
+              <span className="text-gray-500">Purchase Date</span>
+              <span className="ml-auto text-gray-900">{asset.PurchaseDate}</span>
             </div>
             <div class="flex border-b-4 border-gray-300 pt-4 pb-2">
               <h1 className="text-blue-500 text-3xl title-font font-medium mb-2">Employee Information</h1>
