@@ -1,17 +1,17 @@
 import { useState } from 'react';
 
-//Account Alert.
-function AccountAlerts() {
-
+//New request alert.
+function EditAlert() {
+  
   const [isAlertVisible, setIsAlertVisible] = useState(true);
+
   const handleDismiss = () => {
     // When the button is clicked, hide the alert
     setIsAlertVisible(false);
   };
 
   return isAlertVisible ? (
-    
-    <div className="flex w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-xl bg-white">
+    <div className="flex w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-xl bg-white ">
       <div className="flex items-center justify-center w-12 bg-emerald-500">
         <svg
           className="w-6 h-6 text-white fill-current"
@@ -28,7 +28,7 @@ function AccountAlerts() {
               Success
             </span>
             <p className="text-md text-gray-600 dark:text-gray-800">
-              Account information updated successfully.
+              Asset information updated successfully.
             </p>
           </div>
           <button
@@ -51,5 +51,6 @@ function AccountAlerts() {
       </div>
     </div>
   ) : null;
+}
 
-} export default AccountAlerts;
+export default EditAlert;

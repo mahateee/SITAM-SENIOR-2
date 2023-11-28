@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc, addDoc, collection, updateDoc } from 'firebase/firestore';
-import { db, Timestamp} from '../firebase/index';
+import { db, Timestamp } from '../firebase/index';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,21 +8,22 @@ const Maintenance = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [formData, setFormData] = useState({
-    ID:id ||'',
+    ID: id || '',
     assetID: '',
     category: '',
     maintenanceType: '',
     remarks: '',
     urgency: '',
     user: '',
-    predictedUrgency:'',
+    predictedUrgency: '',
     approved: false,
     status: "Waiting",
-    role:"",
-    date: Timestamp.fromDate(new Date()),  });
-  
+    role: "",
+    date: Timestamp.fromDate(new Date()),
+  });
 
-    const handleChange = (e) => {
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -44,64 +45,64 @@ const Maintenance = () => {
     e.preventDefault();
     try {
       const currentDate = new Date();
-      
+
       // Update the formData with the current date
       setFormData((prevData) => ({
         ...prevData,
         date: Timestamp.fromDate(currentDate),
       }));
-  
+
       const maintanceRequestRef = collection(db, 'Maintainance_Requests');
       const newDocRef = await addDoc(maintanceRequestRef, formData);
       console.log('Document written with ID: ', newDocRef.id);
-  
+
       // Reset the form data
       setFormData({
-        ID:id ||'',
+        ID: id || '',
         assetID: '',
         category: '',
         maintenanceType: '',
         remarks: '',
         urgency: '',
         user: '',
-        predictedUrgency:'',
-        role:"",
+        predictedUrgency: '',
+        role: "",
         approved: false,
         status: 'Waiting',
-        date: Timestamp.fromDate(new Date()), 
-       
+        date: Timestamp.fromDate(new Date()),
+
       });
-  
+
       // Update the asset status after adding the document
       await updateAssetStatus(formData.assetID);
-  
+
       // Set showSuccessAlert to true and navigate to the Request page
       navigate('/personalassets', { state: { showMaintenanceAlert: true } });
-  
+
     } catch (error) {
       console.error('Error adding document:', error);
     }
   };
-  
+
   useEffect(() => {
     const fetchAssetData = async () => {
       try {
         const assetDocRef = doc(db, 'asset', id);
         const assetDocSnapshot = await getDoc(assetDocRef);
-  
+
         if (assetDocSnapshot.exists()) {
           const assetData = assetDocSnapshot.data();
-          const assetID = assetData.AssetID; 
+          const assetID = assetData.AssetID;
           const employeeId = assetData.employeeId;
           const employeeDocRef = doc(db, 'Account', employeeId);
           const employeeDocSnapshot = await getDoc(employeeDocRef);
-  
+
           if (employeeDocSnapshot.exists()) {
             const employeeData = employeeDocSnapshot.data();
-  
+
             setFormData((prevData) => ({
               ...prevData,
-              assetID: assetID || '', 
+              assetID: assetID || '',
               category: assetData.Category || '',
               user: `${employeeData.name || ''} ${employeeData.lastname || ''}`,
               role: employeeData.role || '', // Add the role here
@@ -116,10 +117,10 @@ const Maintenance = () => {
         console.error('Error fetching asset data:', error);
       }
     };
-  
+
     fetchAssetData();
   }, [id]);
-  
+
 
   return (
     <section className="bg-gray-200 overflow-y-auto overflow-x-hidden flex justify-center items-center w-full md:inset-0 h-modal md:h-full" style={{ height: '100vh' }}>
@@ -171,25 +172,25 @@ const Maintenance = () => {
                 />
               </div>
               {/* Role */}
-<div className="w-full">
-  <label
-    htmlFor="role"
-    className="block mb-2 text-sm font-medium text-gray-900 white:text-white"
-  >
-    Role
-  </label>
-  <input
-    readOnly
-    type="text"
-    name="role"
-    id="role"
-    value={formData.role}
-    onChange={handleChange}
-    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
-    placeholder="Role"
-    required
-  />
-</div>
+              <div className="w-full">
+                <label
+                  htmlFor="role"
+                  className="block mb-2 text-sm font-medium text-gray-900 white:text-white"
+                >
+                  Role
+                </label>
+                <input
+                  readOnly
+                  type="text"
+                  name="role"
+                  id="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
+                  placeholder="Role"
+                  required
+                />
+              </div>
 
               {/* Assign */}
               <div className="w-full">
@@ -254,7 +255,7 @@ const Maintenance = () => {
                   <option value="other">Other</option>
                 </select>
               </div>
-              
+
               {/* Urgency */}
               <div className="w-full">
                 <label
@@ -318,8 +319,6 @@ const Maintenance = () => {
     </section>
   );
 };
-
-
 
 export default Maintenance;
 

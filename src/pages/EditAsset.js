@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import AssetForm from "../component/Admin/AssetForm";
 
+
 export default function EditAsset() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -301,7 +302,9 @@ export default function EditAsset() {
         });
 
         console.log("Document successfully updated and saved to history!");
-        navigate("/Asset");
+        // Set showSuccessAlert to true and navigate to the Request page
+        navigate('/Asset', { state: { showEditAlert: true } });
+        
       } catch (error) {
         console.error("Error updating document: ", error);
       }

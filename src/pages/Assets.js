@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import {
   collection,
   query,
@@ -10,14 +9,16 @@ import {
 import { db } from "../firebase/index";
 import Example from "../component/Example";
 import ScanQR from "../component/Admin/ScanQR";
-import AdminSidebar from "../component/AdminSidebar";
 import AssetRow from "../component/Admin/AssetRow";
 import SearchInput from "../component/SearchInput";
 import CategoryFilter from "../component/Admin/CategoryFilter";
 import AddAssetButton from "../component/Admin/AddAssetButton";
 import ColumnFilter from "../component/Admin/ColumnFilter";
+import EditAlert from "../component/EditAlert";
+import { useLocation } from 'react-router-dom';
 
 function Assets() {
+  
   const [open, setOpen] = React.useState(false);
 
   const handleClose = () => {
@@ -104,11 +105,20 @@ function Assets() {
     }
   };
 
+  const location = useLocation();
+  const showEditAlert = location.state?.showEditAlert || false;
+
   return (
 
     <div className="bg-gray-50 min-h-screen p-3 sm:p-5">
 
       <div data-testid="asset-table" className=" mt-12 p-6 bg-white border border-gray-300 rounded-lg shadow-lg sm:p-6 max-w-screen-xl mx-auto">
+        
+      {showEditAlert && (
+          <div style={{ position: 'absolute', top: '150px', right: '10px' }}>
+            <EditAlert />
+          </div>
+        )}
 
         {showCautionDialog && (
           <Example

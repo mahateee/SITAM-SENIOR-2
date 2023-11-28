@@ -31,6 +31,7 @@ export default function AssetForm({
     { label: "Printer", value: "Printer" },
     { label: "Phone", value: "Phone" },
   ];
+  
   return (
     <form onSubmit={handleSubmit} className="mb-4 px-10" >
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
@@ -230,7 +231,7 @@ export default function AssetForm({
           className="inline-flex justify-center items-center my-6 py-2 px-4 text-base font-medium text-center text-white rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-purple-500"
           type="submit"
         >
-          {isEdit ? "Edit Asset" : "Add Asset"}
+          {isEdit ? "Save" : "Add Asset"}
         </button>
       </div>
     </form>
