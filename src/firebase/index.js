@@ -40,34 +40,6 @@ export {
   Timestamp, // Include Timestamp in the exports
 };
 
-const accountsRef = db.firestore().collection("accounts");
-
-// Function to generate AI response (replace this with your actual implementation)
-const AIgenerateResponse = async (input) => {
-  // Your AI generation logic goes here
-  // Example: Replace this with the actual code to generate AI response
-  return `AI-generated response for: ${input}`;
-};
-
-// Set up a listener to receive real-time updates for all documents in the "accounts" collection
-accountsRef.onSnapshot(async (snapshot) => {
-  snapshot.forEach(async (doc) => {
-    // Access the document data
-    const accountData = doc.data();
-
-    // Assuming you have a field named "prompt" in your document
-    const prompt = accountData.prompt;
-
-    // Generate AI response based on the prompt
-    const aiResponse = await AIgenerateResponse(prompt);
-
-    // Update the document with the AI-generated response
-    await doc.ref.update({ aiResponse });
-
-    // Log the AI-generated response
-    console.log(`AI-generated Response: ${aiResponse}`);
-  });
-});
 // const collectionName = '';
 
 // // Function to delete all documents inside the collection
