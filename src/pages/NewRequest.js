@@ -89,6 +89,8 @@ function NewRequest() {
             lastname: userData.lastname,
             department: userData.department,
             email: userData.email,
+            phone: userData.phoneNumber,
+
           }));
         } else {
           console.log("User document does not exist");
@@ -255,7 +257,7 @@ function NewRequest() {
                   name="phoneNumber"
                   id="phoneNumber"
                   readOnly
-                  value={formData.phoneNumber}
+                  value={formData.phone}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
                 />
               </div>

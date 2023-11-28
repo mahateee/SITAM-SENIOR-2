@@ -351,9 +351,10 @@ const PreviousRequests = () => {
                         {/* <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
                         {asset.system}
                       </td> */}
-                        <td className="px-4 py-3 text-center">
-                          <Descriptions system={asset.system} />
-                        </td>
+                 <td className="px-4 py-3 text-center max-w-[150px] overflow-hidden">
+  <Descriptions system={asset.system} />
+</td>
+
                       </tr>
                     ))}
                   </tbody>
