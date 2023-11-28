@@ -1,36 +1,108 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineRobot } from "react-icons/ai";
-import { collection, addDoc, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, onSnapshot , doc, getDocs, getDoc  } from "firebase/firestore";
 import { firestore } from "../firebase/index";
-
+import { useAuth } from "../context/AuthContext";
 const ChatGPT = () => {
+  const { currentUser } = useAuth();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
+    const fetchUserEmail = async () => {
+      try {
+        if (!currentUser || !currentUser.email) {
+          console.error("Current user or email is undefined.");
+          return;
+        }
+
+        setUserEmail(currentUser.email);
+        const accountDocRef = doc(firestore, "Account", currentUser.email);
+        const accountDocSnapshot = await getDoc(accountDocRef);
+
+        if (accountDocSnapshot.exists()) {
+          setUserEmail(accountDocSnapshot.data().email);
+        } else {
+          console.error("User document not found");
+        }
+      } catch (error) {
+        console.error("Error fetching user document:", error);
+      }
+    };
+
+    fetchUserEmail();
+  }, [currentUser]);
+
+  useEffect(() => {
+    const fetchInitialMessages = async () => {
+      try {
+        if (!userEmail) return;
+
+        const messagesCollection = collection(firestore, "messages");
+        const snapshot = await getDocs(messagesCollection);
+
+        const allMessages = snapshot.docs
+          .map((doc) => ({ id: doc.id, ...doc.data() }))
+          .filter((msg) => msg.userId === userEmail)
+          .sort((a, b) => a.timestamp - b.timestamp);
+
+        setMessages(allMessages);
+      } catch (error) {
+        console.error("Error fetching initial messages:", error);
+      }
+    };
+
+    fetchInitialMessages();
+  }, [userEmail]);
+
+  useEffect(() => {
+    if (!userEmail) return;
+
     const messagesCollection = collection(firestore, "messages");
     const unsubscribe = onSnapshot(messagesCollection, (snapshot) => {
-      const newMessages = snapshot.docs.map((doc) => doc.data());
-      setMessages(newMessages);
+      const allMessages = snapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
+        .filter((msg) => msg.userId === userEmail)
+        .sort((a, b) => a.timestamp - b.timestamp);
+
+      setMessages(allMessages);
     });
 
     return () => unsubscribe();
-  }, []);
-
+  }, [userEmail]);
   const handleChat = async () => {
     try {
+      if (!userEmail) {
+        console.error("User email is not available.");
+        return;
+      }
+  
       const userDocRef = await addDoc(collection(firestore, "messages"), {
+        userId: userEmail,
         prompt: input,
         timestamp: new Date(),
         type: "user",
       });
-
-      // Wait for Firestore to trigger an update
-      const responseDoc = await userDocRef.get();
-      const responseContent = responseDoc.data()?.response;
-
-      // Update local state with bot response
-      setMessages([...messages, { type: "IAM", response: responseContent }]);
+  
+      const updatedUserDocRef = doc(firestore, "messages", userDocRef.id);
+  
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { id: userDocRef.id, type: "user", prompt: input },
+      ]);
+  
+      onSnapshot(updatedUserDocRef, (responseDoc) => {
+        const responseContent = responseDoc.data()?.response;
+  
+        setMessages((prevMessages) =>
+          prevMessages.map((message) =>
+            message.id === userDocRef.id
+              ? { ...message, type: "IAM", response: responseContent }
+              : message
+          )
+        );
+      });
     } catch (error) {
       console.error("Error handling chat:", error);
     }
@@ -51,22 +123,21 @@ const ChatGPT = () => {
               <div className="flex-grow overflow-y-auto">
                 {/* Chat messages */}
                 <div className="flex flex-col mb-4 gap-4 py-4">
-                  {messages.map((msg, index) => (
-                    <div key={index} className={msg.type === "user" ? "flex justify-end" : "flex justify-start"}>
-                      <div
-                        className={`${msg.type === "user" ? "bg-blue-500 text-white" : "bg-gray-300 text-black"
-                          } rounded-lg px-4 py-2 max-w-[80%]`}
-                      >
-                        {/* Display user input for user messages */}
+{messages.map((msg, index) => (
+  <div key={index} className={msg.type === "user" ? "flex justify-end" : "flex justify-start"}>
+    <div
+      className={`${msg.type === "user" ? "bg-blue-500 text-white" : "bg-gray-300 text-black"
+        } rounded-lg px-4 py-2 max-w-[80%]`}
+    >
+      {/* Display user input for user messages */}
+      {msg.type === "user" && <p className="text-sm">{msg.prompt}</p>}
+      {/* Display bot response for bot messages */}
+      {msg.type === "IAM" && <p className="text-sm">{msg.response}</p>}
+    </div>
+  </div>
+))}
+</div>
 
-                        {msg.type === "user" && <p className="text-sm">{msg.prompt}</p>}
-
-                        {/* Display bot response for bot messages */}
-                        <p className="text-sm">{msg.response}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
 
                 <form onSubmit={(e) => e.preventDefault()}>
                   <div className="flex justify-center items-center h-16">

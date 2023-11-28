@@ -52,9 +52,7 @@ function SignIn({ setUserRole }) {
           setUserRole("user");
           // Additional logic for users if needed
         }
-  
-        // Redirect to the OTP page
-        navigate("/otp", { state: { phoneNumber: user.phoneNumber } });
+
       } else {
         setError("User data not found.");
       }

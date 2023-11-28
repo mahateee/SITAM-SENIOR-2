@@ -25,7 +25,6 @@ import EmployeeList from "./pages/Admin/EmployeeList";
 import Productivity from "./pages/Productivity";
 import PersonalAssets from "./pages/PersonalAssets";
 import AdminSidebar from "./component/AdminSidebar";
-import OTPPage from "./pages/OTPPage"; 
 import Dashboard from "./pages/Dashboard";
 import EmailVerficationPage from "./pages/EmailVerficationPage";
 const USER_TYPE = {
@@ -96,14 +95,7 @@ function App() {
               </PublicElement>
             }
           />
-   <Route
-            path="/otp/:phoneNumber" // Route parameter for phone number
-            element={
-              <PublicElement>
-                <OTPPage setUserRole={setUserRole} />
-              </PublicElement>
-            }
-          />
+
           <Route
             path="/signup"
             element={
