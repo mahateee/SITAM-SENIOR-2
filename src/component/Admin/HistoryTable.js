@@ -21,25 +21,30 @@ const HistoryTable = ({ assetId }) => {
     const unsubscribe = onSnapshot(q, async (querySnapshot) => {
       const historyArray = [];
       const promises = [];
+
       querySnapshot.forEach((queryDoc) => {
         const historyData = queryDoc.data();
-        const empRef = doc(db, "Account", historyData.updatedData.employeeId);
 
-        const promise = getDoc(empRef)
-          .then((accountDoc) => {
-            const accountData = accountDoc.data();
-            const updatedHistoryData = {
-              ...historyData,
-              accountInfo: accountData,
-              formattedDate: formatDate(historyData.timestamp),
-            };
-            historyArray.push(updatedHistoryData);
-          })
-          .catch((error) => {
-            console.log("Error fetching account info:", error);
-          });
+        // Check if employeeId exists before creating the document reference
+        if (historyData.updatedData && historyData.updatedData.employeeId) {
+          const empRef = doc(db, "Account", historyData.updatedData.employeeId);
 
-        promises.push(promise);
+          const promise = getDoc(empRef)
+            .then((accountDoc) => {
+              const accountData = accountDoc.data();
+              const updatedHistoryData = {
+                ...historyData,
+                accountInfo: accountData,
+                formattedDate: formatDate(historyData.timestamp),
+              };
+              historyArray.push(updatedHistoryData);
+            })
+            .catch((error) => {
+              console.log("Error fetching account info:", error);
+            });
+
+          promises.push(promise);
+        }
       });
 
       await Promise.all(promises);
