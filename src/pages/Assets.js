@@ -15,6 +15,7 @@ import CategoryFilter from "../component/Admin/CategoryFilter";
 import AddAssetButton from "../component/Admin/AddAssetButton";
 import ColumnFilter from "../component/Admin/ColumnFilter";
 import EditAlert from "../component/EditAlert";
+import AddAlert from "../component/AddAlert";
 import { useLocation } from 'react-router-dom';
 
 function Assets() {
@@ -107,6 +108,7 @@ function Assets() {
 
   const location = useLocation();
   const showEditAlert = location.state?.showEditAlert || false;
+  const showAddAlert = location.state?.showAddAlert || false;
 
   return (
 
@@ -117,6 +119,12 @@ function Assets() {
       {showEditAlert && (
           <div style={{ position: 'absolute', top: '150px', right: '10px' }}>
             <EditAlert />
+          </div>
+        )}
+
+{showAddAlert && (
+          <div style={{ position: 'absolute', top: '150px', right: '10px' }}>
+            <AddAlert />
           </div>
         )}
 

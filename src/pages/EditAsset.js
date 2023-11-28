@@ -302,7 +302,7 @@ export default function EditAsset() {
         });
 
         console.log("Document successfully updated and saved to history!");
-        // Set showSuccessAlert to true and navigate to the Request page
+        // Set showEditAlert to true and navigate to the Request page
         navigate('/Asset', { state: { showEditAlert: true } });
         
       } catch (error) {

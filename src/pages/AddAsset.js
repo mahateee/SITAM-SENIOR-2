@@ -150,7 +150,8 @@ export default function AddAsset() {
           Supplier: asset.Supplier,
         });
         console.log("Document written with ID: ", docRef.id);
-        navigate("/Asset");
+        // Set showEditAlert to true and navigate to the Request page
+        navigate('/Asset', { state: { showAddAlert: true } });
       } catch (e) {
         console.error("Error adding document: ", e);
       }

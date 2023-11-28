@@ -81,11 +81,9 @@ const ReturnedAssetsTable = () => {
                         </th>
                         <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
                           {returned.Brand}
-                          {/* {returned.employeeName} */}
                         </td>
                         <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
                           {returned.Model}
-                          {/* {returned.employeeName} */}
                         </td>
                       </tr>
                     ))
