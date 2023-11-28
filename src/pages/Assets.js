@@ -19,7 +19,7 @@ import AddAlert from "../component/AddAlert";
 import { useLocation } from 'react-router-dom';
 
 function Assets() {
-  
+
   const [open, setOpen] = React.useState(false);
 
   const handleClose = () => {
@@ -115,14 +115,14 @@ function Assets() {
     <div className="bg-gray-50 min-h-screen p-3 sm:p-5">
 
       <div data-testid="asset-table" className=" mt-12 p-6 bg-white border border-gray-300 rounded-lg shadow-lg sm:p-6 max-w-screen-xl mx-auto">
-        
-      {showEditAlert && (
+
+        {showEditAlert && (
           <div style={{ position: 'absolute', top: '150px', right: '10px' }}>
             <EditAlert />
           </div>
         )}
 
-{showAddAlert && (
+        {showAddAlert && (
           <div style={{ position: 'absolute', top: '150px', right: '10px' }}>
             <AddAlert />
           </div>

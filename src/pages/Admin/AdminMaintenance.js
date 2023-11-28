@@ -155,7 +155,7 @@ export default function AdminMaintenance() {
   };
 
   return (
-    <div className="mt-12 p-12 bg-white border border-gray-300 rounded-lg shadow-lg sm:p-6" style={{ width: '1200px' }}>
+    <div className="mt-12 p-12 bg-white border border-gray-300 rounded-lg shadow-lg sm:p-6" style={{ width: '1250px' }}>
       <div className="flex items-center justify-between lg:flex space-x-12">
         <div className="mb-4 lg:mb-0">
           <h3 className="mb-2 text-xl font-bold text-gray-900">
@@ -281,15 +281,13 @@ export default function AdminMaintenance() {
                         <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">
                           <select
                             value={main.assign || "None"}
-                            onChange={(e) =>
-                              updateMaintancAssign(main.id, e.target.value)
-                            }
-                            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-25 p-2.5"
+                            onChange={(e) => updateMaintancAssign(main.id, e.target.value)}
+                            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-50 p-2.5"
                           >
                             <option value="None">None</option>
                             {employees.map((employee) => (
                               <option key={employee.id} value={employee.id}>
-                                {employee.name}
+                                {` ${employee.name} ${employee.lastname}`}
                               </option>
                             ))}
                           </select>
@@ -337,7 +335,7 @@ const Remarks = ({ remarks, assetId }) => {
       {isDropdownOpen && (
         <div
           id="dropdownDotsHorizontal"
-          className="absolute z-20 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
+          className="absolute z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
           style={{ top: '2.5rem' }} // Adjust this value as needed
         >
           <ul

@@ -145,7 +145,7 @@ const AdminNewRequestsTable = () => {
     }
   };
   return (
-    <div className="overflow-x-auto border border-gray-300 rounded-lg shadow-lg" style={{ width: '1200px' }}>
+    <div className="overflow-x-auto border border-gray-300 rounded-lg shadow-lg" style={{ width: '1250px' }}>
       {/* Display the table for new requests awaiting approval */}
       <AdminMaintenanceApproval
         requests={MaintainanceList}
