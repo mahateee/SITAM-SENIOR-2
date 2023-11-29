@@ -5,10 +5,12 @@ import {
   query,
   doc,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "../../firebase/index";
 import { formatDate } from "../../component/functions/formatDate";
 export default function AdminRequest() {
+
   const [requestsList, setRequestsList] = useState([]);
   const [searchText, setSearchText] = useState([]);
   const [data, setData] = useState(requestsList);
@@ -72,6 +74,46 @@ export default function AdminRequest() {
       console.error("Error updating request status:", error);
     }
   };
+
+  const updateRequestAssign = async (requestId, newStatus) => {
+    try {
+      const requestRef = doc(db, "request", requestId);
+      await updateDoc(requestRef, { assign: newStatus });
+      // Update the local state to reflect the change
+      setRequestsList((prevRequests) =>
+        prevRequests.map((request) =>
+          request.id === requestId ? { ...request, assign: newStatus } : request
+        )
+      );
+      console.log(`Request ${requestId} status updated to ${newStatus}`);
+    } catch (error) {
+      console.error("Error updating request status:", error);
+    }
+  };
+  const [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const q = query(
+          collection(db, "Account"),
+          where("role", "==", "admin")
+        );
+        const unsub = onSnapshot(q, (querySnapshot) => {
+          const adminsArray = [];
+          querySnapshot.forEach((doc) => {
+            adminsArray.push({ ...doc.data(), id: doc.id });
+          });
+          setEmployees(adminsArray);
+        });
+        return () => unsub();
+      } catch (error) {
+        console.error("Error fetching admin employees:", error);
+      }
+    };
+
+    fetchEmployees();
+  }, []);
 
   return (
     <div className="mt-12 p-4 bg-white border border-gray-300 rounded-lg shadow-lg sm:p-6">
@@ -160,6 +202,9 @@ export default function AdminRequest() {
                     >
                       Desired Date
                     </th>
+                    <th scope="col" className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase">
+                      Assign
+                    </th>
                     <th
                       scope="col"
                       className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
@@ -190,6 +235,20 @@ export default function AdminRequest() {
                         <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">{req.brand}</td>
 
                         <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">{req.formattedDate}</td>
+                        <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">
+                          <select
+                            value={req.assign || "None"}
+                            onChange={(e) => updateRequestAssign(req.id, e.target.value)}
+                            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-50 p-2.5"
+                          >
+                            <option value="None">None</option>
+                            {employees.map((employee) => (
+                              <option key={employee.id} value={employee.id}>
+                                {` ${employee.name} ${employee.lastname}`}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
                         <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
                           <select
                             value={req.status || "Waiting"}
