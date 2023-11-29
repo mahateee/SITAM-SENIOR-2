@@ -45,45 +45,45 @@ function Info() {
             <div className="p-4 md:w-1/3">
               <div className="flex rounded-lg h-full bg-white border border-purple-200 p-8 flex-col shadow-lg fade-in opacity-0 transform -translate-y-4 transition-all duration-500 ease-in-out">
                 <div className="flex items-center mb-3">
-                  <h2 className="text-gray-900 text-lg title-font font-bold">Ease of Use</h2>
+                  <h2 className="text-gray-900 text-lg title-font font-bold">Effortless Asset Insight through Scanning</h2>
                 </div>
                 <div className="flex-grow flex items-center justify-center">
                   <p className="leading-relaxed text-gray-500 text-base">
-                    Our IT asset management system is designed to be user-friendly and easy to use,
-                    with a customizable dashboard that provides real-time visibility into your
-                    assets and resources.
+                    Experience simplicity with our IT asset management system.
+                    Utilize the scanning feature for instant access to asset information,
+                    enhancing real-time visibility and resource management.
                   </p>
                 </div>
+
                 <img className="mx-auto mt-4" src={scanPic} alt="Scan" style={{ width: '55%' }} />
               </div>
             </div>
             <div className="p-4 md:w-1/3">
               <div className="flex rounded-lg h-full bg-white border border-purple-200 p-8 flex-col shadow-lg fade-in opacity-0 transform -translate-y-4 transition-all duration-500 ease-in-out delay-150">
                 <div className="flex items-center mb-3">
-                  <h2 className="text-gray-900 text-lg titleFont font-bold">Comprehensive Services</h2>
+                  <h2 className="text-gray-900 text-lg titleFont font-bold">Comprehensive Solutions</h2>
                 </div>
                 <div className="flex-grow flex items-center justify-center">
                   <p className="leading-relaxed text-gray-500 text-base">
-                    Our IT asset management service covers all aspects of asset management, from
-                    asset discovery and inventory management to real-time tracking and monitoring,
-                    to ensure that your IT infrastructure is optimized and secure.
+                    We provide a complete suite of IT asset management solutions, encompassing asset discovery, inventory management, real-time tracking, and monitoring. Our goal is to optimize and secure your IT infrastructure comprehensively.
                   </p>
                 </div>
+
                 <img className="mx-auto mt-4" src={MaintenacePic} alt="Maintenance" style={{ width: '35%' }} />
               </div>
             </div>
             <div className="p-4 md:w-1/3">
               <div className="flex rounded-lg h-full bg-white border border-purple-200 p-8 flex-col shadow-lg fade-in opacity-0 transform -translate-y-4 transition-all duration-500 ease-in-out delay-300">
                 <div className="flex items-center mb-3">
-                  <h2 className="text-gray-900 text-lg title-font font-bold">Improved productivity</h2>
+                  <h2 className="text-gray-900 text-lg title-font font-bold">Maximize Productivity with Virtual Assistant</h2>
                 </div>
                 <div className="flex-grow flex items-center justify-center">
                   <p className="leading-relaxed text-gray-500 text-base">
-                    Our IT asset management service streamlines your asset management process and
-                    optimizes your IT infrastructure, enabling you to focus on other important tasks
-                    and projects to improve your overall productivity.
+                    Utilize our Virtual Assistant to streamline asset management and optimize IT infrastructure, redirecting your focus for enhanced productivity in essential tasks and projects.
                   </p>
                 </div>
+
+
                 <img className="mx-auto mt-4" src={chatbotPic} alt="Chatbot" style={{ width: '50%' }} />
               </div>
             </div>

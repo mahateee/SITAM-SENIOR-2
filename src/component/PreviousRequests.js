@@ -276,33 +276,28 @@ const PreviousRequests = () => {
                     </th>
                     <th
                       scope="col"
-                      // class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase text-center"
                       className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Desired Date
                     </th>
                     <th
                       scope="col"
-                      // class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase text-center"
                       className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Asset Brand
                     </th>
                     <th
                       scope="col"
-                      // class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase text-center"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
+                      Operating System
+                    </th>
+                    <th
+                      scope="col"
                       className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Request Status
                     </th>
-                    <th
-                      scope="col"
-                      // class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase text-center"
-                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
-                    >
-                      Description
-                    </th>
-
                   </tr>
                 </thead>
                 <tbody className="bg-white ">
@@ -318,6 +313,9 @@ const PreviousRequests = () => {
                       </td>
                       <td class="p-4 text-sm font-semibold text-gray-500 whitespace-nowr text-center">
                         {asset.brand}
+                      </td>
+                      <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
+                        {asset.system}
                       </td>
                       <td className="p-4 whitespace-nowrap text-center">
                         <span className="ml-auto text-gray-900">
@@ -348,13 +346,6 @@ const PreviousRequests = () => {
                           ) : null}
                         </span>
                       </td>
-                      {/* <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
-                        {asset.system}
-                      </td> */}
-                      <td className="px-4 py-3 text-center max-w-[150px] overflow-hidden">
-                        <Descriptions system={asset.system} />
-                      </td>
-
                     </tr>
                   ))}
                 </tbody>
@@ -367,52 +358,4 @@ const PreviousRequests = () => {
   );
 };
 
-
-const Descriptions = ({ system }) => {
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-
-  return (
-    <div style={{ position: 'relative' }}>
-      <button
-        id="dropdownMenuIconHorizontalButton"
-        data-dropdown-toggle="dropdownDotsHorizontal"
-        className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-gray-50"
-        type="button"
-        onClick={() => setDropdownOpen(!isDropdownOpen)}
-      >
-        <svg
-          className="w-5 h-5"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 16 3"
-        >
-          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-        </svg>
-      </button>
-
-      {isDropdownOpen && (
-        <div
-          id="dropdownDotsHorizontal"
-          className="absolute z-20 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
-          style={{ top: '2.5rem' }} // Adjust this value as needed
-        >
-          <ul
-            className="py-2 text-sm text-gray-700 bg-white"
-            aria-labelledby="dropdownMenuIconHorizontalButton"
-          >
-            <li>
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 overflow-hidden"
-              >
-                {system}
-              </a>
-            </li>
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-};
 export default PreviousRequests;

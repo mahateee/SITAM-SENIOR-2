@@ -38,48 +38,49 @@ export default function Services() {
             />
           </div>
           <div class="flex flex-col flex-wrap lg:py-6 -mb-10 lg:w-1/2 lg:pl-12 lg:text-left text-center">
-            <div class="flex flex-col bg-white p-6  border border-purple-200  shadow-lg mb-10 lg:items-start items-center">
+            <div class="flex flex-col bg-white p-6 border border-purple-200 shadow-lg mb-10 lg:items-start items-center">
               <div class="flex-grow">
                 <h2 class="text-gray-900 text-lg title-font font-medium mb-3">
-                  Asset maintenance
-                </h2> 
-                <p class="leading-relaxed text-base">
-                  Asset maintenance is a service that manages the maintenance of
-                  IT assets, schedules maintenance activities, and improves the
-                  overall reliability of the IT infrastructure.
-                </p>
-            
-              </div>
-            </div>
-            <div class="flex flex-col  bg-white p-6  border border-purple-200  shadow-lg  mb-10 lg:items-start items-center">
-              <div class="flex-grow">
-                <h2 class="text-gray-900 text-lg title-font font-medium mb-3">
-                  Reporting and analytics
+                  IT Asset Maintenance
                 </h2>
                 <p class="leading-relaxed text-base">
-                  Reporting and analytics is a service that provides insights
-                  into an organization's IT asset management by generating
-                  reports on asset usage, costs, performance, compliance, and
-                  planning for future upgrades and replacements.
+                  Our IT Asset Maintenance service oversees the care and upkeep of IT assets,
+                  including scheduling maintenance activities, contributing to enhanced
+                  reliability, and optimizing the overall performance of the IT infrastructure.
                 </p>
-            
               </div>
             </div>
-            <div class="flex flex-colbg-white p-6  border border-purple-200  shadow-lg mb-10 lg:items-start items-center">
+
+            <div class="flex flex-col bg-white p-6 border border-purple-200 shadow-lg mb-10 lg:items-start items-center">
               <div class="flex-grow">
                 <h2 class="text-gray-900 text-lg title-font font-medium mb-3">
-                  Asset tracking
+                  Unlock Insights with Our Asset Dashboard
                 </h2>
                 <p class="leading-relaxed text-base">
-                  Asset tracking is a service that monitors and tracks an
-                  organization's IT assets, including hardware, software, and
-                  mobile devices. It keeps track of location, status, and
-                  history, as well as manages maintenance schedules and warranty
-                  information.
+                  Discover the power of our Asset Lifecycle Dashboard!
+                  Gain valuable insights into your IT assets – from usage and costs to performance and compliance.
+                  Plan for future upgrades and replacements with ease.
+                  Our user-friendly interface lets you create detailed reports and even print them for quick reference.
+                  Take control of your asset management journey today!
                 </p>
-             
               </div>
             </div>
+
+            <div class="flex flex-col bg-white p-6 border border-purple-200 shadow-lg mb-10 lg:items-start items-center">
+              <div class="flex-grow">
+                <h2 class="text-gray-900 text-lg title-font font-medium mb-3">
+                  Comprehensive Asset History Tracking
+                </h2>
+                <p class="leading-relaxed text-base">
+                  Our Asset Tracking service goes beyond monitoring;
+                  it meticulously tracks the complete history of your organization's IT assets, encompassing hardware, software, and mobile devices.
+                  Gain insights into asset location, status changes, and a detailed history log.
+                  Additionally, efficiently manage maintenance schedules and warranty information to ensure optimal asset performance.
+                  Experience a new level of control with our robust Asset History Tracking service.
+                </p>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>

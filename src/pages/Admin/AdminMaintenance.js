@@ -336,7 +336,7 @@ const Remarks = ({ remarks, assetId }) => {
         <div
           id="dropdownDotsHorizontal"
           className="absolute z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
-          style={{ top: '2.5rem' }} // Adjust this value as needed
+          style={{ top: '2.5rem' , right: '2rem' }} // Adjust this value as needed
         >
           <ul
             className="py-2 text-sm text-gray-700 bg-white"
