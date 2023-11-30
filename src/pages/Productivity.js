@@ -13,10 +13,10 @@ function Productivity() {
           backgroundImage: `url(${frame})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          minHeight: "100vh", // Set minimum height to 100% of the viewport height
+          minHeight: "111vh", // Set minimum height to 100% of the viewport height
         }}
       >
-        <div class="grid w-full grid-cols-1 gap-4 mt-4 xl:grid-cols-2">
+        <div class="grid w-full grid-cols-1 gap-4 mt-4 xl:grid-cols-2 min-h-screen">
           <TaskManager />
           <ChatGPT />
         </div>

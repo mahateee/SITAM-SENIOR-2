@@ -149,7 +149,7 @@ function SignIn({ setUserRole }) {
               Not a member?{" "}
               <Link
                 to="/signup"
-                className="font-semibold leading-6 text-purple-600 hover:text-teal-500"
+                className="font-semibold leading-6 text-purple-600 hover:text-blue-500"
               >
                 Join us
               </Link>

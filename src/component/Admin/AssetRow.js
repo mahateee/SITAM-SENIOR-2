@@ -15,7 +15,7 @@ export default function AssetRow({
   };
 
   return (
-    <tr className="border-b" data-testid="asset" key={index}>
+    <tr className="border-b" data-testid="asset" key={index} >
       <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{index + 1}</td>
       {columnVisibility.ID && (
         <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">{AssetID}</td>

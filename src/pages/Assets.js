@@ -182,7 +182,7 @@ function Assets() {
               <div className="overflow-hidden shadow sm:rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200 ">
                   <TableHeader columnVisibility={columnVisibility} />
-                  <tbody>
+                  <tbody >
                     {data.length > 0 ? (
                       data
                         .filter(
