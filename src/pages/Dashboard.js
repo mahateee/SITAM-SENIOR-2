@@ -8,7 +8,7 @@ export default function Dashboard() {
           title="Report Section"
           width="1400"
           height="750"
-          src= "https://app.powerbi.com/view?r=eyJrIjoiZTJiYzFmODktZTRkMy00NzhlLWFkMDktZTFiNWYyYzI2YTA4IiwidCI6ImI0NTNkOTFiLTZhYzEtNGI2MS1iOGI4LTVlNjVlNDIyMjMzZiIsImMiOjl9"
+          src= "https://app.powerbi.com/view?r=eyJrIjoiZTJiYzFmODktZTRkMy00NzhlLWFkMDktZTFiNWYyYzI2YTA4IiwidCI6ImI0NTNkOTFiLTZhYzEtNGI2MS1iOGI4LTVlNjVlNDIyMjMzZiIsImMiOjl9&pageName=ReportSection07ace11da51e0c6b5d35"
           frameborder="0"
           allowFullScreen="true"
         ></iframe>
