@@ -45,7 +45,7 @@ const TaskManager = () => {
               <p className="text-sm">{format(new Date(), "MMMM d, yyyy")}</p>
             </div>
           </div>
-          <div className="relative mt-10">
+          <div className="relative mt-10 ">
             <div className="absolute inset-y-0 left-2 flex items-center pl-3 pointer-events-none">
               <svg
                 className="w-3.5 h-4 text-gray-500 dark:text-gray"
@@ -73,7 +73,8 @@ const TaskManager = () => {
               onKeyUp={(e) => handleKeyUp(e.key)}
             />
           </div>
-          <ul className="block w-full pt-6">
+          <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+          <ul className="block w-full pt-2">
             {tasks.map((task) => (
               <div key={task.id}>
                 <li className="w-full border-2 rounded-xl mt-2 hover:border-blue-300 hover:scale-110 transition-all">
@@ -112,6 +113,7 @@ const TaskManager = () => {
               </div>
             ))}
           </ul>
+          </div>
         </div>
       </div>
     </section>
