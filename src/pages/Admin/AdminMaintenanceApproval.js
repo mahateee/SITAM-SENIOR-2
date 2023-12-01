@@ -16,7 +16,7 @@ const AdminMaintenanceApproval = ({ requests, onApprove, onReject }) => (
       New Maintenance Requests ✅{" "}
     </h3>
     <span className="text-base font-normal text-gray-500">
-    Requests Awaiting Approval or Rejection.
+      Requests Awaiting Approval or Rejection.
     </span>
     <div class="flex flex-col mt-6">
       <div class="overflow-x-auto rounded-lg">
@@ -25,7 +25,7 @@ const AdminMaintenanceApproval = ({ requests, onApprove, onReject }) => (
             <table class="min-w-full divide-y divide-gray-200 ">
               <thead class="bg-gray-50 ">
                 <tr>
-                <th
+                  <th
                     scope="col"
                     className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                   >
@@ -63,7 +63,7 @@ const AdminMaintenanceApproval = ({ requests, onApprove, onReject }) => (
                         {main.user}
                       </th>
                       <td className="p-4 text-sm font-normal text-gray-500 whitespace-nowrap text-center">
-                      {main.formattedDate}
+                        {main.formattedDate}
                       </td>
                       <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap space-x-6">
                         <button
@@ -121,7 +121,7 @@ const AdminNewRequestsTable = () => {
     });
     return () => unsub();
   }, []);
-  
+
   const handleApprove = (requestId) => {
     updateRequestStatus(requestId, "Pending");
   };

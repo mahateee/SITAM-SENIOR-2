@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/index";
-import {generateHistoryPDF} from "./Admin/generatePDF";
 import HistoryTable from "../component/Admin/HistoryTable";
 import frame from "../images/FrameInside.svg";
 
@@ -11,7 +10,7 @@ function ShowHistory() {
     const [asset, setAsset] = useState({});
     const [employee, setEmployee] = useState({});
     const [history, setHistory] = useState([]); // Add a state for history
- 
+
     useEffect(() => {
         const fetchAssetAndAccount = () => {
             const docRef = doc(db, "asset", id);
@@ -54,7 +53,7 @@ function ShowHistory() {
                         <>
                             <HistoryTable assetId={asset.id} setHistory={setHistory} /> {/* Pass setHistory function to HistoryTable */}
                         </>
-                      
+
                     </div>
                 </div>
             </div>

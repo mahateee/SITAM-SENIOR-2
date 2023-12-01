@@ -45,7 +45,6 @@ const About = () => {
           >
             <h1 className="title-font sm:text-4xl text-3xl mb-4 font-bold text-blue-500">
               Elevate your IT with our Asset Management System Control everything from one platform.
-              {/* <br className="hidden lg:inline-block" /> */}
             </h1>
             <p className="mb-8 text-gray-500 leading-relaxed">
               At our IT asset management system, we believe in simplifying the management of your IT assets. Our system is designed to provide you with a user-friendly and comprehensive solution that enables you to track your assets, monitor performance, and identify potential issues. With our system, you can streamline your IT asset management process and optimize your IT infrastructure to improve your overall productivity.
@@ -58,7 +57,6 @@ const About = () => {
           </div>
         </div>
       </section>
-
       {/* Container for fading effect */}
       <div id="fadeContainer">
         {/* Your remaining content */}

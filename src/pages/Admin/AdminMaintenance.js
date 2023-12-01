@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import {
   collection,
   onSnapshot,
@@ -20,7 +20,19 @@ export default function AdminMaintenance() {
     const unsub = onSnapshot(q, (querySnapshot) => {
       let todosArray = [];
       querySnapshot.forEach((doc) => {
-        todosArray.push({ ...doc.data(), id: doc.id, timestamp: doc.data().timestamp });
+        todosArray.push({
+          ...doc.data(),
+          id: doc.id,
+          timestamp: doc.data().timestamp,
+        });
+      });
+      // Sort the array by urgency (High > Medium > Low)
+      todosArray.sort((a, b) => {
+        const urgencyOrder = { High: 3, Medium: 2, Low: 1 };
+        return (
+          urgencyOrder[predictUrgency(b.maintenanceType, b.urgency)] -
+          urgencyOrder[predictUrgency(a.maintenanceType, a.urgency)]
+        );
       });
       // Sort the array by timestamp in descending order
       todosArray.sort((a, b) => b.timestamp - a.timestamp);
@@ -29,7 +41,6 @@ export default function AdminMaintenance() {
     });
     return () => unsub();
   }, []);
-
 
   const handleChange = (value) => {
     const searchValues = value.split(" ").map((v) => v.trim());
@@ -113,34 +124,34 @@ export default function AdminMaintenance() {
     fetchEmployees();
   }, []);
 
-  const predictUrgency = (role, maintenanceType, urgency) => {
-    if (role === 'admin') {
-      if (maintenanceType === 'Repair') {
-        return urgency === 'within 3 Days' ? 'High' : 'Medium';
-      } else if (maintenanceType === 'Hardware issues') {
-        return 'High';
-      } else if (maintenanceType === 'Software issues') {
-        return 'Medium';
+  const predictUrgency = (maintenanceType, urgency) => {
+    const lowerCaseUrgency = urgency.toLowerCase();
+
+    if (maintenanceType === "Repair") {
+      if (lowerCaseUrgency === "within 3 days") {
+        return "High";
+      } else if (lowerCaseUrgency === "within a week") {
+        return "Medium";
+      } else if (lowerCaseUrgency === "within a month") {
+        return "Low";
       }
-    } else if (role === 'user') {
-      if (maintenanceType === 'Repair') {
-        return urgency === 'within 3 Days' ? 'Medium' : 'Low';
-      } else if (maintenanceType === 'Hardware issues') {
-        return urgency === 'within 3 Days' ? 'High' : 'Medium';
-      } else if (maintenanceType === 'Software issues') {
-        return 'Low';
+    } else if (maintenanceType === "Hardware issues") {
+      if (lowerCaseUrgency === "within 3 days") {
+        return "High";
+      } else if (lowerCaseUrgency === "within a week") {
+        return "Medium";
+      } else if (lowerCaseUrgency === "within a month") {
+        return "Low";
       }
+    } else if (maintenanceType === "Software issues") {
+      return "Medium";
+    } else {
+      return lowerCaseUrgency === "within a week" ? "Low" : "Unknown";
     }
-
-    // Default case if the role or maintenanceType doesn't match any specified condition
-    return 'Unknown';
   };
-
 
   const getUrgencyColor = (predictUrgency) => {
     switch (predictUrgency) {
-      case "Available":
-        return "bg-green-100 text-green-800";
       case "Low":
         return "bg-yellow-100 text-yellow-800";
       case "High":
@@ -155,7 +166,10 @@ export default function AdminMaintenance() {
   };
 
   return (
-    <div className="mt-12 p-12 bg-white border border-gray-300 rounded-lg shadow-lg sm:p-6" style={{ width: '1250px' }}>
+    <div
+      className="mt-12 p-12 bg-white border border-gray-300 rounded-lg shadow-lg sm:p-6"
+      style={{ width: "1250px" }}
+    >
       <div className="flex items-center justify-between lg:flex space-x-12">
         <div className="mb-4 lg:mb-0">
           <h3 className="mb-2 text-xl font-bold text-gray-900">
@@ -211,34 +225,64 @@ export default function AdminMaintenance() {
                     >
                       #
                     </th>
-                    <th scope="col" className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase">
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       Requester
                     </th>
-                    <th scope="col" className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase">
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       Asset ID
                     </th>
-                    <th scope="col" className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase">
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       Asset Category
                     </th>
-                    <th scope="col" className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase">
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       Maintainance Type
                     </th>
-                    <th scope="col" className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase">
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       Urgency
                     </th>
-                    <th scope="col" className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase">
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       Predicted Urgency
                     </th>
-                    <th scope="col" className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase">
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       Request Status
                     </th>
-                    <th scope="col" className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase">
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       Assign
                     </th>
-                    <th scope="col" className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase">
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       Remarks
                     </th>
-                    <th scope="col" className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase">
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    >
                       <span className="sr-only">Actions</span>
                     </th>
                   </tr>
@@ -246,58 +290,81 @@ export default function AdminMaintenance() {
                 <tbody>
                   {data.length > 0
                     ? data.map((main, id) => (
-                      <tr key={id} className="border-b">
-                        <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{id + 1}</td>
-                        <th
-                          scope="row"
-                          className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center"
-                        >
-                          {main.user}
-                        </th>
-                        <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{main.assetID}</td>
-                        <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{main.category}</td>
-                        <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{main.maintenanceType}</td>
-                        <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">{main.urgency}</td>
-                        <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">
-                          <span className={`text-sm font-medium mr-2 px-2.5 py-0.5 rounded ${getUrgencyColor(predictUrgency(main.role, main.maintenanceType, main.urgency))}`}>
-                            {main.predictedUrgency || predictUrgency(main.role, main.maintenanceType)}
-                          </span>
-                        </td>
-                        <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">
-                          <select
-                            value={main.status || "Waiting"}
-                            onChange={(e) =>
-                              updateMaintancStatus(main.id, e.target.value)
-                            }
-                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-25 p-2.5"
+                        <tr key={id} className="border-b">
+                          <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">
+                            {id + 1}
+                          </td>
+                          <th
+                            scope="row"
+                            className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center"
                           >
-                            <option value="Waiting">Waiting</option>
-                            <option value="Pending">Pending</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Canceled">Canceled</option>
-                          </select>
-                        </td>
-                        <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">
-                          <select
-                            value={main.assign || "None"}
-                            onChange={(e) => updateMaintancAssign(main.id, e.target.value)}
-                            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-50 p-2.5"
-                          >
-                            <option value="None">None</option>
-                            {employees.map((employee) => (
-                              <option key={employee.id} value={employee.id}>
-                                {` ${employee.name} ${employee.lastname}`}
-                              </option>
-                            ))}
-                          </select>
-                        </td>
-                        <td className="px-4 py-3 text-center">
-                          <Remarks remarks={main.remarks} assetId={main.ID} />
-                        </td>
-                        <td className="px-4 py-3 flex items-center justify-end"></td>
-                      </tr>
-                    ))
+                            {main.user}
+                          </th>
+                          <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">
+                            {main.assetID}
+                          </td>
+                          <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">
+                            {main.category}
+                          </td>
+                          <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">
+                            {main.maintenanceType}
+                          </td>
+                          <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">
+                            {main.urgency}
+                          </td>
+                          <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">
+                            {/* Assuming main is an object in your data */}
+                            <span
+                              className={`text-sm font-medium mr-2 px-2.5 py-0.5 rounded ${getUrgencyColor(
+                                predictUrgency(
+                                  main.maintenanceType,
+                                  main.urgency
+                                )
+                              )}`}
+                            >
+                              {predictUrgency(
+                                main.maintenanceType,
+                                main.urgency
+                              )}
+                            </span>
+                          </td>
+                          <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">
+                            <select
+                              value={main.status || "Waiting"}
+                              onChange={(e) =>
+                                updateMaintancStatus(main.id, e.target.value)
+                              }
+                              class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-25 p-2.5"
+                            >
+                              <option value="Waiting">Waiting</option>
+                              <option value="Pending">Pending</option>
+                              <option value="In Progress">In Progress</option>
+                              <option value="Completed">Completed</option>
+                              <option value="Canceled">Canceled</option>
+                            </select>
+                          </td>
+                          <td className="p-4 text-sm font-normal text-gray-700 whitespace-nowrap text-center">
+                            <select
+                              value={main.assign || "None"}
+                              onChange={(e) =>
+                                updateMaintancAssign(main.id, e.target.value)
+                              }
+                              className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-50 p-2.5"
+                            >
+                              <option value="None">None</option>
+                              {employees.map((employee) => (
+                                <option key={employee.id} value={employee.id}>
+                                  {` ${employee.name} ${employee.lastname}`}
+                                </option>
+                              ))}
+                            </select>
+                          </td>
+                          <td className="px-4 py-3 text-center">
+                            <Remarks remarks={main.remarks} assetId={main.ID} />
+                          </td>
+                          <td className="px-4 py-3 flex items-center justify-end"></td>
+                        </tr>
+                      ))
                     : null}
                 </tbody>
               </table>
@@ -313,7 +380,7 @@ const Remarks = ({ remarks, assetId }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: "relative" }}>
       <button
         id="dropdownMenuIconHorizontalButton"
         data-dropdown-toggle="dropdownDotsHorizontal"
@@ -336,7 +403,7 @@ const Remarks = ({ remarks, assetId }) => {
         <div
           id="dropdownDotsHorizontal"
           className="absolute z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
-          style={{ top: '2.5rem' , right: '2rem' }} // Adjust this value as needed
+          style={{ top: "2.5rem", right: "2rem" }} // Adjust this value as needed
         >
           <ul
             className="py-2 text-sm text-gray-700 bg-white"
@@ -366,6 +433,3 @@ const Remarks = ({ remarks, assetId }) => {
     </div>
   );
 };
-
-
-

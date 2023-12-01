@@ -10,7 +10,7 @@ function AccountAlerts() {
   };
 
   return isAlertVisible ? (
-    
+
     <div className="flex w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-xl bg-white">
       <div className="flex items-center justify-center w-12 bg-emerald-500">
         <svg
@@ -52,4 +52,5 @@ function AccountAlerts() {
     </div>
   ) : null;
 
-} export default AccountAlerts;
+}
+export default AccountAlerts;

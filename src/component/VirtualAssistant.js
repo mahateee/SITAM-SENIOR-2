@@ -21,7 +21,7 @@ const ChatGPT = () => {
   useEffect(() => {
     // Clear displayed messages when the component mounts
     setDisplayedMessages([]);
-    
+
     const fetchInitialMessages = async () => {
       try {
         const messagesCollection = collection(firestore, "messages");
@@ -32,7 +32,7 @@ const ChatGPT = () => {
           .sort((a, b) => a.timestamp - b.timestamp);
 
         setAllMessages(allMessages);
-        
+
         // Display all IAM messages when the component mounts
         setDisplayedMessages(allMessages.filter((msg) => msg.type === "IAM"));
       } catch (error) {
@@ -115,7 +115,6 @@ const ChatGPT = () => {
               <AiOutlineRobot size={30} className="mr-2" />
               <h2 className="text-xl font-bold">Virtual Assistant</h2>
             </div>
-
             <div className="block w-full pt-12">
               <div className="flex-grow overflow-y-auto">
                 {/* Chat messages */}
@@ -130,11 +129,10 @@ const ChatGPT = () => {
                       }
                     >
                       <div
-                        className={`${
-                          msg.type === "user"
+                        className={`${msg.type === "user"
                             ? "bg-blue-500 text-white"
                             : "bg-gray-300 text-black"
-                        } rounded-lg px-4 py-2 max-w-[80%]`}
+                          } rounded-lg px-4 py-2 max-w-[80%]`}
                       >
                         {/* Display user input for user messages */}
                         {msg.type === "user" && (
@@ -148,7 +146,6 @@ const ChatGPT = () => {
                     </div>
                   ))}
                 </div>
-                          
                 <form onSubmit={(e) => e.preventDefault()}>
                   <div className="flex justify-center items-center">
                     {/* Chat input */}

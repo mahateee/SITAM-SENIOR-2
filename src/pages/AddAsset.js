@@ -5,6 +5,7 @@ import { onSnapshot, query } from "firebase/firestore";
 import AssetForm from "../component/Admin/AssetForm";
 
 export default function AddAsset() {
+  
   const navigate = useNavigate();
   const [showEmployeeField, setShowEmployeeField] = useState(false);
   const [asset, setAsset] = useState({
@@ -28,6 +29,7 @@ export default function AddAsset() {
     PurchaseCost: "",
     Supplier: "",
   });
+
   const [validation, setValidation] = useState({
     id: "",
     name: "",
@@ -44,8 +46,7 @@ export default function AddAsset() {
   });
 
   const checkValidation = () => {
-    let errors = validation;
-
+    let errors = {};
     let isValid = true;
     // Assets name validation
     if (!asset.name.trim()) {
@@ -114,6 +115,8 @@ export default function AddAsset() {
       errors.Brand = "";
     }
 
+    // Set validation state
+    setValidation(errors);
     return isValid;
   };
 
@@ -124,6 +127,7 @@ export default function AddAsset() {
       setShowEmployeeField(true);
     }
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const isValid = checkValidation();
@@ -150,16 +154,18 @@ export default function AddAsset() {
           Supplier: asset.Supplier,
         });
         console.log("Document written with ID: ", docRef.id);
-        // Set showEditAlert to true and navigate to the Request page
+        // Set showAddAlert to true and navigate to the Asset page
         navigate('/Asset', { state: { showAddAlert: true } });
       } catch (e) {
         console.error("Error adding document: ", e);
       }
     }
   };
+
   useEffect(() => {
     checkValidation();
   }, [asset]);
+
   const [employees, setEmployees] = useState([]);
   useEffect(() => {
     const q = query(collection(db, "Account"));
@@ -170,7 +176,6 @@ export default function AddAsset() {
       });
       setEmployees(todosArray);
       console.log(employees);
-      // setData(todosArray);
     });
     return () => unsub();
   }, []);

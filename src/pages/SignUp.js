@@ -5,7 +5,6 @@ import logo from "../images/logoS.svg";
 import frame from "../images/Frame.svg"
  import EmailVerficationPage from "./EmailVerficationPage";
 import { useAuth } from "../context/AuthContext";
-// import axios from "axios";
 import {
   app,
   db,
@@ -38,7 +37,6 @@ function SignUp() {
       setError("");
       setLoading(true);
       const { user } = await signup(
-        // phoneNumRef.current.value,
         emailRef.current.value,
         passwordRef.current.value,
         await sendEmailVerificationLink(emailRef.current.value),
@@ -148,8 +146,6 @@ function SignUp() {
               placeholder="name@company.com"
               required
               ref={emailRef}
-            // value={email}
-            // onChange={(event) => setEmail(event.target.value)}
             />
           </div>
           <div>
@@ -167,8 +163,6 @@ function SignUp() {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               required
               ref={passwordRef}
-            // value={password}
-            // onChange={(event) => setPassword(event.target.value)}
             />
           </div>
           <div>
@@ -186,11 +180,8 @@ function SignUp() {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               required
               ref={passwordConfirmRef}
-            // value={password}
-            // onChange={(event) => setPassword(event.target.value)}
             />
           </div>
-
           <button
             type="submit"
             onSubmit={handleSubmit}

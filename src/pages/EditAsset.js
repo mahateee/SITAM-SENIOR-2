@@ -11,7 +11,6 @@ import {
 } from "firebase/firestore";
 import AssetForm from "../component/Admin/AssetForm";
 
-
 export default function EditAsset() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -49,14 +48,6 @@ export default function EditAsset() {
     const selectedStatus = event.target.value;
     const fieldName = event.target.name;
     setAsset({ ...asset, [event.target.name]: event.target.value });
-
-    // if (fieldName === "Status" && selectedStatus === "InUse") {
-    //   setShowEmployeeField(true);
-    // } else if (fieldName !== "Status" && asset.Status === "InUse") {
-    //   setShowEmployeeField(true);
-    // } else {
-    //   setShowEmployeeField(false);
-    // }
     if (
       selectedStatus === "InUse" ||
       selectedStatus === "Return" ||
@@ -143,33 +134,6 @@ export default function EditAsset() {
     return isValid;
   };
 
-  // useEffect(() => {
-  //   // Fetch asset data based on the id parameter when the component mounts
-  //   const fetchAssetData = async () => {
-  //     try {
-  //       const assetRef = doc(db, "asset", id);
-  //       const assetDoc = await getDoc(assetRef);
-
-  //       if (assetDoc.exists()) {
-  //         const assetData = assetDoc.data();
-  //         // Set the asset state with the fetched data
-  //         setShowEmployeeField(assetData.Status === "InUse");
-
-  //         setAsset(assetData);
-  //       } else {
-  //         // Handle the case where the asset doesn't exist
-  //         console.log("Asset not found");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching document: ", error);
-  //     }
-  //   };
-
-  //   // Call the fetchAssetData function
-  //   fetchAssetData();
-  // }, [id]); // Trigger the fetch when the id parameter changes
-  // const [employees, setEmployees] = useState([]);
-
   useEffect(() => {
     // Fetch asset data based on the id parameter when the component mounts
     const fetchAssetData = async () => {
@@ -182,8 +146,8 @@ export default function EditAsset() {
           // Set the asset state with the fetched data
           setShowEmployeeField(
             assetData.Status === "InUse" ||
-              assetData.Status === "Return" ||
-              assetData.Status === "Maintenance"
+            assetData.Status === "Return" ||
+            assetData.Status === "Maintenance"
           );
 
           setAsset(assetData);
@@ -213,42 +177,6 @@ export default function EditAsset() {
     });
     return () => unsub();
   }, []);
-
-  // const handleSubmit = (event) => {
-  //   const shouldResetEmployeeId = asset.Status !== "InUse";
-  //   event.preventDefault();
-  //   const isValid = checkValidation();
-  //   if (isValid) {
-  //     const assetRef = doc(db, "asset", id);
-  //     updateDoc(assetRef, {
-  //       name: asset.name,
-  //       AssetID: asset.AssetID,
-  //       SerialNumber: asset.SerialNumber,
-  //       Model: asset.Model,
-  //       Brand: asset.Brand,
-  //       Category: asset.Category,
-  //       os: asset.os,
-  //       description: asset.description,
-  //       Status: asset.Status,
-  //       date: asset.date,
-  //       employeeId: shouldResetEmployeeId ? "" : asset.employeeId,
-  //       WarrantyStatus: asset.WarrantyStatus,
-  //       WarrantyType: asset.WarrantyType,
-  //       WarrantyEndDate: asset.WarrantyEndDate,
-  //       OrderNumber: asset.OrderNumber,
-  //       PurchaseDate: asset.PurchaseDate,
-  //       PurchaseCost: asset.PurchaseCost,
-  //       Supplier: asset.Supplier,
-  //     })
-  //       .then(() => {
-  //         console.log("Document successfully updated!");
-  //         navigate("/Asset");
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error updating document: ", error);
-  //       });
-  //   }
-  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -304,7 +232,7 @@ export default function EditAsset() {
         console.log("Document successfully updated and saved to history!");
         // Set showEditAlert to true and navigate to the Request page
         navigate('/Asset', { state: { showEditAlert: true } });
-        
+
       } catch (error) {
         console.error("Error updating document: ", error);
       }
@@ -320,7 +248,6 @@ export default function EditAsset() {
           <div class="pb-4 mb-4 rounded-t border-b-2 sm:mb-5">
             <h3 class="text-2xl font-semibold text-blue-800 ">Edit Asset Form</h3>
           </div>
-
           <AssetForm
             showEmployeeField={showEmployeeField}
             handleSubmit={handleSubmit}

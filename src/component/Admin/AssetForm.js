@@ -31,7 +31,7 @@ export default function AssetForm({
     { label: "Printer", value: "Printer" },
     { label: "Phone", value: "Phone" },
   ];
-  
+
   return (
     <form onSubmit={handleSubmit} className="mb-4 px-10" >
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
@@ -131,7 +131,7 @@ export default function AssetForm({
             required
           ></textarea>
         </div>
-        <FormSubheader title={"Optional Information"}/>
+        <FormSubheader title={"Optional Information"} />
         <TextInput
           label="Warranty Type"
           id="WarrantyType"
@@ -192,7 +192,7 @@ export default function AssetForm({
         />
         {showEmployeeField && (
           <>
-            <FormSubheader title={"Employee Information"}/>
+            <FormSubheader title={"Employee Information"} />
             <div className="">
               <label
                 className="block mb-2 text-sm font-medium text-gray-900"
@@ -206,22 +206,21 @@ export default function AssetForm({
                 onChange={(e) =>
                   setAsset({ ...asset, employeeId: e.target.value })
                 }
-                isSearchable 
+                isSearchable
               >
                 <option value="">Select Employee</option>
                 {employees.map((employee) => (
                   <option key={employee.id} value={employee.id}>
-                   {`${employee.name} ${employee.lastname}`}
+                    {`${employee.name} ${employee.lastname}`}
 
                   </option>
                 ))}
-                {/* Other employee options */}
               </select>
             </div>
           </>
         )}
       </div>
-      
+
       <div className="flex items-center justify-between">
         <Link
           to={`/Asset`}

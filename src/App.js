@@ -1,4 +1,3 @@
-// import logo from "./logo.svg";
 import "./App.css";
 import Assets from "./pages/Assets";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -11,7 +10,6 @@ import EditAsset from "./pages/EditAsset";
 import ShowPage from "./pages/ShowPage";
 import ShowHistory from "./pages/ShowHistory"
 import { useEffect, useState } from "react";
-// import Request from "./component/Request";
 import AuthProvider from "./context/AuthContext";
 import Requests from "./pages/Requests";
 import NewRequest from "./pages/NewRequest";
@@ -27,11 +25,13 @@ import PersonalAssets from "./pages/PersonalAssets";
 import AdminSidebar from "./component/AdminSidebar";
 import Dashboard from "./pages/Dashboard";
 import EmailVerficationPage from "./pages/EmailVerficationPage";
+
 const USER_TYPE = {
   PUBLIC: "Public User",
   NORMAL_USER: "user",
   ADMIN_USER: "admin",
 };
+
 function App() {
   const [userRole, setUserRole] = useState(USER_TYPE.PUBLIC);
   const navigate = useNavigate();
@@ -104,7 +104,7 @@ function App() {
               </PublicElement>
             }
           />
-             <Route
+          <Route
             path="/emailPage"
             element={
               <PublicElement>
@@ -177,7 +177,6 @@ function App() {
               </AdminElement>
             }
           />
-
           <Route
             path="/userinfo"
             element={
@@ -186,7 +185,6 @@ function App() {
               </UserElement>
             }
           />
-
           <Route
             path="/Request"
             element={
@@ -195,7 +193,6 @@ function App() {
               </UserElement>
             }
           />
-
           <Route
             path="/user"
             element={
@@ -230,23 +227,6 @@ function App() {
               </UserElement>
             }
           />
-
-          {/* <Route
-            path="/Request/Assets"
-            element={
-              <UserElement userRole={userRole}>
-                <div>Asset</div>
-              </UserElement>
-            }
-          /> */}
-          {/* <Route
-            path="/Request/Maintenance"
-            element={
-              <UserElement userRole={userRole}>
-                <div>Maintenance</div>
-              </UserElement>
-            }
-          /> */}
         </Routes>
       </AuthProvider>
     </>

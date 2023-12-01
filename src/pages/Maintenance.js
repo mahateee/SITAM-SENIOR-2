@@ -22,7 +22,6 @@ const Maintenance = () => {
     date: Timestamp.fromDate(new Date()),
   });
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -105,7 +104,7 @@ const Maintenance = () => {
               assetID: assetID || '',
               category: assetData.Category || '',
               user: `${employeeData.name || ''} ${employeeData.lastname || ''}`,
-              role: employeeData.role || '', // Add the role here
+              role: employeeData.role || '',
             }));
           } else {
             console.error('Employee not found.');
@@ -191,7 +190,6 @@ const Maintenance = () => {
                   required
                 />
               </div>
-
               {/* Assign */}
               <div className="w-full">
                 <label

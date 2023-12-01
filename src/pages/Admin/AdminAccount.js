@@ -1,13 +1,9 @@
-import { PaperClipIcon } from "@heroicons/react/20/solid";
 import AccountAlerts from "../../component/AccountAlerts";
 import { useAuth } from "../../context/AuthContext";
 import { useEffect } from "react";
-// import { firestore } from "../firebase/index";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-
 import frame from "../../images/InsideFrame.svg"
-
 import {
   collection,
   doc,
@@ -19,9 +15,10 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../../firebase/index";
-import Sidebar from "../../component/Sidebar";
 import AdminSidebar from "../../component/AdminSidebar";
+
 export default function AdminAccount() {
+
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",

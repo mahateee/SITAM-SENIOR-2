@@ -21,7 +21,6 @@ import { useLocation } from 'react-router-dom';
 function Assets() {
 
   const [open, setOpen] = React.useState(false);
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -57,6 +56,7 @@ function Assets() {
     });
     return () => unsub();
   }, []);
+
   // exclude column list from filter
   const excludeColumns = ["id"];
   const [searchText, setSearchText] = useState([]);
@@ -109,25 +109,20 @@ function Assets() {
   const location = useLocation();
   const showEditAlert = location.state?.showEditAlert || false;
   const showAddAlert = location.state?.showAddAlert || false;
-
   return (
 
     <div className="bg-gray-50 min-h-screen p-3 sm:p-5">
-
       <div data-testid="asset-table" className=" mt-12 p-6 bg-white border border-gray-300 rounded-lg shadow-lg sm:p-6 max-w-screen-xl mx-auto">
-
         {showEditAlert && (
           <div style={{ position: 'absolute', top: '150px', right: '10px' }}>
             <EditAlert />
           </div>
         )}
-
         {showAddAlert && (
           <div style={{ position: 'absolute', top: '150px', right: '10px' }}>
             <AddAlert />
           </div>
         )}
-
         {showCautionDialog && (
           <Example
             open={showCautionDialog}
@@ -144,7 +139,6 @@ function Assets() {
           />
         )}
         {open && <ScanQR onClose={handleClose} />}
-
         {/* Flex container for the header */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-4 lg:mb-0">
           <div className="mb-4 lg:mb-0">
@@ -211,12 +205,10 @@ function Assets() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
 }
-export default Assets;
 
 export function ScanButton({ handleOpen }) {
   return (
@@ -246,8 +238,8 @@ export function ScanButton({ handleOpen }) {
 }
 
 export function TableHeader({ columnVisibility }) {
-  return (
 
+  return (
     <thead className="bg-gray-50 ">
       <tr>
         <th
@@ -272,7 +264,6 @@ export function TableHeader({ columnVisibility }) {
             Asset Name
           </th>
         )}
-
         {columnVisibility.Status && (
           <th
             scope="col"
@@ -315,3 +306,4 @@ export function TableHeader({ columnVisibility }) {
     </thead>
   );
 }
+export default Assets;

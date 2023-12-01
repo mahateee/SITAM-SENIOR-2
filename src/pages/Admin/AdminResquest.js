@@ -9,12 +9,12 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase/index";
 import { formatDate } from "../../component/functions/formatDate";
+
 export default function AdminRequest() {
 
   const [requestsList, setRequestsList] = useState([]);
   const [searchText, setSearchText] = useState([]);
   const [data, setData] = useState(requestsList);
-
   useEffect(() => {
     const q = query(collection(db, "request"));
     const unsub = onSnapshot(q, (querySnapshot) => {

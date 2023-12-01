@@ -1,4 +1,5 @@
 export default function SearchInput({ searchText, handleChange }) {
+
   return (
     <div className="w-full ">
       <form className="flex items-center">

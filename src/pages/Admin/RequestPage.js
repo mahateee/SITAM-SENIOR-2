@@ -1,5 +1,4 @@
 import AdminSidebar from "../../component/AdminSidebar";
-// import ReturnedAssetsTable from "../../component/ReturnedAssetsTable";
 import AdminNewRequestsTable from "./AdminApproval";
 import AdminRequest from "./AdminResquest";
 
@@ -13,9 +12,6 @@ export default function RequestPage() {
           <div className="mb-8 lg:mb-12" />{" "}
           {/* Adding space between components */}
           <AdminNewRequestsTable />
-          {/* <div className="mb-8 lg:mb-12" />{" "} */}
-          {/* Adding space between components */}
-          {/* <ReturnedAssetsTable /> */}
         </div>
       </section>
     </>

@@ -7,7 +7,6 @@ import {
   onSnapshot,
   doc,
   updateDoc,
-  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase/index";
 export default function EmployeeList() {
@@ -85,11 +84,12 @@ export default function EmployeeList() {
                 <h3 className="mb-2 text-xl font-bold text-gray-900">
                   Employees 👨‍💼
                 </h3>
-                {/* <span className="text-base font-normal text-gray-500">
-                  List of Employees.
-                </span> */}
+
               </div>
+
+
               <div className="w-full md:w-1/3">
+
                 <form className="flex items-left">
                   <label htmlFor="simple-search" className="sr-only">
                     Search
@@ -119,45 +119,49 @@ export default function EmployeeList() {
                       onChange={(e) => handleChange(e.target.value)}
                     />
                   </div>
+
                 </form>
+
               </div>
+
             </div>
             <div class="relative overflow-x-auto max-h-[600px]">
               <table class="w-full text-sm text-left text-gray-500 ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                   <tr>
-                  <th
+                    <th
                       scope="col"
                       className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       #
                     </th>
-                    <th 
-                    scope="col" 
-                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Name
                     </th>
-                    <th 
-                    scope="col" 
-                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Email Address
                     </th>
-                    <th 
-                    scope="col" 
-                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Role
                     </th>
-                    <th 
-                    scope="col" 
-                    className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
+                    <th
+                      scope="col"
+                      className="px-4 py-3 font-medium tracking-wider text-sm text-center text-gray-700 uppercase"
                     >
                       Department
                     </th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {data.length > 0
                     ? data.map((user, id) => (
@@ -189,8 +193,13 @@ export default function EmployeeList() {
                     : null}
                 </tbody>
               </table>
+
+            </div>
+            <div className="ml-4  text-gray-500">
+              Total Employees: {data.length}
             </div>
           </div>
+
         </div>
       </section>
     </>

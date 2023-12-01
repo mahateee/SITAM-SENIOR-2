@@ -45,7 +45,6 @@ const TaskManager = () => {
               <p className="text-sm">{format(new Date(), "MMMM d, yyyy")}</p>
             </div>
           </div>
-
           <div className="relative mt-10">
             <div className="absolute inset-y-0 left-2 flex items-center pl-3 pointer-events-none">
               <svg
@@ -74,7 +73,6 @@ const TaskManager = () => {
               onKeyUp={(e) => handleKeyUp(e.key)}
             />
           </div>
-
           <ul className="block w-full pt-6">
             {tasks.map((task) => (
               <div key={task.id}>
@@ -105,9 +103,8 @@ const TaskManager = () => {
                     </svg>
                   </button>
                   <label
-                    className={`block w-full p-3 ${
-                      task.completed ? "line-through" : ""
-                    }`}
+                    className={`block w-full p-3 ${task.completed ? "line-through" : ""
+                      }`}
                   >
                     {task.text}
                   </label>

@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import QrReader from "modern-react-qr-reader";
-// import { QrReader } from "react-qr-reader";
 import { useNavigate } from "react-router-dom";
 export default function ScanQR({ onClose }) {
   const [result, setResult] = useState("");

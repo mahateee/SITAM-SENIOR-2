@@ -36,11 +36,9 @@ function NewRequest() {
     department: "",
     date: '',
   });
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -66,7 +64,6 @@ function NewRequest() {
       await addDoc(collection(db, "request"), newRequest);
       // Update the user's requests array with the new request
       console.log("Request added to the 'request' collection in Firestore!");
-      // Set showSuccessAlert to true and navigate to Request page
       navigate('/Request', { state: { showSuccessAlert: true } });
     } catch (error) {
       console.error(
@@ -75,7 +72,6 @@ function NewRequest() {
       );
     }
   };
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -101,8 +97,6 @@ function NewRequest() {
     };
     fetchUserData();
   }, [currentUser.uid]);
-
-
 
   return (
     <section className="bg-gray-200 overflow-y-auto overflow-x-hidden flex justify-center items-center w-full md:inset-0 h-modal md:h-full">
@@ -270,13 +264,13 @@ function NewRequest() {
                   Employee Department
                 </label>
                 <input
-  readOnly
-  id="department"
-  name="department"
-  value={formData.department}
-  onChange={handleChange}
-  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
-/>
+                  readOnly
+                  id="department"
+                  name="department"
+                  value={formData.department}
+                  onChange={handleChange}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-primary-500 white:focus:border-primary-500"
+                />
               </div>
             </div>
             <div className="flex items-center justify-between">
@@ -299,7 +293,7 @@ function NewRequest() {
     </section>
   );
 }
-export default NewRequest;
+
 
 const FormSubheader = ({ title }) => {
   return (
@@ -310,3 +304,4 @@ const FormSubheader = ({ title }) => {
     </div>
   );
 };
+export default NewRequest;

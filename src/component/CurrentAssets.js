@@ -10,7 +10,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase/index";
-import { useAuth } from "../context/AuthContext"; // Update the path as needed
+import { useAuth } from "../context/AuthContext"; 
 import "firebase/functions";
 
 const AssetsTable = () => {
@@ -58,6 +58,7 @@ const AssetsTable = () => {
 
     fetchAssets();
   }, [currentUser]);
+  
   const updateAssetStatus = async (assetKey) => {
     const assetDocRef = doc(db, "asset", assetKey);
     await updateDoc(assetDocRef, { Status: "Return" });
@@ -68,7 +69,6 @@ const AssetsTable = () => {
     try {
       // Update the status in Firestore
       await updateAssetStatus(assetKey);
-
       // Create a copy of the assets array
       const updatedAssets = [...assets];
       // Update the status of the asset to "Return"
@@ -96,9 +96,6 @@ const AssetsTable = () => {
         <div class="items-center justify-between lg:flex">
           <div class="mb-4 lg:mb-0">
             <h3 class="mb-2 text-xl font-bold text-gray-900">Current Assets 🖥️ </h3>
-            {/* <span class="text-base font-normal text-gray-500 ">
-              A List of Current Assets.
-            </span> */}
           </div>
         </div>
         {/* <!-- Table --> */}

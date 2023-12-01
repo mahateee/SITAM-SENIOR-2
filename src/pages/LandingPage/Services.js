@@ -21,9 +21,6 @@ export default function Services() {
       </style>
       <section class="text-gray-600 body-font">
         <div class="flex flex-col text-center w-full ">
-          {/* <h2 class="text-xs text-teal-500 tracking-widest font-medium title-font ">
-            Services We Offer
-          </h2> */}
           <h1 class="sm:text-3xl text-xl font-bold  title-font text-blue-500">
             Empowering Your Business
             <br /> with Optimized IT Asset Management

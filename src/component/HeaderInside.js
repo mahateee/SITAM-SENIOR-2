@@ -10,16 +10,16 @@ export default function HeaderInside() {
         <Link to="/" className="flex items-center">
           <img src={logo} className="h-8 mr-3" alt="SITAM Logo" />
         </Link>
-   
-        </div>
-        <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex items-center space-x-4">
-          {/* React Icons for Account and Settings */}
-          <Link to="/account" className="text-gray-600">
-            <FiUser className="h-6 w-6" />
-          </Link>
-          <Link to="/settings" className="text-gray-600">
-            <FiSettings className="h-6 w-6" />
-          </Link>
+
+      </div>
+      <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex items-center space-x-4">
+        {/* React Icons for Account and Settings */}
+        <Link to="/account" className="text-gray-600">
+          <FiUser className="h-6 w-6" />
+        </Link>
+        <Link to="/settings" className="text-gray-600">
+          <FiSettings className="h-6 w-6" />
+        </Link>
       </div>
     </nav>
   );

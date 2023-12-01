@@ -3,14 +3,16 @@ import { FiMenu, FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import logo from "../images/logoS.svg";
 import { useEffect } from "react";
-import {doc,getDoc,} from "firebase/firestore";
+import { doc, getDoc, } from "firebase/firestore";
 import { db } from "../firebase/index";
 import { useAuth } from "../context/AuthContext";
 
 function Sidebar({ children }) {
+
   const [formData, setFormData] = useState({
     profileImage: "",
   });
+
   const { currentUser, logout } = useAuth();
   const userRef = doc(db, "Account", currentUser.uid);
   useEffect(() => {
@@ -22,7 +24,7 @@ function Sidebar({ children }) {
           console.log(userData);
           setFormData((prevFormData) => ({
             ...prevFormData,
-        
+
             profileImage: userData.profileImage,
           }));
         } else {
@@ -37,7 +39,6 @@ function Sidebar({ children }) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
@@ -47,7 +48,6 @@ function Sidebar({ children }) {
   };
 
   const [isPagesActive, setIsPagesActive] = useState(false); // State to track the active state of "Pages" button
-
   const handlePagesClick = () => {
     setIsPagesActive(!isPagesActive);
   };
@@ -58,7 +58,6 @@ function Sidebar({ children }) {
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
           <div class="flex items-center justify-between">
             <div class="flex items-center justify-start">
-              {/* <button onClick={toggleSidebar}>button</button> */}
               <button
                 onClick={toggleSidebar}
                 data-drawer-target="logo-sidebar"
@@ -101,11 +100,11 @@ function Sidebar({ children }) {
                   >
                     <span class="sr-only">Open user menu</span>
                     <div class="relative w-8 h-8 overflow-hidden bg-gray-200 rounded-full dark-bg-gray-600 ">
-                    <img
-                src={formData.profileImage}
-                alt="Profile"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
+                      <img
+                        src={formData.profileImage}
+                        alt="Profile"
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
                     </div>
                   </button>
                 </div>
@@ -113,53 +112,50 @@ function Sidebar({ children }) {
                   style={{
                     flexDirection: 'column-reverse',
                     position: 'absolute',
-                    bottom: '-82px',  // Adjust this value to move the dropdown up or down.
+                    bottom: '-82px',
                     right: '0',
-                   
+
                   }}
-                  class={` ${
-                    isUserDropdownOpen ? "block" : "hidden"
-                  } my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow`}
+                  class={` ${isUserDropdownOpen ? "block" : "hidden"
+                    } my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow`}
                   id="dropdown-user"
                 >
                   <ul class="py-1" role="none">
-                    
+
                     <li>
-                    <Link to="/userinfo">
-                      <a
-                        href="#"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-                        role="menuitem"
-                      >
-                        Account
-                      </a>
+                      <Link to="/userinfo">
+                        <a
+                          href="#"
+                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                          role="menuitem"
+                        >
+                          Account
+                        </a>
                       </Link>
                     </li>
                     <li>
-                    <Link to="/">
-                      <a
-                        href="#"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        role="menuitem"
-                      >
-                        Logout
-                      </a>
+                      <Link to="/">
+                        <a
+                          href="#"
+                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          role="menuitem"
+                        >
+                          Logout
+                        </a>
                       </Link>
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
       </nav>
       <button onClick={toggleSidebar}>button</button>
       <aside>
         <div
-          className={`fixed left-0 px-4 top-0 drop-shadow-2xl h-screen w-64  pt-20 bg-white z-40 text-white transition-transform duration-300 transform ${
-            isOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+          className={`fixed left-0 px-4 top-0 drop-shadow-2xl h-screen w-64  pt-20 bg-white z-40 text-white transition-transform duration-300 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
         >
           <ul class="space-y-2 text-gray-900 py-4 font-medium">
             <li>
@@ -211,22 +207,17 @@ function Sidebar({ children }) {
                       stroke-linejoin="round"
                       d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12"
                     />
-                    {/* <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z"/>
-                    <path d="M6.737 11.061a2.961 2.961 0 0 1 .81-1.515l6.117-6.116A4.839 4.839 0 0 1 16 2.141V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18v-3.093l-1.546 1.546c-.413.413-.94.695-1.513.81l-3.4.679a2.947 2.947 0 0 1-1.85-.227 2.96 2.96 0 0 1-1.635-3.257l.681-3.397Z"/>
-                    <path d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z"/> */}
                   </svg>
                   <span class="ml-3">Personal Productivity</span>
                 </a>
               </Link>
             </li>
-
             {/* Pages button with active class based on isPagesActive state */}
             <li>
               <button
                 type="button"
-                className={`flex items-center  p-2 w-full text-base rounded-lg transition duration-75 group hover:bg-gray-100 ${
-                  isPagesActive ? "bg-gray-200 " : ""
-                }`}
+                className={`flex items-center  p-2 w-full text-base rounded-lg transition duration-75 group hover:bg-gray-100 ${isPagesActive ? "bg-gray-200 " : ""
+                  }`}
                 aria-controls="dropdown-pages"
                 data-collapse-toggle="dropdown-pages"
                 onClick={handlePagesClick}
@@ -264,29 +255,25 @@ function Sidebar({ children }) {
                   </svg>
                 </div>
               </button>
-
               {/* Dropdown menu */}
               <ul
                 id="dropdown-pages"
-                className={`py-2 space-y-2 text-gray-900 ${
-                  isPagesActive ? "block" : "hidden"
-                }`}
+                className={`py-2 space-y-2 text-gray-900 ${isPagesActive ? "block" : "hidden"
+                  }`}
               >
                 <li>
                   <Link to="/personalassets">
                     <a
                       href="#"
-                      className={`flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group ${
-                        isPagesActive
+                      className={`flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group ${isPagesActive
                           ? "hover:bg-gray-100 "
                           : "hover:bg-gray-100 "
-                      }`}
+                        }`}
                     >
                       Current Assets
                     </a>
                   </Link>
                 </li>
-
                 <li>
                   <Link to="/Request">
                     {/* Replace "/settings" with your desired URL */}
@@ -300,7 +287,6 @@ function Sidebar({ children }) {
               </ul>
             </li>
           </ul>
-
           {/* Additional sections in the sidebar */}
           <ul className="pt-4 mt-4 space-y-2  text-gray-900 font-medium border-t border-gray-200 light:border-gray-700">
             <li>
